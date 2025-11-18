@@ -33,7 +33,7 @@ public class DesktopLauncher {
         // Optional: Set fullscreen
         // config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
         
-        // Create and run the game
+        // Launch the core game (viewer only)
         new Lwjgl3Application(new CelesteGame(), config);
     }
 }
