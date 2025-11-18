@@ -18,8 +18,7 @@ import java.util.List;
 public final class SamuraiCharacter {
 
     private static final Logger LOGGER = new Logger("SamuraiCharacter", Logger.INFO);
-
-    private static final String SAMURAI_BASE = "assets/FREE_Samurai 2D Pixel Art v1.2/Sprites/";
+    private static final String SAMURAI_BASE = "assets/FULL_Samurai 2D Pixel Art v1.2/Sprites/";
     private static final String IDLE_FILE = SAMURAI_BASE + "IDLE.png";
     private static final int FRAME_SIZE = 96;
     private static final float DEFAULT_FRAME_DURATION = 0.08f;
