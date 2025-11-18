@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import java.util.ArrayList;
@@ -27,11 +28,10 @@ public final class SamuraiCharacter {
             new EnumMap<>(SamuraiAnimationKey.class);
     private final List<Texture> ownedTextures = new ArrayList<>();
     private final SamuraiIdleState idleState = new SamuraiIdleState();
+    private final SamuraiKinematicController controller = new SamuraiKinematicController();
 
     private SamuraiState currentState;
     private TextureRegion currentFrame;
-    private float x;
-    private float y;
     private float stateTime;
 
     public SamuraiCharacter() {
@@ -77,9 +77,13 @@ public final class SamuraiCharacter {
     }
 
     public void placeAt(float worldX, float worldY) {
-        this.x = worldX;
-        this.y = worldY;
+        controller.place(worldX, worldY);
         LOGGER.info("Samurai placed at (" + worldX + ", " + worldY + ")");
+    }
+
+    public void configurePhysics(float gravity, float groundY) {
+        controller.setGravity(gravity);
+        controller.setGroundY(groundY);
     }
 
     public void switchState(SamuraiState nextState) {
@@ -102,6 +106,7 @@ public final class SamuraiCharacter {
 
     public void update(float delta) {
         stateTime += delta;
+        controller.update(delta);
         if (currentState == null) {
             LOGGER.error("Samurai has no active state; invoking ensureIdleState");
             ensureIdleState();
@@ -122,7 +127,8 @@ public final class SamuraiCharacter {
             LOGGER.error("Samurai current frame is null; skipping draw");
             return;
         }
-        batch.draw(currentFrame, x, y);
+        Vector2 pos = controller.position();
+        batch.draw(currentFrame, pos.x, pos.y);
     }
 
     public void dispose() {
@@ -149,6 +155,14 @@ public final class SamuraiCharacter {
 
     public SamuraiState idleState() {
         return idleState;
+    }
+
+    public Vector2 getPosition() {
+        return controller.position();
+    }
+
+    public boolean isGrounded() {
+        return controller.isGrounded();
     }
 }
 

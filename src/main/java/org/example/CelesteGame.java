@@ -190,6 +190,7 @@ public class CelesteGame extends ApplicationAdapter {
         float spawnX = 1f * tileWorldSize - 3f;
         float spawnY = 2f * tileWorldSize;
         samurai.placeAt(spawnX, spawnY);
+        samurai.configurePhysics(-1800f, 0f);
         samurai.ensureIdleState();
         Gdx.app.log("CelesteGame", "Samurai initialized at (" + spawnX + ", " + spawnY + ")");
     }
