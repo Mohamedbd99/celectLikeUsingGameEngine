@@ -32,6 +32,7 @@ public class CelesteGame extends ApplicationAdapter {
     private static final float TILE_SCALE = 4f;          // 8px -> 32px world units
     private static final float PALETTE_SCALE = 2f;       // palette tiles drawn at 16px
     private static final float PALETTE_MARGIN = 16f;
+    private static final float PALETTE_HEADER_HEIGHT = 28f;
     private static final float MIN_FRAME_DURATION = 0.05f;
     private static final float MAX_FRAME_DURATION = 0.5f;
     private static final float FRAME_DURATION_STEP = 0.02f;
@@ -57,6 +58,9 @@ public class CelesteGame extends ApplicationAdapter {
     private int hoverCol = -1;
     private boolean pointerOverPalette;
     private int paletteHoverIndex = -1;
+    private boolean draggingPalette;
+    private float dragOffsetX;
+    private float dragOffsetY;
 
     private int selectedTileIndex = -1;
     private int selectedFrameCount = 1;
@@ -219,8 +223,8 @@ public class CelesteGame extends ApplicationAdapter {
     private void updateHoverState() {
         int screenX = Gdx.input.getX();
         int screenY = Gdx.graphics.getHeight() - Gdx.input.getY();
-        paletteHoverIndex = computePaletteIndex(screenX, screenY);
-        pointerOverPalette = paletteHoverIndex >= 0;
+        pointerOverPalette = paletteBounds.contains(screenX, screenY);
+        paletteHoverIndex = pointerOverPalette ? computePaletteIndex(screenX, screenY) : -1;
 
         if (pointerOverPalette) {
             hoverRow = -1;
@@ -248,8 +252,25 @@ public class CelesteGame extends ApplicationAdapter {
     }
 
     private void handleEditorInput() {
-        if (pointerOverPalette && paletteHoverIndex >= 0 && Gdx.input.justTouched()) {
-            setSelectedTileIndex(paletteHoverIndex);
+        int screenX = Gdx.input.getX();
+        int screenY = Gdx.graphics.getHeight() - Gdx.input.getY();
+
+        if (pointerOverPalette) {
+            if (!draggingPalette && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)
+                    && isPointerInPaletteHeader(screenX, screenY)) {
+                startPaletteDrag(screenX, screenY);
+            } else if (!draggingPalette && paletteHoverIndex >= 0 && Gdx.input.justTouched()) {
+                setSelectedTileIndex(paletteHoverIndex);
+            }
+        }
+
+        if (draggingPalette) {
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                dragPalette(screenX, screenY);
+            } else {
+                draggingPalette = false;
+            }
+            return;
         }
 
         if (!pointerOverPalette && hoverRow >= 0 && hoverCol >= 0) {
@@ -385,6 +406,10 @@ public class CelesteGame extends ApplicationAdapter {
         shapeRenderer.setColor(0f, 0f, 0f, 0.7f);
         shapeRenderer.rect(paletteBounds.x - 4f, paletteBounds.y - 4f,
                 paletteBounds.width + 8f, paletteBounds.height + 8f);
+        float headerY = paletteBounds.y + paletteBounds.height - PALETTE_HEADER_HEIGHT;
+        shapeRenderer.setColor(0.12f, 0.12f, 0.16f, 0.9f);
+        shapeRenderer.rect(paletteBounds.x - 4f, headerY,
+                paletteBounds.width + 8f, PALETTE_HEADER_HEIGHT);
         shapeRenderer.end();
 
         batch.setProjectionMatrix(uiMatrix);
@@ -395,15 +420,17 @@ public class CelesteGame extends ApplicationAdapter {
             float[] rect = paletteRectForIndex(idx, paletteTileSize);
             batch.draw(paletteRegions.get(idx), rect[0], rect[1], rect[2], rect[3]);
         }
-        float infoY = paletteBounds.y + paletteBounds.height + 24f;
+        font.draw(batch, "Tile Palette (drag the top bar)",
+                paletteBounds.x, headerY + PALETTE_HEADER_HEIGHT - 8f);
+        float infoY = paletteBounds.y + paletteBounds.height + 16f;
         String brushInfo = selectedTileIndex < 0 ? "Brush: air" : "Brush: " + describeTile(selectedTileIndex);
         font.draw(batch, brushInfo, paletteBounds.x, infoY);
         font.draw(batch,
                 String.format(Locale.US, "Frames: %d  Duration: %.2fs  ([/], -/+, X=air)",
                         selectedFrameCount, selectedFrameDuration),
-                paletteBounds.x, infoY - 18f);
+                paletteBounds.x, infoY - 16f);
         font.draw(batch, "Click palette to pick tile. LMB paint, RMB erase, P=print, C=clear.",
-                paletteBounds.x, infoY - 36f);
+                paletteBounds.x, infoY - 32f);
         batch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -425,30 +452,6 @@ public class CelesteGame extends ApplicationAdapter {
         shapeRenderer.rect(rect[0], rect[1], rect[2], rect[3]);
     }
 
-    private int computePaletteIndex(float screenX, float screenY) {
-        if (!paletteBounds.contains(screenX, screenY)) {
-            return -1;
-        }
-        float paletteTileSize = LevelData.TILE_SIZE * PALETTE_SCALE;
-        float localX = screenX - paletteBounds.x;
-        float localY = screenY - paletteBounds.y;
-        int col = (int) (localX / paletteTileSize);
-        int rowFromBottom = (int) (localY / paletteTileSize);
-        int row = paletteRows - rowFromBottom - 1;
-        if (col < 0 || col >= paletteCols || row < 0 || row >= paletteRows) {
-            return -1;
-        }
-        return row * paletteCols + col;
-    }
-
-    private float[] paletteRectForIndex(int tileIndex, float paletteTileSize) {
-        int row = tileIndex / paletteCols;
-        int col = tileIndex % paletteCols;
-        float x = paletteBounds.x + col * paletteTileSize;
-        float y = paletteBounds.y + (paletteRows - row - 1) * paletteTileSize;
-        return new float[]{x, y, paletteTileSize, paletteTileSize};
-    }
-
     private int clampFramesForTile(int tileIndex, int desiredFrames) {
         if (tileIndex < 0) {
             return 1;
@@ -464,11 +467,22 @@ public class CelesteGame extends ApplicationAdapter {
 
     private void updatePaletteBounds(int width, int height) {
         float paletteTileSize = LevelData.TILE_SIZE * PALETTE_SCALE;
-        float w = paletteCols * paletteTileSize;
-        float h = paletteRows * paletteTileSize;
-        float x = width - w - PALETTE_MARGIN;
-        float y = PALETTE_MARGIN;
-        paletteBounds.set(x, y, w, h);
+        float gridWidth = paletteCols * paletteTileSize;
+        float gridHeight = paletteRows * paletteTileSize;
+        float totalWidth = gridWidth;
+        float totalHeight = gridHeight + PALETTE_HEADER_HEIGHT;
+        if (paletteBounds.width == 0f && paletteBounds.height == 0f) {
+            float x = Math.max(0f, width - totalWidth - PALETTE_MARGIN);
+            float y = PALETTE_MARGIN;
+            paletteBounds.set(x, y, totalWidth, totalHeight);
+        } else {
+            paletteBounds.width = totalWidth;
+            paletteBounds.height = totalHeight;
+            float maxX = Math.max(0f, width - totalWidth);
+            float maxY = Math.max(0f, height - totalHeight);
+            paletteBounds.x = Math.max(0f, Math.min(paletteBounds.x, maxX));
+            paletteBounds.y = Math.max(0f, Math.min(paletteBounds.y, maxY));
+        }
     }
 
     private String describeTile(int tileIndex) {
@@ -491,6 +505,59 @@ public class CelesteGame extends ApplicationAdapter {
 
     private int atlasIndex(int row, int col) {
         return row * paletteCols + col;
+    }
+
+    private boolean isPointerInPaletteHeader(int screenX, int screenY) {
+        if (!paletteBounds.contains(screenX, screenY)) {
+            return false;
+        }
+        float localY = screenY - paletteBounds.y;
+        return localY >= paletteBounds.height - PALETTE_HEADER_HEIGHT;
+    }
+
+    private void startPaletteDrag(int screenX, int screenY) {
+        draggingPalette = true;
+        dragOffsetX = screenX - paletteBounds.x;
+        float topY = paletteBounds.y + paletteBounds.height;
+        dragOffsetY = topY - screenY;
+    }
+
+    private void dragPalette(int screenX, int screenY) {
+        float newX = screenX - dragOffsetX;
+        float newTop = screenY + dragOffsetY;
+        float newY = newTop - paletteBounds.height;
+        float maxX = Math.max(0f, Gdx.graphics.getWidth() - paletteBounds.width);
+        float maxY = Math.max(0f, Gdx.graphics.getHeight() - paletteBounds.height);
+        paletteBounds.x = Math.max(0f, Math.min(newX, maxX));
+        paletteBounds.y = Math.max(0f, Math.min(newY, maxY));
+    }
+
+    private int computePaletteIndex(float screenX, float screenY) {
+        if (!paletteBounds.contains(screenX, screenY)) {
+            return -1;
+        }
+        float paletteTileSize = LevelData.TILE_SIZE * PALETTE_SCALE;
+        float localX = screenX - paletteBounds.x;
+        float localY = screenY - paletteBounds.y;
+        float usableHeight = paletteRows * paletteTileSize;
+        if (localY >= usableHeight) {
+            return -1;
+        }
+        int col = (int) (localX / paletteTileSize);
+        int rowFromBottom = (int) (localY / paletteTileSize);
+        int row = paletteRows - rowFromBottom - 1;
+        if (col < 0 || col >= paletteCols || row < 0 || row >= paletteRows) {
+            return -1;
+        }
+        return row * paletteCols + col;
+    }
+
+    private float[] paletteRectForIndex(int tileIndex, float paletteTileSize) {
+        int row = tileIndex / paletteCols;
+        int col = tileIndex % paletteCols;
+        float x = paletteBounds.x + col * paletteTileSize;
+        float y = paletteBounds.y + (paletteRows - row - 1) * paletteTileSize;
+        return new float[]{x, y, paletteTileSize, paletteTileSize};
     }
 
     private static class TileCell {
