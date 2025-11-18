@@ -85,23 +85,15 @@ public final class LevelData {
         return map;
     }
 
-    private static TileBlueprint fromLegacyValue(int value) {
-        return switch (value) {
-            case 1 -> contiguousBlueprint(WATER_TILE_INDEX, WATER_FRAMES);
-            case 2 -> contiguousBlueprint(SOLID_TILE_INDEX, 1);
-            default -> TileBlueprint.air();
-        };
-    }
-
-    private static TileBlueprint contiguousBlueprint(int startIndex, int frames) {
-        int[] indices = new int[frames];
-        for (int i = 0; i < frames; i++) {
-            indices[i] = startIndex + i;
-        }
-        return new TileBlueprint(indices, DEFAULT_FRAME_DURATION);
-    }
-
     private static int atlasIndex(int row, int col) {
         return row * ATLAS_COLUMNS + col;
+    }
+
+    public static int waterTileIndex() {
+        return WATER_TILE_INDEX;
+    }
+
+    public static int waterFrameCount() {
+        return WATER_FRAMES;
     }
 }

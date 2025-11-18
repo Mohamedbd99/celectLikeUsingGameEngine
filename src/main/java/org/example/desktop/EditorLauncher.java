@@ -1,8 +1,9 @@
 package org.example.desktop;
 
+import org.example.editor.ViewEditor;
+
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import org.example.ViewEditor;
 
 /**
  * Stand-alone launcher for the in-game editor.
@@ -21,5 +22,6 @@ public final class EditorLauncher {
         config.setForegroundFPS(60);
         new Lwjgl3Application(new ViewEditor(), config);
     }
+
 }
 

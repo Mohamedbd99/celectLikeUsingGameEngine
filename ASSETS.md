@@ -12,5 +12,9 @@
   - `frameDuration` is in seconds; the editor preserves your per-cell timing.
 - `LevelData` now stores a blueprint (`TileBlueprint[][]`) with explicit frame arrays. Replace it with the printed structure to bake in new layouts/animations.
 - `CelesteGame` (booted by `org.example.desktop.DesktopLauncher`) is a lightweight runtime that just renders the baked blueprint. The editor is completely separate—run `EditorLauncher` only when you want to edit.
+- Runtime controls:
+  - Move with `WASD` or arrow keys (supports diagonals).
+  - `Space`/`Z` jump. If no direction is held the hero jumps straight up.
+  - `Shift`/`X` dash. Direction comes from the current input, defaulting to straight up when idle.
 - To use a different sprite for a specific behavior, just paint that sprite (optionally add up to 3 frames via `O`) and copy the emitted blueprint; no code changes are required unless you add custom logic for that tile id.
 

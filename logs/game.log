@@ -1,0 +1,1325 @@
+2025-11-18 20:22:50.088 [INFO] (GameState) Entering Playing
+2025-11-18 20:22:50.094 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:22:50.094 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:22:50.094 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:22:50.095 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:22:50.095 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:22:50.095 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:22:50.096 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:22:50.096 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:22:50.097 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:22:50.100 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:22:50.101 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:22:50.102 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:22:50.102 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:22:50.102 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:22:50.103 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:22:50.103 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:22:50.104 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:22:50.104 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:23:28.752 [INFO] (GameState) Entering Playing
+2025-11-18 20:23:28.758 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:23:28.759 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:23:28.759 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:23:28.759 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:23:28.760 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:23:28.760 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:23:28.761 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:23:28.761 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:23:28.764 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:23:28.768 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:23:28.769 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:23:28.770 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:23:28.770 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:23:28.771 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:23:28.772 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:23:28.772 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:23:28.774 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:23:28.774 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:26:47.618 [INFO] (GameState) Entering Playing
+2025-11-18 20:26:47.628 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:26:47.628 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:26:47.631 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:26:47.631 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:26:47.631 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:26:47.631 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:26:47.631 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:26:47.631 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:26:47.638 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:26:47.638 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:26:47.647 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:26:47.648 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:26:47.648 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:26:47.648 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:26:47.648 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:26:47.648 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:26:47.648 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:26:47.648 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:31:56.915 [INFO] (GameState) Entering Playing
+2025-11-18 20:31:56.923 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:31:56.925 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:31:56.926 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:31:56.926 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:31:56.927 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:31:56.928 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:31:56.929 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:31:56.929 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:31:56.932 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:31:56.939 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:31:56.940 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:31:56.942 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:31:56.944 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:31:56.944 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:31:58.577 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:31:58.578 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:31:59.411 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:31:59.411 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:31:59.793 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:31:59.795 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:31:59.944 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:31:59.945 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:00.444 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:00.446 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:00.461 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:00.461 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:00.994 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:00.995 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:01.012 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:01.012 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:01.361 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:01.361 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:01.362 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:01.528 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:01.529 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:01.744 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:01.744 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:01.760 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:01.761 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:02.027 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:02.027 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:02.361 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:02.362 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:02.777 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:02.778 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:03.644 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:03.644 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:03.927 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:03.928 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:04.260 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:04.261 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:04.644 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:04.644 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:05.127 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:05.128 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:05.144 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:05.144 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:05.561 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:05.561 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:05.562 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:05.728 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:05.728 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:05.860 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:05.861 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:05.877 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:05.877 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:06.344 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:06.344 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:06.345 [INFO] (Player) Dash direction (0.70710677,0.70710677)
+2025-11-18 20:32:06.511 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:06.511 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:06.928 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:06.928 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:06.944 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:06.944 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:07.378 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:07.379 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:07.393 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:07.395 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:07.928 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:07.929 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:07.943 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:07.945 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:08.510 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:08.511 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:08.527 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:08.527 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:08.877 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:08.877 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:09.694 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:09.694 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:09.694 [INFO] (Player) Dash direction (1.0,0.0)
+2025-11-18 20:32:09.860 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:09.861 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:10.610 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:10.611 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:10.994 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:10.994 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:10.995 [INFO] (Player) Dash direction (0.70710677,0.70710677)
+2025-11-18 20:32:11.160 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:11.161 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:11.178 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:11.178 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:11.194 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:11.194 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:11.594 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:11.594 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:11.610 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:11.611 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:11.744 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:11.744 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:11.745 [INFO] (Player) Dash direction (0.70710677,0.70710677)
+2025-11-18 20:32:11.910 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:11.910 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:12.177 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:12.177 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:12.195 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:12.195 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:12.594 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:12.594 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:12.610 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:12.611 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:13.011 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:13.011 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:13.027 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:13.028 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:13.427 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:13.427 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:13.444 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:13.444 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:13.878 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:13.878 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:13.894 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:13.894 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:14.312 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:14.312 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:14.327 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:14.327 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:14.728 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:14.728 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:14.744 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:14.744 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:15.160 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:15.161 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:15.177 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:15.177 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:15.377 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:15.378 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:15.595 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:15.595 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:16.077 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:16.077 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:16.094 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:16.094 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:16.411 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:16.411 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:16.594 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:16.594 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:16.811 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:16.811 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:17.044 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:17.044 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:17.161 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:17.161 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:17.410 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:17.411 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:17.611 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:17.611 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:17.728 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:17.728 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:17.893 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:17.894 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:17.960 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:17.961 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:18.161 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:18.161 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:18.162 [INFO] (Player) Dash direction (0.70710677,0.70710677)
+2025-11-18 20:32:18.327 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:18.327 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:18.527 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:18.527 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:18.544 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:18.544 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:18.710 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:18.711 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:18.961 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:18.961 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:19.427 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:19.428 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:19.827 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:19.828 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:19.844 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:19.844 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:20.127 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:20.127 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:20.144 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:20.144 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:20.145 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:20.310 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:20.311 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:20.844 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:20.844 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:21.327 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:21.327 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:21.328 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:21.494 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:21.494 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:21.810 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:21.811 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:22.077 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:22.078 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:22.078 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:22.245 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:22.246 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:22.561 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:22.561 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:22.644 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:22.645 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:22.928 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:22.929 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:22.994 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:22.995 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:23.311 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:23.311 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:23.345 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:23.345 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:23.346 [INFO] (Player) Jump direction (0.0,1.0)
+2025-11-18 20:32:23.460 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:23.461 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:23.461 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:32:23.627 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:23.628 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:24.627 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:24.628 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:25.111 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:25.111 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:25.144 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:25.144 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:25.444 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:25.444 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:25.444 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:32:25.610 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:25.611 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:25.710 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:25.711 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:25.945 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:25.945 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:26.294 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:26.294 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:26.295 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:26.461 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:26.461 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:26.677 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:26.677 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:26.695 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:26.695 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:26.777 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:26.778 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:26.778 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:26.944 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:26.944 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:27.428 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:27.428 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:27.444 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:27.444 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:27.694 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:27.694 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:27.694 [INFO] (Player) Dash direction (0.70710677,0.70710677)
+2025-11-18 20:32:27.861 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:27.861 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:27.961 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:27.961 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:27.994 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:27.994 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:28.377 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:28.377 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:28.394 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:28.394 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:28.444 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:28.444 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:28.444 [INFO] (Player) Dash direction (0.70710677,0.70710677)
+2025-11-18 20:32:28.610 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:28.611 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:28.927 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:28.927 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:28.927 [INFO] (Player) Dash direction (0.70710677,0.70710677)
+2025-11-18 20:32:29.095 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:29.096 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:29.561 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:29.561 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:29.578 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:29.578 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:29.777 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:29.778 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:29.794 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:29.794 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:30.061 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:30.061 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:30.061 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:30.228 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:30.228 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:30.527 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:30.527 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:30.544 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:30.544 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:30.810 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:30.811 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:30.861 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:30.861 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:30.861 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:31.027 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:31.027 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:31.427 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:31.427 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:31.428 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:31.595 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:31.595 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:31.627 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:31.627 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:31.645 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:31.645 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:32.010 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:32.010 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:32.011 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:32.177 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:32.178 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:32.277 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:32.277 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:32.377 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:32.377 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:32.644 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:32.644 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:32.644 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:32.811 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:32.811 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:33.011 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:33.011 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:33.111 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:33.111 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:33.111 [INFO] (Player) Jump direction (1.0,0.0)
+2025-11-18 20:32:33.177 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:33.177 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:33.178 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:33.344 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:33.344 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:34.544 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:34.544 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:34.761 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:34.761 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:34.762 [INFO] (Player) Jump direction (0.0,1.0)
+2025-11-18 20:32:34.844 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:34.844 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:34.844 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:35.011 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:35.011 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:35.293 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:35.293 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:35.295 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:35.461 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:35.461 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:36.227 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:36.227 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:36.228 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:36.394 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:36.394 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:36.961 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:36.961 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:36.977 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:36.978 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:37.095 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:37.095 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:37.095 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:37.260 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:37.261 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:37.544 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:37.545 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:37.545 [INFO] (Player) Dash direction (0.70710677,0.70710677)
+2025-11-18 20:32:37.711 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:37.711 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:37.762 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:37.762 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:37.779 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:37.780 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:38.261 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:38.261 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:38.277 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:38.278 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:38.278 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:38.444 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:38.444 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:38.661 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:38.661 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:38.661 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:38.827 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:38.827 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:39.128 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:39.128 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:39.144 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:39.144 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:39.427 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:39.427 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:39.561 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:39.561 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:39.861 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:39.861 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:39.861 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:32:40.027 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:40.028 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:40.127 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:40.127 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:40.144 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:40.144 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:40.544 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:40.544 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:40.560 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:40.561 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:40.660 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:40.661 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:40.710 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:40.710 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:40.744 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:40.744 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:40.744 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:40.911 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:40.911 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:41.344 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:41.344 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:32:41.694 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:32:41.694 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:42.061 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:42.061 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:42.061 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:32:42.228 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:42.228 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:42.310 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:42.311 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:42.327 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:42.329 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:42.411 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:42.411 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:42.411 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:42.577 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:42.578 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:42.894 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:42.895 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:42.895 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:43.061 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:43.061 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:43.177 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:43.178 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:43.195 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:43.195 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:43.427 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:43.427 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:32:43.428 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:32:43.595 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:32:43.595 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:43.928 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:43.928 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:32:43.944 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:32:43.944 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:32:44.344 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:32:44.344 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:09.400 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:09.400 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:09.500 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:09.500 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:09.899 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:09.900 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:09.916 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:09.916 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:10.366 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:10.367 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:10.384 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:10.384 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:10.800 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:10.801 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:10.817 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:10.818 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:11.333 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:11.333 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:11.350 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:11.350 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:11.749 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:11.750 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:11.766 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:11.767 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:12.283 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:12.283 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:12.299 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:12.300 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:12.867 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:12.867 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:12.884 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:12.884 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:13.317 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:13.318 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:13.450 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:13.450 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:13.917 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:13.917 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:13.918 [INFO] (Player) Jump direction (-1.0,0.0)
+2025-11-18 20:35:14.884 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:14.884 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:15.433 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:15.433 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:15.433 [INFO] (Player) Jump direction (-1.0,0.0)
+2025-11-18 20:35:16.400 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:16.400 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:17.483 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:17.483 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:18.117 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:18.117 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:18.366 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:18.367 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:18.966 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:18.967 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:19.250 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:19.250 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:19.833 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:19.833 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:20.517 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:20.517 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:20.517 [INFO] (Player) Jump direction (1.0,0.0)
+2025-11-18 20:35:21.499 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:21.500 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:22.267 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:22.267 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:22.267 [INFO] (Player) Jump direction (1.0,0.0)
+2025-11-18 20:35:23.400 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:23.401 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:23.900 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:23.900 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:23.900 [INFO] (Player) Jump direction (1.0,0.0)
+2025-11-18 20:35:25.050 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:25.050 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:25.450 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:25.450 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:25.450 [INFO] (Player) Jump direction (1.0,0.0)
+2025-11-18 20:35:26.017 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:26.017 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:35:26.017 [INFO] (Player) Dash direction (1.0,0.0)
+2025-11-18 20:35:26.183 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:35:26.183 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:26.417 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:26.417 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:27.550 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:27.550 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:27.550 [INFO] (Player) Jump direction (1.0,0.0)
+2025-11-18 20:35:28.383 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:28.383 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:35:28.383 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:35:28.550 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:35:28.550 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:29.033 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:29.034 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:29.050 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:29.050 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:29.450 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:29.450 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:29.466 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:29.467 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:29.933 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:29.933 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:29.950 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:29.950 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:30.385 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:30.385 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:35:30.385 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:35:30.550 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:35:30.550 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:30.683 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:30.683 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:30.701 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:30.701 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:30.966 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:30.967 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:31.301 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:31.301 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:31.301 [INFO] (Player) Jump direction (0.0,1.0)
+2025-11-18 20:35:31.933 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:31.934 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:35:31.934 [INFO] (Player) Dash direction (0.70710677,0.70710677)
+2025-11-18 20:35:32.099 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:35:32.100 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:32.567 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:32.567 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:32.816 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:32.816 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:32.967 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:32.967 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:35:32.968 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:35:33.133 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:35:33.133 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:33.533 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:33.533 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:33.616 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:33.617 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:34.017 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:34.017 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:34.033 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:34.033 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:34.600 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:34.600 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:34.616 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:34.617 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:35.050 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:35.050 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:35.066 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:35.067 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:35.616 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:35.617 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:35.633 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:35.634 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:35.933 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:35.933 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:35:35.933 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:35:36.100 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:35:36.100 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:36.366 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:36.367 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:36.383 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:36.384 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:36.866 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:36.867 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:36.884 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:36.884 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:37.367 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:37.367 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:37.383 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:37.383 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:37.918 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:37.919 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:37.934 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:37.934 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:38.400 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:38.400 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:38.916 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:38.916 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:38.917 [INFO] (Player) Jump direction (0.0,1.0)
+2025-11-18 20:35:39.883 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:39.884 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:40.433 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:40.433 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:40.434 [INFO] (Player) Jump direction (0.0,1.0)
+2025-11-18 20:35:40.850 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:40.850 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:35:40.850 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:35:41.016 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:35:41.017 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:41.600 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:41.600 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:41.966 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:41.967 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:41.967 [INFO] (Player) Jump direction (0.0,1.0)
+2025-11-18 20:35:42.934 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:42.934 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:43.283 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:43.283 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:43.283 [INFO] (Player) Jump direction (0.0,1.0)
+2025-11-18 20:35:44.300 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:44.300 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:35:44.300 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:35:44.467 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:35:44.467 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:44.549 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:44.549 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:35:45.050 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:35:45.050 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:45.051 [INFO] (Player) Jump direction (0.0,1.0)
+2025-11-18 20:35:46.133 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:46.133 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:35:46.149 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:35:46.149 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:35:46.316 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:35:46.316 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:40:34.955 [INFO] (GameState) Entering Playing
+2025-11-18 20:40:34.965 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:40:34.966 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:40:34.967 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:40:34.968 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:40:34.969 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:40:34.970 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:40:34.971 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:40:34.971 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:40:34.975 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:40:34.980 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:40:34.982 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:40:34.985 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:40:34.987 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:40:34.988 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:41:08.607 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:41:08.614 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:42:03.800 [INFO] (GameState) Entering Playing
+2025-11-18 20:42:03.809 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:42:03.810 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:42:03.810 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:42:03.811 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:42:03.813 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:42:03.814 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:42:03.816 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:42:03.816 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:42:03.821 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:42:03.831 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:42:03.833 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:42:03.836 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:42:03.839 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:42:03.839 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:42:09.655 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:42:09.655 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:42:10.121 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:42:10.121 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:42:10.122 [INFO] (Player) Jump direction (1.0,0.0)
+2025-11-18 20:42:10.922 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:42:10.922 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:42:10.923 [INFO] (Player) Dash direction (1.0,0.0)
+2025-11-18 20:42:11.088 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:42:11.088 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:42:13.104 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:42:13.105 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:42:13.105 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:42:13.271 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:42:13.272 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:42:15.188 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:42:15.188 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:42:15.189 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:42:15.354 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:42:15.355 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:42:15.805 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:42:15.805 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:42:15.805 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:42:15.972 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:42:15.972 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:42:18.738 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:42:18.739 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:42:18.739 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:42:18.905 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:42:18.905 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:42:21.055 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:42:21.055 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:42:21.055 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:42:21.221 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:42:21.221 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:42:22.271 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:42:22.271 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:42:22.272 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:42:22.438 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:42:22.438 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:06.273 [INFO] (GameState) Entering Playing
+2025-11-18 20:43:06.281 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:43:06.282 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:43:06.282 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:43:06.283 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:43:06.284 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:43:06.286 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:43:06.286 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:43:06.287 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:43:06.289 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:43:06.295 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:43:06.296 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:43:06.300 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:43:06.302 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:43:06.303 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:13.105 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:13.106 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:43:13.205 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:43:13.206 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:14.905 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:14.905 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:43:14.906 [INFO] (Player) Dash direction (1.0,0.0)
+2025-11-18 20:43:15.071 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:43:15.072 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:15.655 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:15.658 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:43:15.659 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:43:15.822 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:43:15.822 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:16.938 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:16.939 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:43:16.939 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:43:17.105 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:43:17.106 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:17.355 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:17.356 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:43:17.356 [INFO] (Player) Dash direction (1.0,0.0)
+2025-11-18 20:43:17.522 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:43:17.522 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:17.939 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:17.939 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:43:17.940 [INFO] (Player) Dash direction (1.0,0.0)
+2025-11-18 20:43:18.105 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:43:18.105 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:18.355 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:18.356 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:43:18.356 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:43:18.521 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:43:18.522 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:37.288 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:37.289 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:43:37.290 [INFO] (Player) Dash direction (1.0,0.0)
+2025-11-18 20:43:37.455 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:43:37.455 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:38.521 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:38.522 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:43:38.523 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:43:38.688 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:43:38.689 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:39.838 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:39.839 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:43:39.840 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:43:40.005 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:43:40.007 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:40.572 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:40.572 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:43:40.572 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:43:40.738 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:43:40.739 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:41.121 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:41.122 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:43:41.188 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:43:41.188 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:41.388 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:41.389 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:43:41.389 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:43:41.555 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:43:41.555 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:43:42.638 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:43:42.639 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:43:42.639 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:43:42.805 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:43:42.805 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:44:08.805 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:44:08.809 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:44:32.590 [INFO] (GameState) Entering Playing
+2025-11-18 20:44:32.599 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:44:32.600 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:44:32.601 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:44:32.602 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:44:32.603 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:44:32.605 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:44:32.606 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:44:32.606 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:44:32.611 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:44:32.619 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:44:32.620 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:44:32.623 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:44:32.625 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:44:32.626 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:44:41.655 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:44:41.657 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:44:41.658 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:44:41.822 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:44:41.823 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:44:54.089 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:44:54.093 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:46:09.499 [INFO] (GameState) Entering Playing
+2025-11-18 20:46:09.507 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:46:09.508 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:46:09.509 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:46:09.510 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:46:09.511 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:46:09.512 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:46:09.512 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:46:09.513 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:46:09.518 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:46:09.524 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:46:09.525 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:46:09.527 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:46:09.528 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:46:09.529 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:49:36.911 [INFO] (GameState) Entering Playing
+2025-11-18 20:49:36.919 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:49:36.919 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:49:36.920 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:49:36.920 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:49:36.921 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:49:36.921 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:49:36.921 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:49:36.922 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:49:36.924 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:49:36.928 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:49:36.929 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:49:36.930 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:49:36.932 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:49:36.933 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:49:57.008 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:49:57.008 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:50:19.085 [INFO] (GameState) Entering Playing
+2025-11-18 20:50:19.095 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:50:19.095 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:50:19.095 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:50:19.095 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:50:19.095 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:50:19.095 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:50:19.095 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:50:19.095 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:50:19.101 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:50:19.105 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:50:19.105 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:50:19.106 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:50:19.106 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:50:19.106 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:50:21.866 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:50:21.867 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:50:21.868 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:50:22.033 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:50:22.034 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:50:24.133 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:50:24.135 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:50:24.468 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:50:24.469 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:50:25.917 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:50:25.917 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:50:25.917 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:50:26.085 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:50:26.085 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:51:24.404 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:51:24.421 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:51:32.468 [INFO] (GameState) Entering Playing
+2025-11-18 20:51:32.480 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:51:32.481 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:51:32.482 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:51:32.484 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:51:32.485 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:51:32.487 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:51:32.487 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:51:32.488 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:51:32.494 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:51:32.502 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:51:32.503 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:51:32.507 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:51:32.509 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:51:32.510 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:52:09.161 [INFO] (GameState) Entering Playing
+2025-11-18 20:52:09.169 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 20:52:09.170 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 20:52:09.170 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 20:52:09.170 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 20:52:09.171 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 20:52:09.172 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 20:52:09.173 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 20:52:09.174 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 20:52:09.177 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 20:52:09.189 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 20:52:09.190 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 20:52:09.193 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:52:09.195 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:52:09.196 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:52:24.660 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:52:24.665 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 20:54:43.124 [INFO] (CharacterState) Madeline leaving Idle
+2025-11-18 20:54:43.126 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:54:43.128 [INFO] (Player) Jump direction (0.0,1.0)
+2025-11-18 20:54:54.492 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:54:54.494 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:54:54.495 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:54:54.659 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:54:54.660 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:54:55.441 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:54:55.441 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:54:55.442 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:54:55.608 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:54:55.608 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:54:56.624 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:54:56.625 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:54:56.625 [INFO] (Player) Dash direction (1.0,0.0)
+2025-11-18 20:54:56.791 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:54:56.792 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:54:57.524 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:54:57.525 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:54:57.657 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:54:57.658 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:54:57.658 [INFO] (Player) Dash direction (-1.0,0.0)
+2025-11-18 20:54:57.691 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:54:57.692 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:54:57.693 [INFO] (Player) Jump direction (-1.0,0.0)
+2025-11-18 20:54:59.124 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:54:59.125 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:54:59.208 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:54:59.209 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:54:59.209 [INFO] (Player) Jump direction (1.0,0.0)
+2025-11-18 20:54:59.558 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:54:59.558 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:54:59.559 [INFO] (Player) Dash direction (1.0,0.0)
+2025-11-18 20:54:59.724 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:54:59.725 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:02.407 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:02.408 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:02.408 [INFO] (Player) Dash direction (1.0,0.0)
+2025-11-18 20:55:02.574 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:02.575 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:03.408 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:03.408 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:03.409 [INFO] (Player) Dash direction (-1.0,0.0)
+2025-11-18 20:55:03.575 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:03.575 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:04.392 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:04.393 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:04.393 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:55:04.558 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:04.558 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:06.191 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:06.192 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:06.192 [INFO] (Player) Dash direction (-1.0,0.0)
+2025-11-18 20:55:06.357 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:06.358 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:07.208 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:07.208 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:07.208 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:55:07.374 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:07.375 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:08.090 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:08.091 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:08.091 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:55:08.257 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:08.258 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:08.624 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:08.625 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:08.625 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:55:08.791 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:08.791 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:09.158 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:09.158 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:09.158 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:55:09.324 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:09.325 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:12.841 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:12.841 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:12.842 [INFO] (Player) Dash direction (0.70710677,0.70710677)
+2025-11-18 20:55:13.007 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:13.008 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:13.291 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:13.291 [INFO] (CharacterState) Madeline entering Running
+2025-11-18 20:55:13.308 [INFO] (CharacterState) Madeline leaving Running
+2025-11-18 20:55:13.308 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:14.090 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:14.091 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:14.091 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:55:14.258 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:14.258 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:16.374 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:16.374 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:16.375 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:55:16.541 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:16.541 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:17.023 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:17.025 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:17.025 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:55:17.191 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:17.191 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:20.674 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:20.675 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:20.675 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:55:20.841 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:20.841 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:21.175 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:21.175 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:21.175 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:55:21.342 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:21.342 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:22.007 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:22.008 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:22.008 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:55:22.175 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:22.175 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:22.391 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:22.391 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:22.391 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:55:22.558 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:22.558 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:22.775 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:22.775 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:22.775 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:55:22.941 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:22.941 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:23.407 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:23.408 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:23.408 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:55:23.574 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:23.575 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:23.991 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:23.991 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:23.991 [INFO] (Player) Dash direction (-1.0,0.0)
+2025-11-18 20:55:24.159 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:24.159 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:24.558 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:24.559 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:24.560 [INFO] (Player) Dash direction (-1.0,0.0)
+2025-11-18 20:55:24.724 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:24.725 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:25.124 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:25.125 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:25.125 [INFO] (Player) Dash direction (0.70710677,0.70710677)
+2025-11-18 20:55:25.291 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:25.291 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:26.074 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:26.075 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:26.075 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:55:26.241 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:26.241 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:26.723 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:26.725 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:26.725 [INFO] (Player) Dash direction (-0.70710677,0.70710677)
+2025-11-18 20:55:26.891 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:26.891 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:27.141 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:27.141 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:27.141 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:55:27.308 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:27.308 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:27.823 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:27.825 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:27.825 [INFO] (Player) Dash direction (0.0,1.0)
+2025-11-18 20:55:27.991 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:27.991 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:55:28.474 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:55:28.474 [INFO] (CharacterState) Madeline entering Attacking
+2025-11-18 20:55:28.475 [INFO] (Player) Dash direction (0.70710677,0.70710677)
+2025-11-18 20:55:28.641 [INFO] (CharacterState) Madeline leaving Attacking
+2025-11-18 20:55:28.641 [INFO] (CharacterState) Madeline entering Jumping
+2025-11-18 20:56:23.689 [INFO] (CharacterState) Madeline leaving Jumping
+2025-11-18 20:56:23.693 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 21:00:32.273 [INFO] (GameState) Entering Playing
+2025-11-18 21:00:32.281 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 21:00:32.281 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 21:00:32.282 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 21:00:32.282 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 21:00:32.284 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 21:00:32.286 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 21:00:32.287 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 21:00:32.287 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 21:00:32.291 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 21:00:32.297 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 21:00:32.298 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 21:00:32.300 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 21:16:54.613 [INFO] (GameState) Entering Playing
+2025-11-18 21:16:54.620 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 21:16:54.620 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 21:16:54.621 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 21:16:54.621 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 21:16:54.622 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 21:16:54.623 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 21:16:54.623 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 21:16:54.623 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 21:16:54.625 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 21:16:54.630 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 21:16:54.630 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 21:16:54.632 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 21:22:03.955 [INFO] (GameState) Entering Playing
+2025-11-18 21:22:03.966 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 21:22:03.967 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 21:22:03.968 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 21:22:03.968 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 21:22:03.970 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 21:22:03.971 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 21:22:03.971 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 21:22:03.972 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 21:22:03.977 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 21:22:03.985 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 21:22:03.987 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 21:22:03.990 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 21:29:05.515 [INFO] (GameState) Entering Playing
+2025-11-18 21:29:05.522 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 21:29:05.522 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 21:29:05.522 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 21:29:05.522 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 21:29:05.522 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 21:29:05.522 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 21:29:05.522 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 21:29:05.522 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 21:29:05.530 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 21:29:05.530 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 21:29:05.530 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 21:29:05.537 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 21:29:37.345 [INFO] (GameState) Entering Playing
+2025-11-18 21:29:37.353 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 21:29:37.354 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 21:29:37.354 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 21:29:37.355 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 21:29:37.355 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 21:29:37.356 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 21:29:37.357 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 21:29:37.357 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 21:29:37.361 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 21:29:37.366 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 21:29:37.367 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 21:29:37.370 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 21:29:56.323 [INFO] (GameState) Entering Playing
+2025-11-18 21:29:56.330 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 21:29:56.330 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 21:29:56.330 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 21:29:56.330 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 21:29:56.334 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 21:29:56.334 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 21:29:56.334 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 21:29:56.334 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 21:29:56.340 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 21:29:56.340 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 21:29:56.344 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 21:29:56.344 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 21:33:32.273 [INFO] (GameState) Entering Playing
+2025-11-18 21:33:32.281 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 21:33:32.281 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 21:33:32.282 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 21:33:32.282 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 21:33:32.283 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 21:33:32.284 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 21:33:32.284 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 21:33:32.284 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 21:33:32.288 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 21:33:32.292 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 21:33:32.293 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 21:33:32.295 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 23:09:19.150 [INFO] (GameState) Entering Playing
+2025-11-18 23:09:19.158 [INFO] (CharacterState) Enemy Tier 1 #1 entering Running
+2025-11-18 23:09:19.159 [INFO] (EntityFactory) Created Enemy Tier 1 #1
+2025-11-18 23:09:19.159 [INFO] (CharacterState) Enemy Tier 1 #2 entering Running
+2025-11-18 23:09:19.159 [INFO] (EntityFactory) Created Enemy Tier 1 #2
+2025-11-18 23:09:19.160 [INFO] (CharacterState) Enemy Tier 1 #3 entering Running
+2025-11-18 23:09:19.160 [INFO] (EntityFactory) Created Enemy Tier 1 #3
+2025-11-18 23:09:19.160 [INFO] (CharacterState) Enemy Tier 1 #4 entering Running
+2025-11-18 23:09:19.161 [INFO] (EntityFactory) Created Enemy Tier 1 #4
+2025-11-18 23:09:19.161 [INFO] (CharacterState) Enemy Tier 1 #5 entering Running
+2025-11-18 23:09:19.161 [INFO] (EntityFactory) Created Enemy Tier 1 #5
+2025-11-18 23:09:19.161 [INFO] (CharacterState) Enemy Tier 1 #6 entering Running
+2025-11-18 23:09:19.162 [INFO] (EntityFactory) Created Enemy Tier 1 #6
+2025-11-18 23:09:19.162 [INFO] (CharacterState) Enemy Tier 1 #7 entering Running
+2025-11-18 23:09:19.162 [INFO] (EntityFactory) Created Enemy Tier 1 #7
+2025-11-18 23:09:19.163 [INFO] (CharacterState) Enemy Tier 1 #8 entering Running
+2025-11-18 23:09:19.163 [INFO] (EntityFactory) Created Enemy Tier 1 #8
+2025-11-18 23:09:19.163 [INFO] (CharacterState) Enemy Tier 1 #9 entering Running
+2025-11-18 23:09:19.163 [INFO] (EntityFactory) Created Enemy Tier 1 #9
+2025-11-18 23:09:19.163 [INFO] (CharacterState) Enemy Tier 2 #1 entering Running
+2025-11-18 23:09:19.163 [INFO] (EntityFactory) Created Enemy Tier 2 #1
+2025-11-18 23:09:19.165 [INFO] (CharacterState) Enemy Tier 2 #2 entering Running
+2025-11-18 23:09:19.165 [INFO] (EntityFactory) Created Enemy Tier 2 #2
+2025-11-18 23:09:19.165 [INFO] (CharacterState) Enemy Tier 3 #1 entering Running
+2025-11-18 23:09:19.165 [INFO] (EntityFactory) Created Enemy Tier 3 #1
+2025-11-18 23:09:19.166 [INFO] (CharacterState) Enemy Tier 3 #2 entering Running
+2025-11-18 23:09:19.166 [INFO] (EntityFactory) Created Enemy Tier 3 #2
+2025-11-18 23:09:19.166 [INFO] (CharacterState) Enemy Tier 3 #3 entering Running
+2025-11-18 23:09:19.166 [INFO] (EntityFactory) Created Enemy Tier 3 #3
+2025-11-18 23:09:19.167 [INFO] (EntityFactory) Created Door 1 tile 1
+2025-11-18 23:09:19.167 [INFO] (EntityFactory) Created Door 1 tile 2
+2025-11-18 23:09:19.168 [INFO] (EntityFactory) Created Door 1 tile 3
+2025-11-18 23:09:19.168 [INFO] (EntityFactory) Created Door 1 tile 4
+2025-11-18 23:09:19.168 [INFO] (EntityFactory) Created Door 2 tile 1
+2025-11-18 23:09:19.168 [INFO] (EntityFactory) Created Door 2 tile 2
+2025-11-18 23:09:19.169 [INFO] (EntityFactory) Created Door 2 tile 3
+2025-11-18 23:09:19.169 [INFO] (EntityFactory) Created Door 2 tile 4
+2025-11-18 23:09:19.172 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 23:09:19.176 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 23:09:19.177 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 23:09:19.178 [INFO] (CharacterState) Madeline entering Idle
+2025-11-18 23:15:52.868 [INFO] (GameState) Entering Playing
+2025-11-18 23:15:52.883 [INFO] (CharacterState) Enemy Alpha entering Running
+2025-11-18 23:15:52.884 [INFO] (EntityFactory) Created Enemy Alpha
+2025-11-18 23:15:52.886 [INFO] (CharacterState) Enemy Beta entering Running
+2025-11-18 23:15:52.886 [INFO] (EntityFactory) Created Enemy Beta
+2025-11-18 23:15:52.888 [INFO] (EntityFactory) Created Key Channel 1
+2025-11-18 23:15:52.890 [INFO] (EntityFactory) Created Door Channel 1
+2025-11-18 23:15:52.891 [INFO] (EntityFactory) Created Key Channel 2
+2025-11-18 23:15:52.891 [INFO] (EntityFactory) Created Door Channel 2
+2025-11-18 23:15:52.896 [INFO] (Decorator) Madeline receives Shield +2
+2025-11-18 23:15:52.906 [INFO] (Decorator) Madeline receives Speed x1.25
+2025-11-18 23:15:52.908 [INFO] (Decorator) Madeline receives Weapon +5
+2025-11-18 23:15:52.912 [INFO] (CharacterState) Madeline entering Idle

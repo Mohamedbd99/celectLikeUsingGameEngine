@@ -14,10 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import org.example.LevelData.TileBlueprint;
+import org.example.samurai.SamuraiCharacter;
 
 /**
  * Minimal runtime that renders the currently authored level.
- * The interactive editor logic now lives in {@link ViewEditor}.
+ * The interactive editor logic now lives in org.example.editor.ViewEditor.
  */
 public class CelesteGame extends ApplicationAdapter {
 
@@ -35,6 +36,9 @@ public class CelesteGame extends ApplicationAdapter {
     private float worldWidth;
     private float worldHeight;
     private float elapsed;
+    private float viewWidth;
+    private float viewHeight;
+    private SamuraiCharacter samurai;
 
     @Override
     public void create() {
@@ -52,25 +56,36 @@ public class CelesteGame extends ApplicationAdapter {
 
         worldWidth = cols * tileWorldSize;
         worldHeight = rows * tileWorldSize;
+        viewWidth = worldWidth;
+        viewHeight = worldHeight;
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(worldWidth, worldHeight, camera);
+        viewport = new FitViewport(viewWidth, viewHeight, camera);
         viewport.apply(true);
 
         batch = new SpriteBatch();
         loadTileset();
+        initSamurai();
         Gdx.graphics.setVSync(true);
+        updateCamera();
     }
 
     @Override
     public void render() {
-        elapsed += Gdx.graphics.getDeltaTime();
+        float delta = Gdx.graphics.getDeltaTime();
+        elapsed += delta;
         ScreenUtils.clear(0.08f, 0.08f, 0.12f, 1f);
 
+        if (samurai != null) {
+            samurai.update(delta);
+        }
+
+        updateCamera();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         drawTiles();
+        drawSamurai();
         batch.end();
     }
 
@@ -84,6 +99,9 @@ public class CelesteGame extends ApplicationAdapter {
         batch.dispose();
         for (Texture texture : paletteTextures) {
             texture.dispose();
+        }
+        if (samurai != null) {
+            samurai.dispose();
         }
     }
 
@@ -102,6 +120,13 @@ public class CelesteGame extends ApplicationAdapter {
                 batch.draw(frame, x, y, tileWorldSize, tileWorldSize);
             }
         }
+    }
+
+    private void drawSamurai() {
+        if (samurai == null) {
+            return;
+        }
+        samurai.draw(batch);
     }
 
     private void loadTileset() {
@@ -157,6 +182,25 @@ public class CelesteGame extends ApplicationAdapter {
             }
         }
         Gdx.app.log("CelesteGame", "Loaded " + paletteRegions.size() + " sprites from atlas fallback");
+    }
+
+    private void initSamurai() {
+        samurai = new SamuraiCharacter();
+        samurai.loadAssets();
+        float spawnX = 1f * tileWorldSize - 3f;
+        float spawnY = 2f * tileWorldSize;
+        samurai.placeAt(spawnX, spawnY);
+        samurai.ensureIdleState();
+        Gdx.app.log("CelesteGame", "Samurai initialized at (" + spawnX + ", " + spawnY + ")");
+    }
+
+    private void updateCamera() {
+        if (camera == null) {
+            return;
+        }
+        float centerX = worldWidth * 0.5f;
+        float centerY = worldHeight * 0.5f;
+        camera.position.set(centerX, centerY, 0f);
     }
 
     private static class TileCell {

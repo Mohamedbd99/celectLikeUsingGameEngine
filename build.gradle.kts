@@ -50,6 +50,20 @@ application {
     mainClass.set("org.example.desktop.DesktopLauncher")
 }
 
+tasks.register<JavaExec>("runViewEditor") {
+    group = "application"
+    description = "Launches the standalone ViewEditor"
+    mainClass.set("org.example.desktop.EditorLauncher")
+    classpath = sourceSets["main"].runtimeClasspath
+}
+
+tasks.register<JavaExec>("runInspector") {
+    group = "application"
+    description = "Launches the map inspector tool"
+    mainClass.set("org.example.desktop.InspectorLauncher")
+    classpath = sourceSets["main"].runtimeClasspath
+}
+
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }

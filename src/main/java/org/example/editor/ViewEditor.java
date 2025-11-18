@@ -1,4 +1,4 @@
-package org.example;
+package org.example.editor;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import org.example.LevelData;
 import org.example.LevelData.TileBlueprint;
 
 /**
