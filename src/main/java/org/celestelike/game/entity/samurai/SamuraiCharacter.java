@@ -17,6 +17,9 @@ import org.celestelike.game.entity.samurai.state.SamuraiIdleState;
 import org.celestelike.game.entity.samurai.state.SamuraiJumpState;
 import org.celestelike.game.entity.samurai.state.SamuraiRunState;
 import org.celestelike.game.entity.samurai.state.SamuraiState;
+import org.celestelike.game.entity.samurai.state.SamuraiWallContactState;
+import org.celestelike.game.entity.samurai.state.SamuraiWallJumpState;
+import org.celestelike.game.entity.samurai.state.SamuraiWallSlideState;
 import org.celestelike.game.world.LevelCollisionMap;
 
 /**
@@ -32,6 +35,9 @@ public final class SamuraiCharacter {
     private static final String JUMP_TRANSITION_FILE = SAMURAI_BASE + "JUMP-TRANSITION.png";
     private static final String JUMP_FALL_FILE = SAMURAI_BASE + "JUMP-FALL.png";
     private static final String DASH_FILE = SAMURAI_BASE + "DASH.png";
+    private static final String WALL_CONTACT_FILE = SAMURAI_BASE + "WALL CONTACT.png";
+    private static final String WALL_SLIDE_FILE = SAMURAI_BASE + "WALL SLIDE.png";
+    private static final String WALL_JUMP_FILE = SAMURAI_BASE + "WALL JUMP.png";
     private static final int FRAME_SIZE = 96;
     private static final float DEFAULT_FRAME_DURATION = 0.08f;
     private static final float RUN_FRAME_DURATION = 0.05f;
@@ -39,11 +45,17 @@ public final class SamuraiCharacter {
     private static final float JUMP_TRANSITION_DURATION = 0.05f;
     private static final float JUMP_FALL_FRAME_DURATION = 0.06f;
     private static final float DASH_FRAME_DURATION = 0.04f;
+    private static final float WALL_CONTACT_FRAME_DURATION = 0.08f;
+    private static final float WALL_SLIDE_FRAME_DURATION = 0.08f;
+    private static final float WALL_JUMP_FRAME_DURATION = 0.06f;
     private static final float DEFAULT_RUN_SPEED = 220f;
     private static final float DEFAULT_JUMP_SPEED = 620f;
     private static final float DASH_SPEED = 700f;
     private static final float DASH_DURATION = 0.25f;
     private static final int DASH_MAX_FRAMES = 5;
+    private static final float WALL_SLIDE_MAX_DESCENT_SPEED = -220f;
+    private static final float WALL_JUMP_HORIZONTAL_SPEED = 360f;
+    private static final float WALL_JUMP_STATE_DURATION = 0.18f;
     private static final float RENDER_OFFSET_Y = -20f;
     private static final float RENDER_OFFSET_X = 0f;
     private final Vector2 dashDirection = new Vector2();
@@ -55,6 +67,9 @@ public final class SamuraiCharacter {
     private final SamuraiRunState runState = new SamuraiRunState();
     private final SamuraiJumpState jumpState = new SamuraiJumpState();
     private final SamuraiDashState dashState = new SamuraiDashState();
+    private final SamuraiWallContactState wallContactState = new SamuraiWallContactState();
+    private final SamuraiWallSlideState wallSlideState = new SamuraiWallSlideState();
+    private final SamuraiWallJumpState wallJumpState = new SamuraiWallJumpState();
     private final SamuraiKinematicController controller = new SamuraiKinematicController();
 
     private SamuraiState currentState;
@@ -72,6 +87,7 @@ public final class SamuraiCharacter {
     private boolean isDashing;
     private float dashTimer;
     private boolean wasGrounded;
+    private float wallJumpTimer;
 
     public SamuraiCharacter() {
         LOGGER.info("Samurai character initialized");
@@ -133,6 +149,33 @@ public final class SamuraiCharacter {
             LOGGER.info("Dash animation primed");
         } else {
             LOGGER.error("Failed to load dash animation.");
+        }
+
+        Animation<TextureRegion> wallContactAnimation =
+                loadAnimation(WALL_CONTACT_FILE, WALL_CONTACT_FRAME_DURATION, Animation.PlayMode.LOOP);
+        if (wallContactAnimation != null) {
+            animations.put(SamuraiAnimationKey.WALL_CONTACT, wallContactAnimation);
+            LOGGER.info("Wall contact animation primed");
+        } else {
+            LOGGER.error("Failed to load wall contact animation.");
+        }
+
+        Animation<TextureRegion> wallSlideAnimation =
+                loadAnimation(WALL_SLIDE_FILE, WALL_SLIDE_FRAME_DURATION, Animation.PlayMode.LOOP);
+        if (wallSlideAnimation != null) {
+            animations.put(SamuraiAnimationKey.WALL_SLIDE, wallSlideAnimation);
+            LOGGER.info("Wall slide animation primed");
+        } else {
+            LOGGER.error("Failed to load wall slide animation.");
+        }
+
+        Animation<TextureRegion> wallJumpAnimation =
+                loadAnimation(WALL_JUMP_FILE, WALL_JUMP_FRAME_DURATION, Animation.PlayMode.NORMAL);
+        if (wallJumpAnimation != null) {
+            animations.put(SamuraiAnimationKey.WALL_JUMP, wallJumpAnimation);
+            LOGGER.info("Wall jump animation primed");
+        } else {
+            LOGGER.error("Failed to load wall jump animation.");
         }
     }
 
@@ -209,6 +252,8 @@ public final class SamuraiCharacter {
         controller.update(delta);
         tickDash(delta);
         handleGrounding(controller.isGrounded());
+        handleWallInteractions();
+        tickWallJump(delta);
         if (currentState == null) {
             LOGGER.error("Samurai has no active state; invoking ensureIdleState");
             ensureIdleState();
@@ -346,6 +391,26 @@ public final class SamuraiCharacter {
         return true;
     }
 
+    public boolean wallJump() {
+        if (isDashing || controller.isGrounded()) {
+            return false;
+        }
+        boolean touchingLeft = controller.isTouchingWallLeft();
+        boolean touchingRight = controller.isTouchingWallRight();
+        if (!touchingLeft && !touchingRight) {
+            return false;
+        }
+        float horizontal = touchingLeft ? WALL_JUMP_HORIZONTAL_SPEED : -WALL_JUMP_HORIZONTAL_SPEED;
+        controller.setHorizontalSpeed(horizontal);
+        controller.setVerticalVelocity(jumpSpeed);
+        facingRight = horizontal > 0f;
+        wallJumpTimer = WALL_JUMP_STATE_DURATION;
+        switchState(wallJumpState);
+        advanceJumpPhase(JumpPhase.START);
+        jumpAvailable = false;
+        return true;
+    }
+
     public boolean dash(float dirX, float dirY) {
         if (!dashAvailable || isDashing) {
             return false;
@@ -410,7 +475,9 @@ public final class SamuraiCharacter {
     }
 
     private void stopRunState() {
-        ensureIdleState();
+        if (controller.isGrounded()) {
+            ensureIdleState();
+        }
     }
 
     private void updateJumpPhase(float delta) {
@@ -444,8 +511,12 @@ public final class SamuraiCharacter {
         if (grounded && !wasGrounded) {
             restoreAirActions();
         }
-        if (grounded && !isDashing && currentState == jumpState) {
-            ensureIdleState();
+        if (grounded && !isDashing) {
+            if (currentState == jumpState) {
+                ensureIdleState();
+            } else if (isInWallState()) {
+                ensureIdleState();
+            }
         }
         wasGrounded = grounded;
     }
@@ -453,6 +524,62 @@ public final class SamuraiCharacter {
     private void restoreAirActions() {
         dashAvailable = true;
         jumpAvailable = true;
+    }
+
+    private void handleWallInteractions() {
+        if (isDashing || currentState == wallJumpState) {
+            return;
+        }
+        boolean touchingLeft = controller.isTouchingWallLeft();
+        boolean touchingRight = controller.isTouchingWallRight();
+        boolean touchingWall = touchingLeft || touchingRight;
+        boolean grounded = controller.isGrounded();
+        if (!touchingWall || grounded) {
+            if (isInWallState()) {
+                if (grounded) {
+                    ensureIdleState();
+                } else {
+                    switchState(jumpState);
+                    advanceJumpPhase(JumpPhase.FALL);
+                }
+            }
+            return;
+        }
+        if (touchingLeft) {
+            facingRight = true;
+        } else if (touchingRight) {
+            facingRight = false;
+        }
+        if (controller.velocity().y < -5f) {
+            applyWallSlideSlowdown();
+            if (currentState != wallSlideState) {
+                switchState(wallSlideState);
+            }
+        } else if (currentState != wallContactState) {
+            switchState(wallContactState);
+        }
+    }
+
+    private void applyWallSlideSlowdown() {
+        Vector2 velocity = controller.velocity();
+        if (velocity.y < WALL_SLIDE_MAX_DESCENT_SPEED) {
+            velocity.y = WALL_SLIDE_MAX_DESCENT_SPEED;
+        }
+    }
+
+    private boolean isInWallState() {
+        return currentState == wallContactState || currentState == wallSlideState;
+    }
+
+    private void tickWallJump(float delta) {
+        if (currentState != wallJumpState) {
+            return;
+        }
+        wallJumpTimer -= delta;
+        if (wallJumpTimer <= 0f) {
+            switchState(jumpState);
+            advanceJumpPhase(JumpPhase.TRANSITION);
+        }
     }
 
     private SamuraiAnimationKey resolveAnimationKey() {

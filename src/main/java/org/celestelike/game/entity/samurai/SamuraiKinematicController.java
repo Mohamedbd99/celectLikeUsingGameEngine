@@ -21,6 +21,8 @@ public final class SamuraiKinematicController {
     private float groundY = 0f;
     private boolean grounded = false;
     private LevelCollisionMap collisionMap;
+    private boolean touchingWallLeft;
+    private boolean touchingWallRight;
     private float colliderWidth = 48f;
     private float colliderHeight = 80f;
     private float colliderOffsetX = 2f;
@@ -84,6 +86,8 @@ public final class SamuraiKinematicController {
     public void update(float delta) {
         velocity.y += gravity * delta;
         if (collisionMap == null) {
+            touchingWallLeft = false;
+            touchingWallRight = false;
             legacyIntegrate(delta);
         } else {
             integrateWithCollisions(delta);
@@ -102,7 +106,55 @@ public final class SamuraiKinematicController {
         return grounded;
     }
 
+    public boolean isTouchingWallLeft() {
+        return touchingWallLeft;
+    }
+
+    public boolean isTouchingWallRight() {
+        return touchingWallRight;
+    }
+
+    private void refreshWallTouchFlags() {
+        if (collisionMap == null) {
+            touchingWallLeft = false;
+            touchingWallRight = false;
+            return;
+        }
+        float bottom = colliderBottom() + COLLISION_EPSILON;
+        float top = colliderTop() - COLLISION_EPSILON;
+        int rowBottom = collisionMap.worldToRow(bottom);
+        int rowTop = collisionMap.worldToRow(top);
+        int rowStart = Math.min(rowBottom, rowTop);
+        int rowEnd = Math.max(rowBottom, rowTop);
+
+        boolean leftContact = false;
+        boolean rightContact = false;
+
+        float probeLeft = colliderLeft() - COLLISION_EPSILON;
+        int colLeft = collisionMap.worldToCol(probeLeft);
+        for (int row = rowStart; row <= rowEnd; row++) {
+            if (collisionMap.isSolid(row, colLeft)) {
+                leftContact = true;
+                break;
+            }
+        }
+
+        float probeRight = colliderRight() + COLLISION_EPSILON;
+        int colRight = collisionMap.worldToCol(probeRight);
+        for (int row = rowStart; row <= rowEnd; row++) {
+            if (collisionMap.isSolid(row, colRight)) {
+                rightContact = true;
+                break;
+            }
+        }
+
+        touchingWallLeft = leftContact;
+        touchingWallRight = rightContact;
+    }
+
     private void legacyIntegrate(float delta) {
+        touchingWallLeft = false;
+        touchingWallRight = false;
         position.mulAdd(velocity, delta);
         if (position.y < groundY) {
             position.y = groundY;
@@ -119,11 +171,14 @@ public final class SamuraiKinematicController {
     }
 
     private void integrateWithCollisions(float delta) {
+        touchingWallLeft = false;
+        touchingWallRight = false;
         position.x += velocity.x * delta;
         resolveHorizontalCollision();
 
         position.y += velocity.y * delta;
         resolveVerticalCollision();
+        refreshWallTouchFlags();
     }
 
     private void resolveHorizontalCollision() {
@@ -147,6 +202,7 @@ public final class SamuraiKinematicController {
                     float newLeft = tileLeft - colliderWidth;
                     setColliderLeft(newLeft);
                     velocity.x = 0f;
+                    touchingWallRight = true;
                     break;
     }
             }
@@ -159,6 +215,7 @@ public final class SamuraiKinematicController {
                     float newLeft = tileRight;
                     setColliderLeft(newLeft);
                     velocity.x = 0f;
+                    touchingWallLeft = true;
                     break;
                 }
             }

@@ -13,11 +13,16 @@ public final class JumpCommand implements SamuraiCommand {
     @Override
     public void execute(SamuraiCharacter samurai, float delta) {
         boolean jumped = samurai.jump();
-        if (jumped) {
-            LOGGER.info("Jump command executed successfully");
-        } else {
-            LOGGER.info("Jump command ignored (not grounded or jump unavailable)");
+        if (!jumped) {
+            jumped = samurai.wallJump();
+            if (jumped) {
+                LOGGER.info("Wall jump executed");
+            } else {
+                LOGGER.info("Jump command ignored (no available jump)");
+            }
+            return;
         }
+        LOGGER.info("Jump command executed successfully");
     }
 
     @Override

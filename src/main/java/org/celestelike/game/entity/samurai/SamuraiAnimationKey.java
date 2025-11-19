@@ -9,6 +9,9 @@ public enum SamuraiAnimationKey {
     JUMP,
     JUMP_TRANSITION,
     JUMP_FALL,
-    DASH
+    DASH,
+    WALL_CONTACT,
+    WALL_SLIDE,
+    WALL_JUMP
 }
 
