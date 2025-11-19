@@ -1,5 +1,6 @@
 package org.example.samurai;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Logger;
 
@@ -41,6 +42,25 @@ public final class SamuraiKinematicController {
         if (impulseY > 0f) {
             grounded = false;
         }
+    }
+
+    public void setHorizontalSpeed(float speed) {
+        if (!MathUtils.isEqual(velocity.x, speed, 0.1f)) {
+            LOGGER.info("Horizontal speed set to " + speed);
+        }
+        velocity.x = speed;
+    }
+
+    public void stopHorizontal() {
+        if (!MathUtils.isZero(velocity.x, 0.1f)) {
+            LOGGER.info("Horizontal movement halted");
+        }
+        velocity.x = 0f;
+    }
+
+    public void setVerticalVelocity(float speed) {
+        LOGGER.info("Vertical velocity set to " + speed);
+        velocity.y = speed;
     }
 
     public void update(float delta) {

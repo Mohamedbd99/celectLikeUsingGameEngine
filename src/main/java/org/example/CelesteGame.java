@@ -2,6 +2,7 @@ package org.example;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,7 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import org.example.LevelData.TileBlueprint;
+import org.example.samurai.JumpCommand;
+import org.example.samurai.MoveDownCommand;
+import org.example.samurai.MoveLeftCommand;
+import org.example.samurai.MoveRightCommand;
+import org.example.samurai.MoveUpCommand;
 import org.example.samurai.SamuraiCharacter;
+import org.example.samurai.SamuraiCommand;
 
 /**
  * Minimal runtime that renders the currently authored level.
@@ -39,6 +46,11 @@ public class CelesteGame extends ApplicationAdapter {
     private float viewWidth;
     private float viewHeight;
     private SamuraiCharacter samurai;
+    private SamuraiCommand moveRightCommand;
+    private SamuraiCommand moveLeftCommand;
+    private SamuraiCommand moveUpCommand;
+    private SamuraiCommand moveDownCommand;
+    private SamuraiCommand jumpCommand;
 
     @Override
     public void create() {
@@ -75,6 +87,8 @@ public class CelesteGame extends ApplicationAdapter {
         float delta = Gdx.graphics.getDeltaTime();
         elapsed += delta;
         ScreenUtils.clear(0.08f, 0.08f, 0.12f, 1f);
+
+        handleInput(delta);
 
         if (samurai != null) {
             samurai.update(delta);
@@ -192,7 +206,53 @@ public class CelesteGame extends ApplicationAdapter {
         samurai.placeAt(spawnX, spawnY);
         samurai.configurePhysics(-1800f, 0f);
         samurai.ensureIdleState();
+        moveRightCommand = new MoveRightCommand();
+        moveLeftCommand = new MoveLeftCommand();
+        moveUpCommand = new MoveUpCommand();
+        moveDownCommand = new MoveDownCommand();
+        jumpCommand = new JumpCommand();
         Gdx.app.log("CelesteGame", "Samurai initialized at (" + spawnX + ", " + spawnY + ")");
+    }
+
+    private void handleInput(float delta) {
+        if (samurai == null
+                || moveRightCommand == null
+                || moveLeftCommand == null
+                || moveUpCommand == null
+                || moveDownCommand == null
+                || jumpCommand == null) {
+            return;
+        }
+        boolean leftHeld = Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT);
+        boolean rightHeld = Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT);
+        boolean upHeld = Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP);
+        boolean downHeld = Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN);
+
+        if (leftHeld && !rightHeld) {
+            moveLeftCommand.execute(samurai, delta);
+            moveRightCommand.release(samurai);
+        } else if (rightHeld && !leftHeld) {
+            moveRightCommand.execute(samurai, delta);
+            moveLeftCommand.release(samurai);
+        } else {
+            moveLeftCommand.release(samurai);
+            moveRightCommand.release(samurai);
+        }
+
+        if (upHeld && !downHeld) {
+            moveUpCommand.execute(samurai, delta);
+            moveDownCommand.release(samurai);
+        } else if (downHeld && !upHeld) {
+            moveDownCommand.execute(samurai, delta);
+            moveUpCommand.release(samurai);
+        } else {
+            moveUpCommand.release(samurai);
+            moveDownCommand.release(samurai);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            jumpCommand.execute(samurai, delta);
+        }
     }
 
     private void updateCamera() {
