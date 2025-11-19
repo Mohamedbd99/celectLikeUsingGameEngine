@@ -26,11 +26,15 @@ public final class SamuraiCharacter {
     private static final String SAMURAI_BASE = "assets/FULL_Samurai 2D Pixel Art v1.2/Sprites/";
     private static final String IDLE_FILE = SAMURAI_BASE + "IDLE.png";
     private static final String RUN_FILE = SAMURAI_BASE + "RUN.png";
-    private static final String JUMP_FILE = SAMURAI_BASE + "JUMP.png";
+    private static final String JUMP_START_FILE = SAMURAI_BASE + "JUMP-START.png";
+    private static final String JUMP_TRANSITION_FILE = SAMURAI_BASE + "JUMP-TRANSITION.png";
+    private static final String JUMP_FALL_FILE = SAMURAI_BASE + "JUMP-FALL.png";
     private static final int FRAME_SIZE = 96;
     private static final float DEFAULT_FRAME_DURATION = 0.08f;
     private static final float RUN_FRAME_DURATION = 0.05f;
-    private static final float JUMP_FRAME_DURATION = 0.06f;
+    private static final float JUMP_START_DURATION = 0.05f;
+    private static final float JUMP_TRANSITION_DURATION = 0.05f;
+    private static final float JUMP_FALL_FRAME_DURATION = 0.06f;
     private static final float DEFAULT_RUN_SPEED = 220f;
     private static final float DEFAULT_JUMP_SPEED = 620f;
 
@@ -48,6 +52,10 @@ public final class SamuraiCharacter {
     private int verticalIntent; // -1 down, 0 neutral, 1 up
     private boolean facingRight = true;
     private float jumpSpeed = DEFAULT_JUMP_SPEED;
+    private JumpPhase jumpPhase = JumpPhase.START;
+    private float jumpPhaseTime;
+    private float jumpStartDuration;
+    private float jumpTransitionDuration;
 
     public SamuraiCharacter() {
         LOGGER.info("Samurai character initialized");
@@ -55,9 +63,11 @@ public final class SamuraiCharacter {
 
     public void loadAssets() {
         LOGGER.info("Loading samurai spritesheets");
-        Animation<TextureRegion> idleAnimation = loadAnimation(IDLE_FILE, DEFAULT_FRAME_DURATION);
-        Animation<TextureRegion> runAnimation = loadAnimation(RUN_FILE, RUN_FRAME_DURATION);
-        Animation<TextureRegion> jumpAnimation = loadAnimation(JUMP_FILE, JUMP_FRAME_DURATION);
+        Animation<TextureRegion> idleAnimation = loadAnimation(IDLE_FILE, DEFAULT_FRAME_DURATION, Animation.PlayMode.LOOP);
+        Animation<TextureRegion> runAnimation = loadAnimation(RUN_FILE, RUN_FRAME_DURATION, Animation.PlayMode.LOOP);
+        Animation<TextureRegion> jumpStartAnimation = loadAnimation(JUMP_START_FILE, JUMP_START_DURATION, Animation.PlayMode.NORMAL);
+        Animation<TextureRegion> jumpTransitionAnimation = loadAnimation(JUMP_TRANSITION_FILE, JUMP_TRANSITION_DURATION, Animation.PlayMode.NORMAL);
+        Animation<TextureRegion> jumpFallAnimation = loadAnimation(JUMP_FALL_FILE, JUMP_FALL_FRAME_DURATION, Animation.PlayMode.NORMAL);
 
         if (idleAnimation != null) {
             animations.put(SamuraiAnimationKey.IDLE, idleAnimation);
@@ -74,15 +84,31 @@ public final class SamuraiCharacter {
             LOGGER.error("Failed to load run animation; run state will fallback to idle frames.");
         }
 
-        if (jumpAnimation != null) {
-            animations.put(SamuraiAnimationKey.JUMP, jumpAnimation);
-            LOGGER.info("Jump animation primed");
+        if (jumpStartAnimation != null) {
+            animations.put(SamuraiAnimationKey.JUMP, jumpStartAnimation);
+            jumpStartDuration = jumpStartAnimation.getAnimationDuration();
+            LOGGER.info("Jump start animation primed");
         } else {
-            LOGGER.error("Failed to load jump animation; jump state will fallback to idle frames.");
+            LOGGER.error("Failed to load jump start animation.");
+        }
+
+        if (jumpTransitionAnimation != null) {
+            animations.put(SamuraiAnimationKey.JUMP_TRANSITION, jumpTransitionAnimation);
+            jumpTransitionDuration = jumpTransitionAnimation.getAnimationDuration();
+            LOGGER.info("Jump transition animation primed");
+        } else {
+            LOGGER.error("Failed to load jump transition animation.");
+        }
+
+        if (jumpFallAnimation != null) {
+            animations.put(SamuraiAnimationKey.JUMP_FALL, jumpFallAnimation);
+            LOGGER.info("Jump fall animation primed");
+        } else {
+            LOGGER.error("Failed to load jump fall animation.");
         }
     }
 
-    private Animation<TextureRegion> loadAnimation(String path, float frameDuration) {
+    private Animation<TextureRegion> loadAnimation(String path, float frameDuration, Animation.PlayMode playMode) {
         FileHandle handle = Gdx.files.internal(path);
         if (!handle.exists()) {
             LOGGER.error("Missing animation sheet: " + path);
@@ -105,7 +131,7 @@ public final class SamuraiCharacter {
             return null;
         }
         LOGGER.info("Loaded " + frames.size + " frames from " + path);
-        return new Animation<>(frameDuration, frames, Animation.PlayMode.LOOP);
+        return new Animation<>(frameDuration, frames, playMode);
     }
 
     public void placeAt(float worldX, float worldY) {
@@ -145,9 +171,12 @@ public final class SamuraiCharacter {
         }
         if (currentState != null) {
             currentState.update(this, delta);
-            Animation<TextureRegion> animation = animations.get(currentState.animationKey());
+            updateJumpPhase(delta);
+            Animation<TextureRegion> animation = animations.get(resolveAnimationKey());
             if (animation != null) {
-                currentFrame = animation.getKeyFrame(stateTime, true);
+                float animationTime = currentState == jumpState ? jumpPhaseTime : stateTime;
+                boolean loop = animation.getPlayMode() == Animation.PlayMode.LOOP || animation.getPlayMode() == Animation.PlayMode.LOOP_REVERSED;
+                currentFrame = animation.getKeyFrame(animationTime, loop);
             } else {
                 LOGGER.error("No animation registered for state " + currentState.name());
             }
@@ -208,13 +237,17 @@ public final class SamuraiCharacter {
     public void moveRight() {
         controller.setHorizontalSpeed(DEFAULT_RUN_SPEED);
         facingRight = true;
-        startRunState();
+        if (controller.isGrounded()) {
+            startRunState();
+        }
     }
 
     public void moveLeft() {
         controller.setHorizontalSpeed(-DEFAULT_RUN_SPEED);
         facingRight = false;
-        startRunState();
+        if (controller.isGrounded()) {
+            startRunState();
+        }
     }
 
     public void stopHorizontalMovement() {
@@ -256,6 +289,8 @@ public final class SamuraiCharacter {
             return false;
         }
         controller.setVerticalVelocity(jumpSpeed);
+        jumpPhase = JumpPhase.START;
+        jumpPhaseTime = 0f;
         switchState(jumpState);
         return true;
     }
@@ -277,6 +312,50 @@ public final class SamuraiCharacter {
 
     private void stopRunState() {
         ensureIdleState();
+    }
+
+    private void updateJumpPhase(float delta) {
+        if (currentState != jumpState) {
+            return;
+        }
+        jumpPhaseTime += delta;
+        switch (jumpPhase) {
+            case START -> {
+                if (jumpPhaseTime >= jumpStartDuration) {
+                    advanceJumpPhase(JumpPhase.TRANSITION);
+                }
+            }
+            case TRANSITION -> {
+                if (jumpPhaseTime >= jumpTransitionDuration) {
+                    advanceJumpPhase(JumpPhase.FALL);
+                }
+            }
+            case FALL -> {
+                // stay until grounded (handled elsewhere)
+            }
+        }
+    }
+
+    private void advanceJumpPhase(JumpPhase phase) {
+        jumpPhase = phase;
+        jumpPhaseTime = 0f;
+    }
+
+    private SamuraiAnimationKey resolveAnimationKey() {
+        if (currentState == jumpState) {
+            return switch (jumpPhase) {
+                case START -> SamuraiAnimationKey.JUMP;
+                case TRANSITION -> SamuraiAnimationKey.JUMP_TRANSITION;
+                case FALL -> SamuraiAnimationKey.JUMP_FALL;
+            };
+        }
+        return currentState.animationKey();
+    }
+
+    private enum JumpPhase {
+        START,
+        TRANSITION,
+        FALL
     }
 }
 

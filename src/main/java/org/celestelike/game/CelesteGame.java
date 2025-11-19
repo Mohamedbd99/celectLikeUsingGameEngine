@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -32,6 +33,8 @@ public class CelesteGame extends ApplicationAdapter {
 
     private static final String KENNEY_BASE = "assets/kenney_pico-8-platformer/";
     private static final float TILE_SCALE = 4f; // 8px -> 32 px world units
+    private static final float VIEW_TILES_W = 20f;
+    private static final float VIEW_TILES_H = 12f;
 
     private OrthographicCamera camera;
     private Viewport viewport;
@@ -69,8 +72,8 @@ public class CelesteGame extends ApplicationAdapter {
 
         worldWidth = cols * tileWorldSize;
         worldHeight = rows * tileWorldSize;
-        viewWidth = worldWidth;
-        viewHeight = worldHeight;
+        viewWidth = VIEW_TILES_W * tileWorldSize;
+        viewHeight = VIEW_TILES_H * tileWorldSize;
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(viewWidth, viewHeight, camera);
@@ -262,6 +265,23 @@ public class CelesteGame extends ApplicationAdapter {
         }
         float centerX = worldWidth * 0.5f;
         float centerY = worldHeight * 0.5f;
+        if (samurai != null) {
+            var samuraiPos = samurai.getPosition();
+            centerX = samuraiPos.x + tileWorldSize * 0.5f;
+            centerY = samuraiPos.y + tileWorldSize * 0.5f;
+        }
+        float halfWidth = camera.viewportWidth * 0.5f;
+        float halfHeight = camera.viewportHeight * 0.5f;
+        if (worldWidth > camera.viewportWidth) {
+            centerX = MathUtils.clamp(centerX, halfWidth, worldWidth - halfWidth);
+        } else {
+            centerX = worldWidth * 0.5f;
+        }
+        if (worldHeight > camera.viewportHeight) {
+            centerY = MathUtils.clamp(centerY, halfHeight, worldHeight - halfHeight);
+        } else {
+            centerY = worldHeight * 0.5f;
+        }
         camera.position.set(centerX, centerY, 0f);
     }
 

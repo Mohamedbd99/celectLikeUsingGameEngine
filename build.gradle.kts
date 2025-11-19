@@ -3,7 +3,7 @@ plugins {
     id("application")
 }
 
-group = "org.example"
+group = "org.celestelike"
 version = "1.0-SNAPSHOT"
 
 java {
@@ -47,20 +47,20 @@ tasks.test {
 }
 
 application {
-    mainClass.set("org.example.desktop.DesktopLauncher")
+    mainClass.set("org.celestelike.desktop.DesktopLauncher")
 }
 
 tasks.register<JavaExec>("runViewEditor") {
     group = "application"
     description = "Launches the standalone ViewEditor"
-    mainClass.set("org.example.desktop.EditorLauncher")
+    mainClass.set("org.celestelike.desktop.EditorLauncher")
     classpath = sourceSets["main"].runtimeClasspath
 }
 
 tasks.register<JavaExec>("runInspector") {
     group = "application"
     description = "Launches the map inspector tool"
-    mainClass.set("org.example.desktop.InspectorLauncher")
+    mainClass.set("org.celestelike.desktop.InspectorLauncher")
     classpath = sourceSets["main"].runtimeClasspath
 }
 
