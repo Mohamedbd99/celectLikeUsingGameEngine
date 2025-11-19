@@ -1,6 +1,7 @@
-package org.example.samurai;
+package org.celestelike.game.entity.samurai.input;
 
 import com.badlogic.gdx.utils.Logger;
+import org.celestelike.game.entity.samurai.SamuraiCharacter;
 
 /**
  * Command that sets the Samurai's upward intent (used for aiming jumps/dashes).

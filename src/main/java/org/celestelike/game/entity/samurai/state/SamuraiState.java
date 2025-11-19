@@ -1,4 +1,7 @@
-package org.example.samurai;
+package org.celestelike.game.entity.samurai.state;
+
+import org.celestelike.game.entity.samurai.SamuraiAnimationKey;
+import org.celestelike.game.entity.samurai.SamuraiCharacter;
 
 /**
  * State interface for the Samurai hero.

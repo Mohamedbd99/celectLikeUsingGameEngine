@@ -1,6 +1,7 @@
-package org.example.samurai;
+package org.celestelike.game.entity.samurai.input;
 
 import com.badlogic.gdx.utils.Logger;
+import org.celestelike.game.entity.samurai.SamuraiCharacter;
 
 /**
  * Command that initiates a Samurai jump when executed.
@@ -24,4 +25,3 @@ public final class JumpCommand implements SamuraiCommand {
         // No-op; jump is an instantaneous command
     }
 }
-

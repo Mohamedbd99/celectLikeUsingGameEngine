@@ -1,4 +1,4 @@
-package org.example;
+package org.celestelike.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -14,18 +14,19 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import org.example.LevelData.TileBlueprint;
-import org.example.samurai.JumpCommand;
-import org.example.samurai.MoveDownCommand;
-import org.example.samurai.MoveLeftCommand;
-import org.example.samurai.MoveRightCommand;
-import org.example.samurai.MoveUpCommand;
-import org.example.samurai.SamuraiCharacter;
-import org.example.samurai.SamuraiCommand;
+import org.celestelike.game.entity.samurai.SamuraiCharacter;
+import org.celestelike.game.entity.samurai.input.JumpCommand;
+import org.celestelike.game.entity.samurai.input.MoveDownCommand;
+import org.celestelike.game.entity.samurai.input.MoveLeftCommand;
+import org.celestelike.game.entity.samurai.input.MoveRightCommand;
+import org.celestelike.game.entity.samurai.input.MoveUpCommand;
+import org.celestelike.game.entity.samurai.input.SamuraiCommand;
+import org.celestelike.game.world.LevelData;
+import org.celestelike.game.world.LevelData.TileBlueprint;
 
 /**
  * Minimal runtime that renders the currently authored level.
- * The interactive editor logic now lives in org.example.editor.ViewEditor.
+ * The interactive editor logic now lives in org.celestelike.tools.editor.ViewEditor.
  */
 public class CelesteGame extends ApplicationAdapter {
 

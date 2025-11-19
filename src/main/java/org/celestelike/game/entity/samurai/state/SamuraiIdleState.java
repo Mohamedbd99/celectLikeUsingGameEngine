@@ -1,6 +1,8 @@
-package org.example.samurai;
+package org.celestelike.game.entity.samurai.state;
 
 import com.badlogic.gdx.utils.Logger;
+import org.celestelike.game.entity.samurai.SamuraiAnimationKey;
+import org.celestelike.game.entity.samurai.SamuraiCharacter;
 
 /**
  * Default standing state for the Samurai.

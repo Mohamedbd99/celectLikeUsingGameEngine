@@ -1,6 +1,6 @@
-package org.example.desktop;
+package org.celestelike.desktop;
 
-import org.example.editor.ViewEditor;
+import org.celestelike.tools.editor.ViewEditor;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;

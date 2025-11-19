@@ -1,4 +1,4 @@
-package org.example.samurai;
+package org.celestelike.game.entity.samurai;
 
 /**
  * Enumerates the known animation groups for the Samurai hero.

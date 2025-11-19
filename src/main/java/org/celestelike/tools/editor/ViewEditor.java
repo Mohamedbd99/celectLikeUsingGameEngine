@@ -1,4 +1,4 @@
-package org.example.editor;
+package org.celestelike.tools.editor;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -21,8 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import org.example.LevelData;
-import org.example.LevelData.TileBlueprint;
+import org.celestelike.game.world.LevelData;
+import org.celestelike.game.world.LevelData.TileBlueprint;
 
 /**
  * Tile editor for the Kenney Pico-8 tileset that lets you pick any sprite and

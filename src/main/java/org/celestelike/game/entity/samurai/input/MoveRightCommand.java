@@ -1,6 +1,7 @@
-package org.example.samurai;
+package org.celestelike.game.entity.samurai.input;
 
 import com.badlogic.gdx.utils.Logger;
+import org.celestelike.game.entity.samurai.SamuraiCharacter;
 
 /**
  * Command that drives the Samurai to move right at the default run speed.

@@ -1,4 +1,4 @@
-package org.example;
+package org.celestelike.game.world;
 
 /**
  * Holds the initial tile blueprint used by the in-game editor.

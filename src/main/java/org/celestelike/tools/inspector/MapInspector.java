@@ -1,4 +1,4 @@
-package org.example.inspector;
+package org.celestelike.tools.inspector;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -21,8 +21,8 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import org.example.LevelData;
-import org.example.LevelData.TileBlueprint;
+import org.celestelike.game.world.LevelData;
+import org.celestelike.game.world.LevelData.TileBlueprint;
 
 public class MapInspector extends ApplicationAdapter {
 

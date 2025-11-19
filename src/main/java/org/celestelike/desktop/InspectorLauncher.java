@@ -1,8 +1,8 @@
-package org.example.desktop;
+package org.celestelike.desktop;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import org.example.inspector.MapInspector;
+import org.celestelike.tools.inspector.MapInspector;
 
 public class InspectorLauncher {
     public static void main(String[] arg) {

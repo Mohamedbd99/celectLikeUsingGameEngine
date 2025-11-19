@@ -1,4 +1,4 @@
-package org.example.samurai;
+package org.celestelike.game.entity.samurai;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;

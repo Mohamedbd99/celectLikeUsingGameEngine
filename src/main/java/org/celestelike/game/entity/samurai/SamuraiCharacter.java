@@ -1,4 +1,4 @@
-package org.example.samurai;
+package org.celestelike.game.entity.samurai;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -12,6 +12,10 @@ import com.badlogic.gdx.utils.Logger;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
+import org.celestelike.game.entity.samurai.state.SamuraiIdleState;
+import org.celestelike.game.entity.samurai.state.SamuraiJumpState;
+import org.celestelike.game.entity.samurai.state.SamuraiRunState;
+import org.celestelike.game.entity.samurai.state.SamuraiState;
 
 /**
  * Samurai hero facade. Handles loading, state updates, animation selection, and rendering.

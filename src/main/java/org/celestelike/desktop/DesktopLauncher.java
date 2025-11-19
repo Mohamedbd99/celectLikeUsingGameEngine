@@ -1,8 +1,8 @@
-package org.example.desktop;
+package org.celestelike.desktop;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import org.example.CelesteGame;
+import org.celestelike.game.CelesteGame;
 
 /**
  * Desktop launcher for the game

@@ -1,4 +1,6 @@
-package org.example.samurai;
+package org.celestelike.game.entity.samurai.input;
+
+import org.celestelike.game.entity.samurai.SamuraiCharacter;
 
 /**
  * Command abstraction for Samurai actions (Command pattern).
