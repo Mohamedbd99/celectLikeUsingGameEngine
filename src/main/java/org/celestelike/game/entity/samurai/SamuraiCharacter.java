@@ -45,7 +45,7 @@ public final class SamuraiCharacter {
     private static final float DASH_DURATION = 0.25f;
     private static final int DASH_MAX_FRAMES = 5;
     private static final float RENDER_OFFSET_Y = -20f;
-    private static final float RENDER_OFFSET_X = -10f;
+    private static final float RENDER_OFFSET_X = 0f;
     private final Vector2 dashDirection = new Vector2();
 
     private final EnumMap<SamuraiAnimationKey, Animation<TextureRegion>> animations =
@@ -75,7 +75,7 @@ public final class SamuraiCharacter {
 
     public SamuraiCharacter() {
         LOGGER.info("Samurai character initialized");
-        controller.configureCollider(40f, 84f, 50f, 0f);
+        controller.configureCollider(39f, 84f, 27f, 0f);
         dashAvailable = true;
         jumpAvailable = true;
         wasGrounded = false;
