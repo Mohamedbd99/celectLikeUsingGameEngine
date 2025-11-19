@@ -12,9 +12,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -238,7 +241,9 @@ public class MapInspector extends ApplicationAdapter {
     }
 
     private void handleHotkeys() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+        if (isSaveShortcutJustPressed()) {
+            saveSnapshot();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
             setSelection(SelectionType.SOLID, "1");
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
             setSelection(SelectionType.SOLID, "2");
@@ -255,6 +260,12 @@ public class MapInspector extends ApplicationAdapter {
             deleteMode = true;
             Gdx.app.log("MapInspector", "Delete mode active. Click a tile to remove it.");
         }
+    }
+
+    private boolean isSaveShortcutJustPressed() {
+        boolean ctrl = Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
+                || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT);
+        return ctrl && Gdx.input.isKeyJustPressed(Input.Keys.S);
     }
 
     private void cycleEnemyTier() {
@@ -484,11 +495,15 @@ public class MapInspector extends ApplicationAdapter {
     }
 
     private void loadSnapshot() {
+        FileHandle file = snapshotHandleForRead();
+        if (file == null) {
+            Gdx.app.log("MapInspector", "No snapshot found; starting fresh.");
+            return;
+        }
         try {
-            FileHandle file = Gdx.files.internal(SNAPSHOT_PATH);
-            if (!file.exists()) {
-                return;
-            }
+            selections.values().forEach(List::clear);
+            doors.clear();
+            pendingDoors.clear();
             JsonValue root = new JsonReader().parse(file);
             preloadList(SelectionType.SOLID, root.get("solid"));
             preloadList(SelectionType.WATER, root.get("water"));
@@ -504,7 +519,7 @@ public class MapInspector extends ApplicationAdapter {
                     doors.add(door);
                 }
             }
-            pendingDoors.clear();
+            Gdx.app.log("MapInspector", "Loaded snapshot from " + file.path());
         } catch (Exception exception) {
             Gdx.app.error("MapInspector", "Failed to load snapshot", exception);
         }
@@ -539,6 +554,76 @@ public class MapInspector extends ApplicationAdapter {
                 entry = entry.next;
             }
         }
+    }
+
+    private void saveSnapshot() {
+        FileHandle handle = snapshotHandleForWrite();
+        if (handle == null) {
+            Gdx.app.error("MapInspector", "File IO unavailable; cannot save snapshot.");
+            return;
+        }
+        if (handle.file().getParentFile() != null) {
+            handle.file().getParentFile().mkdirs();
+        }
+        try (Writer writer = handle.writer(false, "UTF-8")) {
+            JsonWriter json = new JsonWriter(writer);
+            json.setOutputType(JsonWriter.OutputType.json);
+            json.object();
+            writeRefs(json, "solid", selections.get(SelectionType.SOLID));
+            writeRefs(json, "water", selections.get(SelectionType.WATER));
+            writeRefs(json, "enemyTier1", selections.get(SelectionType.ENEMY_TIER1));
+            writeRefs(json, "enemyTier2", selections.get(SelectionType.ENEMY_TIER2));
+            writeRefs(json, "enemyTier3", selections.get(SelectionType.ENEMY_TIER3));
+            json.name("doors");
+            json.array();
+            for (DoorRecord door : doors) {
+                json.object();
+                writeRefs(json, "door", door.doorTiles);
+                writeRefs(json, "key", door.keyTiles);
+                json.pop();
+            }
+            json.pop(); // doors array
+            json.pop(); // root
+            json.close();
+            Gdx.app.log("MapInspector", "Snapshot saved to " + handle.file().getAbsolutePath());
+            printSummary();
+        } catch (IOException exception) {
+            Gdx.app.error("MapInspector", "Failed to save snapshot", exception);
+        }
+    }
+
+    private void writeRefs(JsonWriter json, String name, List<TileRef> refs) throws IOException {
+        json.name(name);
+        json.array();
+        for (TileRef ref : refs) {
+            json.array();
+            json.value(ref.row());
+            json.value(ref.col());
+            json.pop();
+        }
+        json.pop();
+    }
+
+    private FileHandle snapshotHandleForRead() {
+        if (Gdx.files == null) {
+            return null;
+        }
+        FileHandle local = Gdx.files.local(SNAPSHOT_PATH);
+        if (local.exists()) {
+            return local;
+        }
+        FileHandle internal = Gdx.files.internal(SNAPSHOT_PATH);
+        if (internal.exists()) {
+            return internal;
+        }
+        return null;
+    }
+
+    private FileHandle snapshotHandleForWrite() {
+        if (Gdx.files == null) {
+            return null;
+        }
+        return Gdx.files.local(SNAPSHOT_PATH);
     }
 
     private static class TileCell {

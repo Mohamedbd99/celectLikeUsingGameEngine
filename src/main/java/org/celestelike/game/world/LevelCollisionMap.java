@@ -104,13 +104,13 @@ public final class LevelCollisionMap {
         if (Gdx.files == null) {
             return null;
         }
-        FileHandle internal = Gdx.files.internal(SNAPSHOT_PATH);
-        if (internal.exists()) {
-            return internal;
-        }
         FileHandle local = Gdx.files.local(SNAPSHOT_PATH);
         if (local.exists()) {
             return local;
+        }
+        FileHandle internal = Gdx.files.internal(SNAPSHOT_PATH);
+        if (internal.exists()) {
+            return internal;
         }
         return null;
     }
