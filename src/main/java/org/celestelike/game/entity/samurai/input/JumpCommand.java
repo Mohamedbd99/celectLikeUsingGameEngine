@@ -16,7 +16,7 @@ public final class JumpCommand implements SamuraiCommand {
         if (jumped) {
             LOGGER.info("Jump command executed successfully");
         } else {
-            LOGGER.info("Jump command ignored (already airborne)");
+            LOGGER.info("Jump command ignored (not grounded or jump unavailable)");
         }
     }
 

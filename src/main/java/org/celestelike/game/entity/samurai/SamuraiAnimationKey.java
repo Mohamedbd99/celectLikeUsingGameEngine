@@ -8,6 +8,7 @@ public enum SamuraiAnimationKey {
     RUN,
     JUMP,
     JUMP_TRANSITION,
-    JUMP_FALL
+    JUMP_FALL,
+    DASH
 }
 

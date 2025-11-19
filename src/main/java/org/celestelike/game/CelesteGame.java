@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import org.celestelike.game.entity.samurai.SamuraiCharacter;
+import org.celestelike.game.entity.samurai.input.DashCommand;
 import org.celestelike.game.entity.samurai.input.JumpCommand;
 import org.celestelike.game.entity.samurai.input.MoveDownCommand;
 import org.celestelike.game.entity.samurai.input.MoveLeftCommand;
@@ -34,8 +35,8 @@ public class CelesteGame extends ApplicationAdapter {
 
     private static final String KENNEY_BASE = "assets/kenney_pico-8-platformer/";
     private static final float TILE_SCALE = 4f; // 8px -> 32 px world units
-    private static final float VIEW_TILES_W = 20f;
-    private static final float VIEW_TILES_H = 12f;
+    private static final float VIEW_TILES_W = 28f;
+    private static final float VIEW_TILES_H = 16f;
 
     private OrthographicCamera camera;
     private Viewport viewport;
@@ -57,6 +58,7 @@ public class CelesteGame extends ApplicationAdapter {
     private SamuraiCommand moveUpCommand;
     private SamuraiCommand moveDownCommand;
     private SamuraiCommand jumpCommand;
+    private DashCommand dashCommand;
 
     @Override
     public void create() {
@@ -219,6 +221,7 @@ public class CelesteGame extends ApplicationAdapter {
         moveUpCommand = new MoveUpCommand();
         moveDownCommand = new MoveDownCommand();
         jumpCommand = new JumpCommand();
+        dashCommand = new DashCommand();
         Gdx.app.log("CelesteGame", "Samurai initialized at (" + spawnX + ", " + spawnY + ")");
     }
 
@@ -228,7 +231,8 @@ public class CelesteGame extends ApplicationAdapter {
                 || moveLeftCommand == null
                 || moveUpCommand == null
                 || moveDownCommand == null
-                || jumpCommand == null) {
+                || jumpCommand == null
+                || dashCommand == null) {
             return;
         }
         boolean leftHeld = Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT);
@@ -260,6 +264,26 @@ public class CelesteGame extends ApplicationAdapter {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             jumpCommand.execute(samurai, delta);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT)
+                || Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_RIGHT)) {
+            float dashX = 0f;
+            if (rightHeld) {
+                dashX += 1f;
+            }
+            if (leftHeld) {
+                dashX -= 1f;
+            }
+            float dashY = 0f;
+            if (upHeld) {
+                dashY += 1f;
+            }
+            if (downHeld) {
+                dashY -= 1f;
+            }
+            dashCommand.setDirection(dashX, dashY);
+            dashCommand.execute(samurai, delta);
         }
     }
 
