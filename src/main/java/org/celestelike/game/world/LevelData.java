@@ -1,5 +1,13 @@
 package org.celestelike.game.world;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
+import java.io.IOException;
+import java.io.Writer;
+
 /**
  * Holds the initial tile blueprint used by the in-game editor.
  * Each cell stores explicit frame indices and animation timing.
@@ -13,9 +21,10 @@ public final class LevelData {
     public static final int ATLAS_COLUMNS = 15;
     private static final float DEFAULT_FRAME_DURATION = 0.15f;
 
-    private static final int SOLID_TILE_INDEX = atlasIndex(6, 1);
     private static final int WATER_TILE_INDEX = atlasIndex(4, 7);
     private static final int WATER_FRAMES = 4;
+    private static final String BLUEPRINT_EXPORT_PATH = "editor_blueprint.json";
+    private static TileBlueprint[][] cachedBlueprint;
 
     public static final TileBlueprint[][] CUSTOM_MAP = {
         {new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{20}, 0.15f), new TileBlueprint(new int[]{18}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{47}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f), new TileBlueprint(new int[]{}, 0.15f)},
@@ -50,16 +59,71 @@ public final class LevelData {
     
     public static final TileBlueprint[][] DEFAULT_BLUEPRINT = buildBlueprint();
 
-    public static TileBlueprint[][] copyBlueprint() {
-        int rows = DEFAULT_BLUEPRINT.length;
-        int cols = DEFAULT_BLUEPRINT[0].length;
-        TileBlueprint[][] copy = new TileBlueprint[rows][cols];
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                copy[row][col] = DEFAULT_BLUEPRINT[row][col].copy();
-            }
+    public static synchronized TileBlueprint[][] copyBlueprint() {
+        TileBlueprint[][] source = ensureBlueprint();
+        return deepCopy(source);
+    }
+
+    /**
+     * Persists the provided blueprint to {@value BLUEPRINT_EXPORT_PATH} so the game/editor/inspector
+     * reload the same layout next launch.
+     */
+    public static synchronized boolean saveBlueprint(TileBlueprint[][] blueprint) {
+        if (blueprint == null || blueprint.length == 0) {
+            return false;
         }
-        return copy;
+        if (!isFileIOAvailable()) {
+            logInfo("File IO unavailable; cannot export blueprint yet.");
+            return false;
+        }
+        FileHandle handle = Gdx.files.local(BLUEPRINT_EXPORT_PATH);
+        if (handle.file().getParentFile() != null) {
+            // Ensure parent directories exist when running from unusual working dirs.
+            handle.file().getParentFile().mkdirs();
+        }
+        try (Writer writer = handle.writer(false, "UTF-8")) {
+            JsonWriter json = new JsonWriter(writer);
+            json.setOutputType(JsonWriter.OutputType.json);
+            json.object();
+            json.name("rows").value(blueprint.length);
+            json.name("cols").value(blueprint[0].length);
+            json.name("cells");
+            json.array();
+            for (TileBlueprint[] row : blueprint) {
+                json.array();
+                for (TileBlueprint cell : row) {
+                    TileBlueprint safe = cell == null ? TileBlueprint.air() : cell;
+                    json.object();
+                    json.name("duration").value(safe.frameDuration());
+                    json.name("frames");
+                    json.array();
+                    int[] frames = safe.frames();
+                    for (int frame : frames) {
+                        json.value(frame);
+                    }
+                    json.pop(); // frames array
+                    json.pop(); // cell object
+                }
+                json.pop(); // row array
+            }
+            json.pop(); // cells array
+            json.pop(); // root object
+            json.close();
+            cachedBlueprint = deepCopy(blueprint);
+            logInfo("Saved blueprint override to " + handle.file().getAbsolutePath());
+            return true;
+        } catch (IOException exception) {
+            logError("Failed to save blueprint override", exception);
+            return false;
+        }
+    }
+
+    public static String blueprintExportPath() {
+        return BLUEPRINT_EXPORT_PATH;
+    }
+
+    public static synchronized void invalidateCachedBlueprint() {
+        cachedBlueprint = null;
     }
 
     public record TileBlueprint(int[] frames, float frameDuration) {
@@ -73,16 +137,77 @@ public final class LevelData {
     }
 
     private static TileBlueprint[][] buildBlueprint() {
-        int rows = CUSTOM_MAP.length;
-        int cols = CUSTOM_MAP[0].length;
-        TileBlueprint[][] map = new TileBlueprint[rows][cols];
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                TileBlueprint blueprint = CUSTOM_MAP[row][col];
-                map[row][col] = blueprint == null ? TileBlueprint.air() : blueprint.copy();
+        return deepCopy(CUSTOM_MAP);
+    }
+
+    private static TileBlueprint[][] ensureBlueprint() {
+        if (cachedBlueprint != null) {
+            return cachedBlueprint;
+        }
+        cachedBlueprint = loadBlueprintFromDisk();
+        return cachedBlueprint;
+    }
+
+    private static TileBlueprint[][] loadBlueprintFromDisk() {
+        TileBlueprint[][] fallback = deepCopy(DEFAULT_BLUEPRINT);
+        if (!isFileIOAvailable()) {
+            return fallback;
+        }
+        FileHandle handle = Gdx.files.local(BLUEPRINT_EXPORT_PATH);
+        if (!handle.exists()) {
+            return fallback;
+        }
+        try {
+            JsonValue root = new JsonReader().parse(handle);
+            JsonValue cellsNode = root.get("cells");
+            if (cellsNode == null || cellsNode.size == 0) {
+                logError("Blueprint override missing 'cells' array", null);
+                return fallback;
+            }
+            TileBlueprint[][] map = new TileBlueprint[cellsNode.size][];
+            int rowIndex = 0;
+            for (JsonValue rowNode = cellsNode.child; rowNode != null; rowNode = rowNode.next, rowIndex++) {
+                map[rowIndex] = new TileBlueprint[rowNode.size];
+                int colIndex = 0;
+                for (JsonValue cellNode = rowNode.child; cellNode != null; cellNode = cellNode.next, colIndex++) {
+                    map[rowIndex][colIndex] = parseCell(cellNode);
+                }
+            }
+            logInfo("Loaded blueprint override from " + handle.file().getAbsolutePath());
+            return map;
+        } catch (Exception exception) {
+            logError("Failed to parse blueprint override", exception);
+            return fallback;
+        }
+    }
+
+    private static TileBlueprint parseCell(JsonValue node) {
+        if (node == null) {
+            return TileBlueprint.air();
+        }
+        JsonValue framesNode = node.get("frames");
+        int[] frames = framesNode == null ? new int[0] : framesNode.asIntArray();
+        float duration = node.getFloat("duration", DEFAULT_FRAME_DURATION);
+        if (frames.length == 0) {
+            return TileBlueprint.air();
+        }
+        return new TileBlueprint(frames, duration);
+    }
+
+    private static TileBlueprint[][] deepCopy(TileBlueprint[][] source) {
+        TileBlueprint[][] copy = new TileBlueprint[source.length][];
+        for (int row = 0; row < source.length; row++) {
+            copy[row] = new TileBlueprint[source[row].length];
+            for (int col = 0; col < source[row].length; col++) {
+                TileBlueprint blueprint = source[row][col];
+                copy[row][col] = blueprint == null ? TileBlueprint.air() : blueprint.copy();
             }
         }
-        return map;
+        return copy;
+    }
+
+    private static boolean isFileIOAvailable() {
+        return Gdx.files != null;
     }
 
     private static int atlasIndex(int row, int col) {
@@ -95,5 +220,19 @@ public final class LevelData {
 
     public static int waterFrameCount() {
         return WATER_FRAMES;
+    }
+
+    private static void logInfo(String message) {
+        if (Gdx.app != null) {
+            Gdx.app.log("LevelData", message);
+        }
+    }
+
+    private static void logError(String message, Exception exception) {
+        if (Gdx.app != null) {
+            Gdx.app.error("LevelData", message, exception);
+        } else if (exception != null) {
+            exception.printStackTrace();
+        }
     }
 }

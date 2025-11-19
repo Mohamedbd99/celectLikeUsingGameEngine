@@ -16,6 +16,7 @@ import org.celestelike.game.entity.samurai.state.SamuraiIdleState;
 import org.celestelike.game.entity.samurai.state.SamuraiJumpState;
 import org.celestelike.game.entity.samurai.state.SamuraiRunState;
 import org.celestelike.game.entity.samurai.state.SamuraiState;
+import org.celestelike.game.world.LevelCollisionMap;
 
 /**
  * Samurai hero facade. Handles loading, state updates, animation selection, and rendering.
@@ -37,6 +38,8 @@ public final class SamuraiCharacter {
     private static final float JUMP_FALL_FRAME_DURATION = 0.06f;
     private static final float DEFAULT_RUN_SPEED = 220f;
     private static final float DEFAULT_JUMP_SPEED = 620f;
+    private static final float RENDER_OFFSET_Y = -20f;
+    private static final float RENDER_OFFSET_X = -10f;
 
     private final EnumMap<SamuraiAnimationKey, Animation<TextureRegion>> animations =
             new EnumMap<>(SamuraiAnimationKey.class);
@@ -59,6 +62,7 @@ public final class SamuraiCharacter {
 
     public SamuraiCharacter() {
         LOGGER.info("Samurai character initialized");
+        controller.configureCollider(40f, 84f, 50f, 0f);
     }
 
     public void loadAssets() {
@@ -144,6 +148,10 @@ public final class SamuraiCharacter {
         controller.setGroundY(groundY);
     }
 
+    public void attachCollisionMap(LevelCollisionMap collisionMap) {
+        controller.setCollisionMap(collisionMap);
+    }
+
     public void switchState(SamuraiState nextState) {
         if (nextState == null) {
             LOGGER.error("Attempted to switch to a null state");
@@ -195,9 +203,10 @@ public final class SamuraiCharacter {
         Vector2 pos = controller.position();
         float width = currentFrame.getRegionWidth();
         float height = currentFrame.getRegionHeight();
-        float drawX = facingRight ? pos.x : pos.x + width;
         float drawWidth = facingRight ? width : -width;
-        batch.draw(currentFrame, drawX, pos.y, drawWidth, height);
+        float drawX = facingRight ? pos.x + RENDER_OFFSET_X : pos.x + width - RENDER_OFFSET_X;
+        float drawY = pos.y + RENDER_OFFSET_Y;
+        batch.draw(currentFrame, drawX, drawY, drawWidth, height);
     }
 
     public void dispose() {

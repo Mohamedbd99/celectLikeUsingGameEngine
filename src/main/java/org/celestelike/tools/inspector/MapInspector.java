@@ -173,14 +173,29 @@ public class MapInspector extends ApplicationAdapter {
 
     private void drawHighlights() {
         shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(0f, 1f, 0f, 1f);
-        selections.values().forEach(list -> list.forEach(ref -> drawTileOutline(ref)));
-        doors.forEach(door -> door.doorTiles.forEach(this::drawTileOutline));
-        doors.forEach(door -> {
-            shapeRenderer.setColor(1f, 1f, 0f, 1f);
-            door.keyTiles.forEach(this::drawTileOutline);
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        selections.forEach((type, list) -> {
+            setFillColor(type, 0.28f);
+            list.forEach(ref -> drawTileFill(ref));
         });
+        for (DoorRecord door : doors) {
+            shapeRenderer.setColor(0.95f, 0.55f, 0.15f, 0.28f);
+            door.doorTiles.forEach(this::drawTileFill);
+            shapeRenderer.setColor(0.95f, 0.85f, 0.2f, 0.28f);
+            door.keyTiles.forEach(this::drawTileFill);
+        }
+        shapeRenderer.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        selections.forEach((type, list) -> {
+            setOutlineColor(type);
+            list.forEach(ref -> drawTileOutline(ref));
+        });
+        shapeRenderer.setColor(0.95f, 0.55f, 0.15f, 1f);
+        doors.forEach(door -> door.doorTiles.forEach(this::drawTileOutline));
+        shapeRenderer.setColor(0.95f, 0.85f, 0.2f, 1f);
+        doors.forEach(door -> door.keyTiles.forEach(this::drawTileOutline));
         shapeRenderer.end();
     }
 
@@ -189,6 +204,37 @@ public class MapInspector extends ApplicationAdapter {
         float x = ref.col * tileWorldSize;
         float y = (rows - ref.row - 1) * tileWorldSize;
         shapeRenderer.rect(x, y, tileWorldSize, tileWorldSize);
+    }
+
+    private void drawTileFill(TileRef ref) {
+        int rows = cells.length;
+        float x = ref.col * tileWorldSize;
+        float y = (rows - ref.row - 1) * tileWorldSize;
+        shapeRenderer.rect(x, y, tileWorldSize, tileWorldSize);
+    }
+
+    private void setFillColor(SelectionType type, float alpha) {
+        switch (type) {
+            case SOLID -> shapeRenderer.setColor(0.1f, 0.95f, 0.2f, alpha);
+            case WATER -> shapeRenderer.setColor(0.2f, 0.45f, 0.95f, alpha);
+            case ENEMY_TIER1 -> shapeRenderer.setColor(0.95f, 0.2f, 0.2f, alpha);
+            case ENEMY_TIER2 -> shapeRenderer.setColor(0.95f, 0.6f, 0.2f, alpha);
+            case ENEMY_TIER3 -> shapeRenderer.setColor(0.7f, 0.2f, 0.95f, alpha);
+            case DOOR -> shapeRenderer.setColor(0.95f, 0.55f, 0.15f, alpha);
+            case KEY -> shapeRenderer.setColor(0.95f, 0.85f, 0.2f, alpha);
+        }
+    }
+
+    private void setOutlineColor(SelectionType type) {
+        switch (type) {
+            case SOLID -> shapeRenderer.setColor(0.1f, 0.95f, 0.2f, 1f);
+            case WATER -> shapeRenderer.setColor(0.2f, 0.45f, 0.95f, 1f);
+            case ENEMY_TIER1 -> shapeRenderer.setColor(0.95f, 0.2f, 0.2f, 1f);
+            case ENEMY_TIER2 -> shapeRenderer.setColor(0.95f, 0.6f, 0.2f, 1f);
+            case ENEMY_TIER3 -> shapeRenderer.setColor(0.7f, 0.2f, 0.95f, 1f);
+            case DOOR -> shapeRenderer.setColor(0.95f, 0.55f, 0.15f, 1f);
+            case KEY -> shapeRenderer.setColor(0.95f, 0.85f, 0.2f, 1f);
+        }
     }
 
     private void handleHotkeys() {
@@ -252,7 +298,12 @@ public class MapInspector extends ApplicationAdapter {
     }
 
     private void addAndLog(SelectionType type, TileRef ref) {
-        selections.get(type).add(ref);
+        List<TileRef> list = selections.get(type);
+        if (list.contains(ref)) {
+            Gdx.app.log("MapInspector", type.label + " already contains " + ref);
+            return;
+        }
+        list.add(ref);
         printSummary();
     }
 
@@ -263,6 +314,10 @@ public class MapInspector extends ApplicationAdapter {
             doors.add(current);
             pendingDoors.addLast(current);
         }
+        if (current.doorTiles.contains(ref)) {
+            Gdx.app.log("MapInspector", "Door already contains " + ref);
+            return;
+        }
         current.doorTiles.add(ref);
         printSummary();
     }
@@ -271,6 +326,10 @@ public class MapInspector extends ApplicationAdapter {
         DoorRecord current = pendingDoors.peekLast();
         if (current == null) {
             Gdx.app.log("MapInspector", "No pending door to attach this key. Select door (4) first.");
+            return;
+        }
+        if (current.keyTiles.contains(ref)) {
+            Gdx.app.log("MapInspector", "Key list already contains " + ref);
             return;
         }
         current.keyTiles.add(ref);

@@ -43,3 +43,5 @@ bin/
 .DS_Store
 
 kenney_pico-8-platformer
+resources
+src/main/resources

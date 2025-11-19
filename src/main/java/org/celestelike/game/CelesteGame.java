@@ -22,6 +22,7 @@ import org.celestelike.game.entity.samurai.input.MoveLeftCommand;
 import org.celestelike.game.entity.samurai.input.MoveRightCommand;
 import org.celestelike.game.entity.samurai.input.MoveUpCommand;
 import org.celestelike.game.entity.samurai.input.SamuraiCommand;
+import org.celestelike.game.world.LevelCollisionMap;
 import org.celestelike.game.world.LevelData;
 import org.celestelike.game.world.LevelData.TileBlueprint;
 
@@ -43,6 +44,7 @@ public class CelesteGame extends ApplicationAdapter {
     private final List<Texture> paletteTextures = new ArrayList<>();
     private final List<TextureRegion> paletteRegions = new ArrayList<>();
     private TileCell[][] cells;
+    private LevelCollisionMap collisionMap;
     private float tileWorldSize;
     private float worldWidth;
     private float worldHeight;
@@ -69,6 +71,7 @@ public class CelesteGame extends ApplicationAdapter {
                 cells[row][col] = TileCell.fromBlueprint(blueprint[row][col]);
             }
         }
+        collisionMap = new LevelCollisionMap(blueprint, tileWorldSize);
 
         worldWidth = cols * tileWorldSize;
         worldHeight = rows * tileWorldSize;
@@ -209,6 +212,7 @@ public class CelesteGame extends ApplicationAdapter {
         float spawnY = 2f * tileWorldSize;
         samurai.placeAt(spawnX, spawnY);
         samurai.configurePhysics(-1800f, 0f);
+        samurai.attachCollisionMap(collisionMap);
         samurai.ensureIdleState();
         moveRightCommand = new MoveRightCommand();
         moveLeftCommand = new MoveLeftCommand();

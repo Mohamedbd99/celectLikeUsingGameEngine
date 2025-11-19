@@ -70,6 +70,9 @@ public class ViewEditor extends ApplicationAdapter {
     private int selectedTileIndex = -1;
     private int selectedFrameCount = 1;
     private float selectedFrameDuration = 0.15f;
+    private static final float STATUS_MESSAGE_DURATION = 2.5f;
+    private float statusMessageTimer = 0f;
+    private String statusMessage = "";
 
     private final Vector2 tmpWorld = new Vector2();
     private final Rectangle paletteBounds = new Rectangle();
@@ -112,6 +115,7 @@ public class ViewEditor extends ApplicationAdapter {
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
         elapsed += delta;
+        updateStatusBanner(delta);
 
         updateHoverState();
         updateEntityHotkeys();
@@ -272,6 +276,10 @@ public class ViewEditor extends ApplicationAdapter {
         boolean shift = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT);
         boolean pointerBlocked = pointerOverPalette || draggingPalette;
 
+        if (isSaveShortcutJustPressed()) {
+            exportCurrentBlueprint();
+        }
+
         if (pointerOverPalette) {
             if (!draggingPalette && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)
                     && isPointerInPaletteHeader(screenX, screenY)) {
@@ -337,6 +345,56 @@ public class ViewEditor extends ApplicationAdapter {
         if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
             clearAllTiles();
         }
+    }
+
+    private boolean isSaveShortcutJustPressed() {
+        boolean ctrl = Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
+                || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT);
+        return ctrl && Gdx.input.isKeyJustPressed(Input.Keys.S);
+    }
+
+    private void exportCurrentBlueprint() {
+        TileBlueprint[][] snapshot = captureBlueprint();
+        boolean saved = LevelData.saveBlueprint(snapshot);
+        if (saved) {
+            showStatusMessage("Saved level to " + LevelData.blueprintExportPath());
+        } else {
+            showStatusMessage("Save failed (see log)");
+        }
+    }
+
+    private TileBlueprint[][] captureBlueprint() {
+        int rows = cells.length;
+        int cols = cells[0].length;
+        TileBlueprint[][] snapshot = new TileBlueprint[rows][cols];
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                TileCell cell = cells[row][col];
+                if (cell.frameCount <= 0) {
+                    snapshot[row][col] = TileBlueprint.air();
+                } else {
+                    snapshot[row][col] = new TileBlueprint(cell.exportFrames(), cell.frameDuration);
+                }
+            }
+        }
+        return snapshot;
+    }
+
+    private void updateStatusBanner(float delta) {
+        if (statusMessageTimer <= 0f) {
+            return;
+        }
+        statusMessageTimer -= delta;
+        if (statusMessageTimer <= 0f) {
+            statusMessageTimer = 0f;
+            statusMessage = "";
+        }
+    }
+
+    private void showStatusMessage(String message) {
+        statusMessage = message;
+        statusMessageTimer = STATUS_MESSAGE_DURATION;
+        Gdx.app.log("ViewEditor", message);
     }
 
     private void applyBrush(int row, int col) {
@@ -479,8 +537,11 @@ public class ViewEditor extends ApplicationAdapter {
         }
         font.draw(batch, entityInfo + "  [F1-F5] brush  channels [F6/F7]  Shift+click to place/remove",
                 paletteBounds.x, infoY - 32f);
-        font.draw(batch, "Click palette to pick tile. LMB paint, RMB erase, P=print, C=clear.",
+        font.draw(batch, "Click palette to pick tile. LMB paint, RMB erase, P=print, C=clear, Ctrl+S=save.",
                 paletteBounds.x, infoY - 48f);
+        if (statusMessageTimer > 0f && statusMessage != null && !statusMessage.isEmpty()) {
+            font.draw(batch, statusMessage, paletteBounds.x, infoY - 64f);
+        }
         batch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -733,6 +794,15 @@ public class ViewEditor extends ApplicationAdapter {
                 return null;
             }
             return palette.get(index);
+        }
+
+        int[] exportFrames() {
+            if (frameCount <= 0) {
+                return new int[0];
+            }
+            int[] frames = new int[frameCount];
+            System.arraycopy(frameIndices, 0, frames, 0, frameCount);
+            return frames;
         }
     }
 
