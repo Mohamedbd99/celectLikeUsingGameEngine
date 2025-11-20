@@ -9,9 +9,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -56,6 +58,8 @@ public class CelesteGame extends ApplicationAdapter {
     private float viewWidth;
     private float viewHeight;
     private SamuraiCharacter samurai;
+    private ShapeRenderer uiShape;
+    private final Matrix4 uiMatrix = new Matrix4();
     private SamuraiCommand moveRightCommand;
     private SamuraiCommand moveLeftCommand;
     private SamuraiCommand moveUpCommand;
@@ -65,6 +69,8 @@ public class CelesteGame extends ApplicationAdapter {
     private SamuraiCommand attackCommand;
     private SamuraiCommand defendCommand;
     private SamuraiCommand specialAttackCommand;
+    private float spawnX;
+    private float spawnY;
 
     @Override
     public void create() {
@@ -91,6 +97,7 @@ public class CelesteGame extends ApplicationAdapter {
         viewport.apply(true);
 
         batch = new SpriteBatch();
+        uiShape = new ShapeRenderer();
         loadTileset();
         initSamurai();
         Gdx.graphics.setVSync(true);
@@ -116,6 +123,7 @@ public class CelesteGame extends ApplicationAdapter {
         drawTiles();
         drawSamurai();
         batch.end();
+        drawHealthBar();
     }
 
     @Override
@@ -126,6 +134,9 @@ public class CelesteGame extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
+        if (uiShape != null) {
+            uiShape.dispose();
+        }
         for (Texture texture : paletteTextures) {
             texture.dispose();
         }
@@ -216,12 +227,13 @@ public class CelesteGame extends ApplicationAdapter {
     private void initSamurai() {
         samurai = new SamuraiCharacter();
         samurai.loadAssets();
-        float spawnX = 1f * tileWorldSize - 3f;
-        float spawnY = 2f * tileWorldSize;
+        spawnX = 1f * tileWorldSize - 3f;
+        spawnY = 2f * tileWorldSize;
         samurai.placeAt(spawnX, spawnY);
         samurai.configurePhysics(-1800f, 0f);
         samurai.attachCollisionMap(collisionMap);
         samurai.ensureIdleState();
+        samurai.setDeathListener(this::handleSamuraiDeath);
         moveRightCommand = new MoveRightCommand();
         moveLeftCommand = new MoveLeftCommand();
         moveUpCommand = new MoveUpCommand();
@@ -340,6 +352,41 @@ public class CelesteGame extends ApplicationAdapter {
             centerY = worldHeight * 0.5f;
         }
         camera.position.set(centerX, centerY, 0f);
+    }
+
+    private void handleSamuraiDeath() {
+        Gdx.app.log("CelesteGame", "Samurai died; scheduling respawn");
+        Gdx.app.postRunnable(() -> {
+            if (samurai != null) {
+                samurai.reviveAt(spawnX, spawnY);
+            }
+        });
+    }
+
+    private void drawHealthBar() {
+        if (uiShape == null || samurai == null) {
+            return;
+        }
+        int max = samurai.getMaxHealth();
+        if (max <= 0) {
+            return;
+        }
+        int current = Math.max(0, samurai.getCurrentHealth());
+        float ratio = MathUtils.clamp(current / (float) max, 0f, 1f);
+        float margin = 20f;
+        float barWidth = 220f;
+        float barHeight = 18f;
+        float x = margin;
+        float y = Gdx.graphics.getHeight() - margin - barHeight;
+        uiShape.setProjectionMatrix(uiMatrix.setToOrtho2D(0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        uiShape.begin(ShapeRenderer.ShapeType.Filled);
+        uiShape.setColor(0f, 0f, 0f, 0.6f);
+        uiShape.rect(x - 2f, y - 2f, barWidth + 4f, barHeight + 4f);
+        uiShape.setColor(0.18f, 0.18f, 0.18f, 0.85f);
+        uiShape.rect(x, y, barWidth, barHeight);
+        uiShape.setColor(0.85f, 0.1f, 0.2f, 0.95f);
+        uiShape.rect(x, y, barWidth * ratio, barHeight);
+        uiShape.end();
     }
 
     private static class TileCell {

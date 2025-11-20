@@ -23,6 +23,7 @@ public final class SamuraiKinematicController {
     private LevelCollisionMap collisionMap;
     private boolean touchingWallLeft;
     private boolean touchingWallRight;
+    private boolean inWater;
     private float colliderWidth = 48f;
     private float colliderHeight = 80f;
     private float colliderOffsetX = 2f;
@@ -88,6 +89,7 @@ public final class SamuraiKinematicController {
         if (collisionMap == null) {
             touchingWallLeft = false;
             touchingWallRight = false;
+            inWater = false;
             legacyIntegrate(delta);
         } else {
             integrateWithCollisions(delta);
@@ -112,6 +114,10 @@ public final class SamuraiKinematicController {
 
     public boolean isTouchingWallRight() {
         return touchingWallRight;
+    }
+
+    public boolean isInWater() {
+        return inWater;
     }
 
     private void refreshWallTouchFlags() {
@@ -152,6 +158,18 @@ public final class SamuraiKinematicController {
         touchingWallRight = rightContact;
     }
 
+    private void refreshWaterFlag() {
+        if (collisionMap == null) {
+            inWater = false;
+            return;
+        }
+        float left = colliderLeft() + COLLISION_EPSILON;
+        float right = colliderRight() - COLLISION_EPSILON;
+        float bottom = colliderBottom() + COLLISION_EPSILON;
+        float top = colliderTop() - COLLISION_EPSILON;
+        inWater = collisionMap.overlapsWater(left, bottom, right, top);
+    }
+
     private void legacyIntegrate(float delta) {
         touchingWallLeft = false;
         touchingWallRight = false;
@@ -168,6 +186,7 @@ public final class SamuraiKinematicController {
         } else {
             grounded = false;
         }
+        inWater = false;
     }
 
     private void integrateWithCollisions(float delta) {
@@ -179,6 +198,7 @@ public final class SamuraiKinematicController {
         position.y += velocity.y * delta;
         resolveVerticalCollision();
         refreshWallTouchFlags();
+        refreshWaterFlag();
     }
 
     private void resolveHorizontalCollision() {

@@ -16,19 +16,32 @@ public final class LevelCollisionMap {
     private static final float DEFAULT_TILE_SIZE = LevelData.TILE_SIZE;
 
     private final boolean[][] solid;
+    private final boolean[][] water;
     private final int rows;
     private final int cols;
     private final float tileSize;
+    private boolean solidMaskLoaded;
+    private boolean waterMaskLoaded;
 
     public LevelCollisionMap(TileBlueprint[][] blueprint, float tileWorldSize) {
         this.rows = blueprint.length;
         this.cols = blueprint[0].length;
         this.tileSize = tileWorldSize <= 0f ? DEFAULT_TILE_SIZE : tileWorldSize;
         this.solid = new boolean[rows][cols];
+        this.water = new boolean[rows][cols];
 
-        boolean loadedSnapshot = loadSolidMaskFromSnapshot();
-        if (!loadedSnapshot) {
+        solidMaskLoaded = false;
+        waterMaskLoaded = false;
+
+        boolean loadedSnapshot = loadMasksFromSnapshot();
+        if (!solidMaskLoaded) {
             populateFromBlueprint(blueprint);
+        }
+        if (!waterMaskLoaded) {
+            populateWaterMask(blueprint);
+        }
+        if (loadedSnapshot) {
+            logInfo("Collision map loaded from snapshot " + SNAPSHOT_PATH);
         }
     }
 
@@ -47,6 +60,34 @@ public final class LevelCollisionMap {
             return true;
         }
         return solid[row][col];
+    }
+
+    public boolean isWater(int row, int col) {
+        if (col < 0 || col >= cols) {
+            return false;
+        }
+        if (row < 0 || row >= rows) {
+            return false;
+        }
+        return water[row][col];
+    }
+
+    public boolean overlapsWater(float left, float bottom, float right, float top) {
+        if (left > right || bottom > top) {
+            return false;
+        }
+        int colStart = worldToCol(Math.max(left, 0f));
+        int colEnd = worldToCol(Math.max(right, 0f));
+        int rowStart = worldToRow(Math.max(bottom, 0f));
+        int rowEnd = worldToRow(Math.max(top, 0f));
+        for (int row = Math.min(rowStart, rowEnd); row <= Math.max(rowStart, rowEnd); row++) {
+            for (int col = Math.min(colStart, colEnd); col <= Math.max(colStart, colEnd); col++) {
+                if (isWater(row, col)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public int worldToCol(float worldX) {
@@ -80,20 +121,49 @@ public final class LevelCollisionMap {
         logInfo("Collision map populated from blueprint (no snapshot found)");
     }
 
-    private boolean loadSolidMaskFromSnapshot() {
+    private void populateWaterMask(TileBlueprint[][] blueprint) {
+        int waterTileIndex = LevelData.waterTileIndex();
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                TileBlueprint cell = blueprint[row][col];
+                water[row][col] = containsFrame(cell, waterTileIndex);
+            }
+        }
+    }
+
+    private static boolean containsFrame(TileBlueprint cell, int frameIndex) {
+        if (cell == null || cell.frames() == null) {
+            return false;
+        }
+        for (int frame : cell.frames()) {
+            if (frame == frameIndex) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean loadMasksFromSnapshot() {
         try {
             FileHandle file = locateSnapshot();
             if (file == null) {
                 return false;
             }
             JsonValue root = new JsonReader().parse(file);
+            boolean loadedAnything = false;
             JsonValue solidArray = root.get("solid");
-            if (solidArray == null || solidArray.size == 0) {
-                return false;
+            if (solidArray != null && solidArray.size > 0) {
+                applySolidEntries(solidArray);
+                solidMaskLoaded = true;
+                loadedAnything = true;
             }
-            applySolidEntries(solidArray);
-            logInfo("Collision map loaded from snapshot " + file.path());
-            return true;
+            JsonValue waterArray = root.get("water");
+            if (waterArray != null && waterArray.size > 0) {
+                applyWaterEntries(waterArray);
+                waterMaskLoaded = true;
+                loadedAnything = true;
+            }
+            return loadedAnything;
         } catch (Exception exception) {
             logError("Failed to parse inspector snapshot for collisions", exception);
             return false;
@@ -143,11 +213,46 @@ public final class LevelCollisionMap {
         }
     }
 
+    private void applyWaterEntries(JsonValue array) {
+        JsonValue entry = array.child;
+        while (entry != null) {
+            if (entry.isArray()) {
+                if (entry.size >= 2) {
+                    markWater(entry.getInt(0), entry.getInt(1));
+                }
+                entry = entry.next;
+            } else if (entry.isObject()) {
+                JsonValue rowValue = entry.get("row");
+                JsonValue colValue = entry.get("col");
+                if (rowValue != null && colValue != null) {
+                    markWater(rowValue.asInt(), colValue.asInt());
+                }
+                entry = entry.next;
+            } else if (entry.isNumber()) {
+                JsonValue colValue = entry.next;
+                if (colValue == null || !colValue.isNumber()) {
+                    break;
+                }
+                markWater(entry.asInt(), colValue.asInt());
+                entry = colValue.next;
+            } else {
+                entry = entry.next;
+            }
+        }
+    }
+
     private void markSolid(int row, int col) {
         if (row < 0 || row >= rows || col < 0 || col >= cols) {
             return;
         }
         solid[row][col] = true;
+    }
+
+    private void markWater(int row, int col) {
+        if (row < 0 || row >= rows || col < 0 || col >= cols) {
+            return;
+        }
+        water[row][col] = true;
     }
 
     private static void logInfo(String message) {
