@@ -10,6 +10,7 @@ public enum SamuraiAnimationKey {
     ATTACK_2,
     ATTACK_3,
     AIR_ATTACK,
+    SPECIAL_ATTACK,
     DEFEND,
     JUMP,
     JUMP_TRANSITION,

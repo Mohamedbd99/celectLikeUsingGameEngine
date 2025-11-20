@@ -21,6 +21,7 @@ import org.celestelike.game.entity.samurai.state.SamuraiJumpState;
 import org.celestelike.game.entity.samurai.state.SamuraiRunState;
 import org.celestelike.game.entity.samurai.state.SamuraiState;
 import org.celestelike.game.entity.samurai.state.SamuraiDefendState;
+import org.celestelike.game.entity.samurai.state.SamuraiSpecialAttackState;
 import org.celestelike.game.entity.samurai.state.SamuraiWallContactState;
 import org.celestelike.game.entity.samurai.state.SamuraiWallJumpState;
 import org.celestelike.game.entity.samurai.state.SamuraiWallSlideState;
@@ -47,6 +48,7 @@ public final class SamuraiCharacter {
     private static final String ATTACK_THREE_FILE = SAMURAI_BASE + "ATTACK 2.png";
     private static final String AIR_ATTACK_FILE = SAMURAI_BASE + "AIR ATTACK.png";
     private static final String DEFEND_FILE = SAMURAI_BASE + "DEFEND.png";
+    private static final String SPECIAL_ATTACK_FILE = SAMURAI_BASE + "SPECIAL ATTACK.png";
     private static final int FRAME_SIZE = 96;
     private static final float DEFAULT_FRAME_DURATION = 0.08f;
     private static final float RUN_FRAME_DURATION = 0.05f;
@@ -71,6 +73,7 @@ public final class SamuraiCharacter {
     private static final int ATTACK_THREE_FRAMES = 6;
     private static final int AIR_ATTACK_FRAMES = 6;
     private static final float DEFEND_FRAME_DURATION = 0.08f;
+    private static final float SPECIAL_ATTACK_FRAME_DURATION = 0.06f;
     private static final float RENDER_OFFSET_Y = -20f;
     private static final float RENDER_OFFSET_X = 0f;
     private final Vector2 dashDirection = new Vector2();
@@ -84,6 +87,7 @@ public final class SamuraiCharacter {
     private final SamuraiDashState dashState = new SamuraiDashState();
     private final SamuraiAttackState attackState = new SamuraiAttackState();
     private final SamuraiDefendState defendState = new SamuraiDefendState();
+    private final SamuraiSpecialAttackState specialAttackState = new SamuraiSpecialAttackState();
     private final SamuraiWallContactState wallContactState = new SamuraiWallContactState();
     private final SamuraiWallSlideState wallSlideState = new SamuraiWallSlideState();
     private final SamuraiWallJumpState wallJumpState = new SamuraiWallJumpState();
@@ -105,6 +109,7 @@ public final class SamuraiCharacter {
     private boolean isDashing;
     private boolean isDefending;
     private boolean isAttacking;
+    private boolean isSpecialAttacking;
     private float dashTimer;
     private boolean wasGrounded;
     private float wallJumpTimer;
@@ -206,6 +211,15 @@ public final class SamuraiCharacter {
             LOGGER.info("Defend animation primed");
         } else {
             LOGGER.error("Failed to load defend animation.");
+        }
+
+        Animation<TextureRegion> specialAttackAnimation =
+                loadAnimation(SPECIAL_ATTACK_FILE, SPECIAL_ATTACK_FRAME_DURATION, Animation.PlayMode.NORMAL);
+        if (specialAttackAnimation != null) {
+            animations.put(SamuraiAnimationKey.SPECIAL_ATTACK, specialAttackAnimation);
+            LOGGER.info("Special attack animation primed");
+        } else {
+            LOGGER.error("Failed to load special attack animation.");
         }
 
         Animation<TextureRegion> attackOneAnimation =
@@ -354,7 +368,7 @@ public final class SamuraiCharacter {
     }
 
     public void ensureIdleState() {
-        if (isAttacking || isDefending) {
+        if (isAttacking || isDefending || isSpecialAttacking) {
             return;
         }
         if (currentState == null || currentState != idleState) {
@@ -367,6 +381,7 @@ public final class SamuraiCharacter {
         controller.update(delta);
         attackCoordinator.tick(delta, isAttacking);
         tickDash(delta);
+        tickSpecialAttack();
         handleGrounding(controller.isGrounded());
         handleWallInteractions();
         tickWallJump(delta);
@@ -437,7 +452,7 @@ public final class SamuraiCharacter {
     }
 
     private boolean canApplyHorizontalInput() {
-        return !isDashing && !isAttacking && !isDefending;
+        return !isDashing && !isAttacking && !isDefending && !isSpecialAttacking;
     }
 
     public void moveRight() {
@@ -505,7 +520,7 @@ public final class SamuraiCharacter {
     }
 
     public boolean jump() {
-        if (!jumpAvailable || !controller.isGrounded() || isAttacking || isDefending) {
+        if (!jumpAvailable || !controller.isGrounded() || isAttacking || isDefending || isSpecialAttacking) {
             return false;
         }
         jumpAvailable = false;
@@ -517,7 +532,7 @@ public final class SamuraiCharacter {
     }
 
     public boolean wallJump() {
-        if (isDashing || controller.isGrounded() || isAttacking || isDefending) {
+        if (isDashing || controller.isGrounded() || isAttacking || isDefending || isSpecialAttacking) {
             return false;
         }
         boolean touchingLeft = controller.isTouchingWallLeft();
@@ -537,7 +552,7 @@ public final class SamuraiCharacter {
     }
 
     public boolean dash(float dirX, float dirY) {
-        if (!dashAvailable || isDashing || isAttacking || isDefending) {
+        if (!dashAvailable || isDashing || isAttacking || isDefending || isSpecialAttacking) {
             return false;
         }
         Vector2 direction = dashDirection.set(dirX, dirY);
@@ -560,7 +575,7 @@ public final class SamuraiCharacter {
     }
 
     public boolean attack() {
-        if (isDashing || isDefending) {
+        if (isDashing || isDefending || isSpecialAttacking) {
             return false;
         }
         SamuraiAttackStrategy strategy = attackCoordinator.requestStrategy(this);
@@ -572,6 +587,20 @@ public final class SamuraiCharacter {
             return true;
         }
         startAttack(strategy);
+        return true;
+    }
+
+    public boolean specialAttack() {
+        if (isSpecialAttacking || isDashing || isDefending) {
+            return false;
+        }
+        cancelAttackState();
+        if (!controller.isGrounded()) {
+            return false;
+        }
+        isSpecialAttacking = true;
+        switchState(specialAttackState);
+        controller.stopHorizontal();
         return true;
     }
 
@@ -620,7 +649,7 @@ public final class SamuraiCharacter {
     }
 
     public void startDefend() {
-        if (isDefending || !controller.isGrounded()) {
+        if (isDefending || !controller.isGrounded() || isSpecialAttacking) {
             return;
         }
         if (isAttacking) {
@@ -667,6 +696,16 @@ public final class SamuraiCharacter {
         }
     }
 
+    private void tickSpecialAttack() {
+        if (!isSpecialAttacking) {
+            return;
+        }
+        Animation<TextureRegion> animation = animations.get(SamuraiAnimationKey.SPECIAL_ATTACK);
+        if (animation == null || animation.isAnimationFinished(stateTime)) {
+            finishSpecialAttack();
+        }
+    }
+
     private void endDash() {
         if (!isDashing) {
             return;
@@ -675,6 +714,19 @@ public final class SamuraiCharacter {
         controller.stopHorizontal();
         if (controller.isGrounded()) {
             restoreAirActions();
+            ensureIdleState();
+        } else {
+            switchState(jumpState);
+            advanceJumpPhase(JumpPhase.FALL);
+        }
+    }
+
+    private void finishSpecialAttack() {
+        if (!isSpecialAttacking) {
+            return;
+        }
+        isSpecialAttacking = false;
+        if (controller.isGrounded()) {
             ensureIdleState();
         } else {
             switchState(jumpState);
@@ -734,7 +786,7 @@ public final class SamuraiCharacter {
         if (grounded && !wasGrounded) {
             restoreAirActions();
         }
-        if (grounded && !isDashing && !isAttacking && !isDefending) {
+        if (grounded && !isDashing && !isAttacking && !isDefending && !isSpecialAttacking) {
             if (currentState == jumpState) {
                 ensureIdleState();
             } else if (isInWallState()) {
@@ -750,7 +802,7 @@ public final class SamuraiCharacter {
     }
 
     private void handleWallInteractions() {
-        if (isDashing || currentState == wallJumpState || isAttacking || isDefending) {
+        if (isDashing || currentState == wallJumpState || isAttacking || isDefending || isSpecialAttacking) {
             return;
         }
         boolean touchingLeft = controller.isTouchingWallLeft();

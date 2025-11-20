@@ -19,6 +19,7 @@ import org.celestelike.game.entity.samurai.SamuraiCharacter;
 import org.celestelike.game.entity.samurai.input.AttackCommand;
 import org.celestelike.game.entity.samurai.input.DashCommand;
 import org.celestelike.game.entity.samurai.input.DefendCommand;
+import org.celestelike.game.entity.samurai.input.SpecialAttackCommand;
 import org.celestelike.game.entity.samurai.input.JumpCommand;
 import org.celestelike.game.entity.samurai.input.MoveDownCommand;
 import org.celestelike.game.entity.samurai.input.MoveLeftCommand;
@@ -63,6 +64,7 @@ public class CelesteGame extends ApplicationAdapter {
     private DashCommand dashCommand;
     private SamuraiCommand attackCommand;
     private SamuraiCommand defendCommand;
+    private SamuraiCommand specialAttackCommand;
 
     @Override
     public void create() {
@@ -228,6 +230,7 @@ public class CelesteGame extends ApplicationAdapter {
         dashCommand = new DashCommand();
         attackCommand = new AttackCommand();
         defendCommand = new DefendCommand();
+        specialAttackCommand = new SpecialAttackCommand();
         Gdx.app.log("CelesteGame", "Samurai initialized at (" + spawnX + ", " + spawnY + ")");
     }
 
@@ -240,7 +243,8 @@ public class CelesteGame extends ApplicationAdapter {
                 || jumpCommand == null
                 || dashCommand == null
                 || attackCommand == null
-                || defendCommand == null) {
+                || defendCommand == null
+                || specialAttackCommand == null) {
             return;
         }
         boolean leftHeld = Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT);
@@ -278,6 +282,11 @@ public class CelesteGame extends ApplicationAdapter {
                 || Gdx.input.isKeyJustPressed(Input.Keys.Z)
                 || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             attackCommand.execute(samurai, delta);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)
+                || Gdx.input.isButtonJustPressed(Input.Buttons.MIDDLE)) {
+            specialAttackCommand.execute(samurai, delta);
         }
 
         if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
