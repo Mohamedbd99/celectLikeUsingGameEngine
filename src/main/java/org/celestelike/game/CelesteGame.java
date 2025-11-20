@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import org.celestelike.game.entity.samurai.SamuraiCharacter;
+import org.celestelike.game.entity.samurai.input.AttackCommand;
 import org.celestelike.game.entity.samurai.input.DashCommand;
 import org.celestelike.game.entity.samurai.input.JumpCommand;
 import org.celestelike.game.entity.samurai.input.MoveDownCommand;
@@ -59,6 +60,7 @@ public class CelesteGame extends ApplicationAdapter {
     private SamuraiCommand moveDownCommand;
     private SamuraiCommand jumpCommand;
     private DashCommand dashCommand;
+    private SamuraiCommand attackCommand;
 
     @Override
     public void create() {
@@ -222,6 +224,7 @@ public class CelesteGame extends ApplicationAdapter {
         moveDownCommand = new MoveDownCommand();
         jumpCommand = new JumpCommand();
         dashCommand = new DashCommand();
+        attackCommand = new AttackCommand();
         Gdx.app.log("CelesteGame", "Samurai initialized at (" + spawnX + ", " + spawnY + ")");
     }
 
@@ -232,7 +235,8 @@ public class CelesteGame extends ApplicationAdapter {
                 || moveUpCommand == null
                 || moveDownCommand == null
                 || jumpCommand == null
-                || dashCommand == null) {
+                || dashCommand == null
+                || attackCommand == null) {
             return;
         }
         boolean leftHeld = Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT);
@@ -264,6 +268,11 @@ public class CelesteGame extends ApplicationAdapter {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             jumpCommand.execute(samurai, delta);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.J)
+                || Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
+            attackCommand.execute(samurai, delta);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT)

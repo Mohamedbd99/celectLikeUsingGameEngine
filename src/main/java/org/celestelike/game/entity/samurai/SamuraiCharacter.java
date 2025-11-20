@@ -12,6 +12,9 @@ import com.badlogic.gdx.utils.Logger;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
+import org.celestelike.game.entity.samurai.attack.SamuraiAttackCoordinator;
+import org.celestelike.game.entity.samurai.attack.SamuraiAttackStrategy;
+import org.celestelike.game.entity.samurai.state.SamuraiAttackState;
 import org.celestelike.game.entity.samurai.state.SamuraiDashState;
 import org.celestelike.game.entity.samurai.state.SamuraiIdleState;
 import org.celestelike.game.entity.samurai.state.SamuraiJumpState;
@@ -38,6 +41,10 @@ public final class SamuraiCharacter {
     private static final String WALL_CONTACT_FILE = SAMURAI_BASE + "WALL CONTACT.png";
     private static final String WALL_SLIDE_FILE = SAMURAI_BASE + "WALL SLIDE.png";
     private static final String WALL_JUMP_FILE = SAMURAI_BASE + "WALL JUMP.png";
+    private static final String ATTACK_ONE_FILE = SAMURAI_BASE + "ATTACK 1.png";
+    private static final String ATTACK_TWO_FILE = SAMURAI_BASE + "ATTACK 1.png";
+    private static final String ATTACK_THREE_FILE = SAMURAI_BASE + "ATTACK 2.png";
+    private static final String AIR_ATTACK_FILE = SAMURAI_BASE + "AIR ATTACK.png";
     private static final int FRAME_SIZE = 96;
     private static final float DEFAULT_FRAME_DURATION = 0.08f;
     private static final float RUN_FRAME_DURATION = 0.05f;
@@ -56,6 +63,11 @@ public final class SamuraiCharacter {
     private static final float WALL_SLIDE_MAX_DESCENT_SPEED = -220f;
     private static final float WALL_JUMP_HORIZONTAL_SPEED = 360f;
     private static final float WALL_JUMP_STATE_DURATION = 0.18f;
+    private static final float ATTACK_FRAME_DURATION = 0.055f;
+    private static final int ATTACK_ONE_FRAMES = 7;
+    private static final int ATTACK_TWO_FRAMES = 7;
+    private static final int ATTACK_THREE_FRAMES = 6;
+    private static final int AIR_ATTACK_FRAMES = 6;
     private static final float RENDER_OFFSET_Y = -20f;
     private static final float RENDER_OFFSET_X = 0f;
     private final Vector2 dashDirection = new Vector2();
@@ -67,10 +79,12 @@ public final class SamuraiCharacter {
     private final SamuraiRunState runState = new SamuraiRunState();
     private final SamuraiJumpState jumpState = new SamuraiJumpState();
     private final SamuraiDashState dashState = new SamuraiDashState();
+    private final SamuraiAttackState attackState = new SamuraiAttackState();
     private final SamuraiWallContactState wallContactState = new SamuraiWallContactState();
     private final SamuraiWallSlideState wallSlideState = new SamuraiWallSlideState();
     private final SamuraiWallJumpState wallJumpState = new SamuraiWallJumpState();
     private final SamuraiKinematicController controller = new SamuraiKinematicController();
+    private final SamuraiAttackCoordinator attackCoordinator = new SamuraiAttackCoordinator();
 
     private SamuraiState currentState;
     private TextureRegion currentFrame;
@@ -85,9 +99,11 @@ public final class SamuraiCharacter {
     private boolean dashAvailable = true;
     private boolean jumpAvailable = true;
     private boolean isDashing;
+    private boolean isAttacking;
     private float dashTimer;
     private boolean wasGrounded;
     private float wallJumpTimer;
+    private SamuraiAttackStrategy queuedAttackStrategy;
 
     public SamuraiCharacter() {
         LOGGER.info("Samurai character initialized");
@@ -177,6 +193,42 @@ public final class SamuraiCharacter {
         } else {
             LOGGER.error("Failed to load wall jump animation.");
         }
+
+        Animation<TextureRegion> attackOneAnimation =
+                loadAnimationSlice(ATTACK_ONE_FILE, ATTACK_FRAME_DURATION, Animation.PlayMode.NORMAL, 0, ATTACK_ONE_FRAMES);
+        if (attackOneAnimation != null) {
+            animations.put(SamuraiAnimationKey.ATTACK_1, attackOneAnimation);
+            LOGGER.info("Attack 1 animation primed");
+        } else {
+            LOGGER.error("Failed to load Attack 1 animation.");
+        }
+
+        Animation<TextureRegion> attackTwoAnimation =
+                loadAnimationSlice(ATTACK_TWO_FILE, ATTACK_FRAME_DURATION, Animation.PlayMode.NORMAL, ATTACK_ONE_FRAMES, ATTACK_TWO_FRAMES);
+        if (attackTwoAnimation != null) {
+            animations.put(SamuraiAnimationKey.ATTACK_2, attackTwoAnimation);
+            LOGGER.info("Attack 2 animation primed");
+        } else {
+            LOGGER.error("Failed to load Attack 2 animation.");
+        }
+
+        Animation<TextureRegion> attackThreeAnimation =
+                loadAnimationSlice(ATTACK_THREE_FILE, ATTACK_FRAME_DURATION, Animation.PlayMode.NORMAL, 0, ATTACK_THREE_FRAMES);
+        if (attackThreeAnimation != null) {
+            animations.put(SamuraiAnimationKey.ATTACK_3, attackThreeAnimation);
+            LOGGER.info("Attack 3 animation primed");
+        } else {
+            LOGGER.error("Failed to load Attack 3 animation.");
+        }
+
+        Animation<TextureRegion> airAttackAnimation =
+                loadAnimationSlice(AIR_ATTACK_FILE, ATTACK_FRAME_DURATION, Animation.PlayMode.NORMAL, 0, AIR_ATTACK_FRAMES);
+        if (airAttackAnimation != null) {
+            animations.put(SamuraiAnimationKey.AIR_ATTACK, airAttackAnimation);
+            LOGGER.info("Air attack animation primed");
+        } else {
+            LOGGER.error("Failed to load Air attack animation.");
+        }
     }
 
     private Animation<TextureRegion> loadAnimation(String path, float frameDuration, Animation.PlayMode playMode) {
@@ -215,6 +267,52 @@ public final class SamuraiCharacter {
         return new Animation<>(frameDuration, frames, playMode);
     }
 
+    private Animation<TextureRegion> loadAnimationSlice(
+            String path,
+            float frameDuration,
+            Animation.PlayMode playMode,
+            int startFrame,
+            int frameCount) {
+        if (frameCount <= 0) {
+            LOGGER.error("Requested slice with non-positive frame count for " + path);
+            return null;
+        }
+        FileHandle handle = Gdx.files.internal(path);
+        if (!handle.exists()) {
+            LOGGER.error("Missing animation sheet: " + path);
+            return null;
+        }
+        Texture texture = new Texture(handle);
+        ownedTextures.add(texture);
+        TextureRegion[][] split = TextureRegion.split(texture, FRAME_SIZE, FRAME_SIZE);
+        Array<TextureRegion> frames = new Array<>();
+        int index = 0;
+        outer:
+        for (TextureRegion[] row : split) {
+            for (TextureRegion region : row) {
+                if (region == null) {
+                    continue;
+                }
+                if (index >= startFrame) {
+                    frames.add(region);
+                }
+                index++;
+                if (frames.size >= frameCount) {
+                    break outer;
+                }
+            }
+        }
+        if (frames.isEmpty()) {
+            LOGGER.error("No frames captured for slice " + path + " start=" + startFrame + " count=" + frameCount);
+            return null;
+        }
+        if (frames.size < frameCount) {
+            LOGGER.error("Requested " + frameCount + " frames from " + path + " but only found " + frames.size);
+        }
+        LOGGER.info("Loaded slice (" + frames.size + " frames) from " + path);
+        return new Animation<>(frameDuration, frames, playMode);
+    }
+
     public void placeAt(float worldX, float worldY) {
         controller.place(worldX, worldY);
         LOGGER.info("Samurai placed at (" + worldX + ", " + worldY + ")");
@@ -242,6 +340,9 @@ public final class SamuraiCharacter {
     }
 
     public void ensureIdleState() {
+        if (isAttacking) {
+            return;
+        }
         if (currentState == null || currentState != idleState) {
             switchState(idleState);
         }
@@ -250,6 +351,7 @@ public final class SamuraiCharacter {
     public void update(float delta) {
         stateTime += delta;
         controller.update(delta);
+        attackCoordinator.tick(delta, isAttacking);
         tickDash(delta);
         handleGrounding(controller.isGrounded());
         handleWallInteractions();
@@ -320,8 +422,12 @@ public final class SamuraiCharacter {
         return controller.isGrounded();
     }
 
+    private boolean canApplyHorizontalInput() {
+        return !isDashing && !isAttacking;
+    }
+
     public void moveRight() {
-        if (isDashing) {
+        if (!canApplyHorizontalInput()) {
             return;
         }
         controller.setHorizontalSpeed(DEFAULT_RUN_SPEED);
@@ -332,7 +438,7 @@ public final class SamuraiCharacter {
     }
 
     public void moveLeft() {
-        if (isDashing) {
+        if (!canApplyHorizontalInput()) {
             return;
         }
         controller.setHorizontalSpeed(-DEFAULT_RUN_SPEED);
@@ -343,12 +449,17 @@ public final class SamuraiCharacter {
     }
 
     public void stopHorizontalMovement() {
-        if (isDashing) {
+        if (!canApplyHorizontalInput()) {
             return;
         }
         controller.stopHorizontal();
         stopRunState();
     }
+
+    public void stopHorizontalMovementForAttack() {
+        controller.stopHorizontal();
+    }
+
 
     public float defaultRunSpeed() {
         return DEFAULT_RUN_SPEED;
@@ -380,7 +491,7 @@ public final class SamuraiCharacter {
     }
 
     public boolean jump() {
-        if (!jumpAvailable || !controller.isGrounded()) {
+        if (!jumpAvailable || !controller.isGrounded() || isAttacking) {
             return false;
         }
         jumpAvailable = false;
@@ -392,7 +503,7 @@ public final class SamuraiCharacter {
     }
 
     public boolean wallJump() {
-        if (isDashing || controller.isGrounded()) {
+        if (isDashing || controller.isGrounded() || isAttacking) {
             return false;
         }
         boolean touchingLeft = controller.isTouchingWallLeft();
@@ -412,7 +523,7 @@ public final class SamuraiCharacter {
     }
 
     public boolean dash(float dirX, float dirY) {
-        if (!dashAvailable || isDashing) {
+        if (!dashAvailable || isDashing || isAttacking) {
             return false;
         }
         Vector2 direction = dashDirection.set(dirX, dirY);
@@ -432,6 +543,56 @@ public final class SamuraiCharacter {
         }
         switchState(dashState);
         return true;
+    }
+
+    public boolean attack() {
+        if (isDashing) {
+            return false;
+        }
+        SamuraiAttackStrategy strategy = attackCoordinator.requestStrategy(this);
+        if (strategy == null || !strategy.canExecute(this)) {
+            return false;
+        }
+        if (isAttacking) {
+            queuedAttackStrategy = strategy;
+            return true;
+        }
+        startAttack(strategy);
+        return true;
+    }
+
+    private void startAttack(SamuraiAttackStrategy strategy) {
+        if (strategy == null) {
+            return;
+        }
+        queuedAttackStrategy = null;
+        attackState.setStrategy(strategy);
+        attackCoordinator.onAttackStarted(strategy, controller.isGrounded());
+        isAttacking = true;
+        switchState(attackState);
+    }
+
+    public void onAttackStateComplete() {
+        if (queuedAttackStrategy != null) {
+            SamuraiAttackStrategy next = queuedAttackStrategy;
+            if (next.canExecute(this)) {
+                startAttack(next);
+                return;
+            }
+            queuedAttackStrategy = null;
+        }
+        isAttacking = false;
+        attackCoordinator.onAttackComplete(controller.isGrounded());
+        if (controller.isGrounded()) {
+            if (Math.abs(controller.velocity().x) > 1f) {
+                startRunState();
+            } else {
+                ensureIdleState();
+            }
+        } else {
+            switchState(jumpState);
+            advanceJumpPhase(JumpPhase.FALL);
+        }
     }
 
     public void setJumpSpeed(float speed) {
@@ -469,13 +630,16 @@ public final class SamuraiCharacter {
     }
 
     private void startRunState() {
+        if (isAttacking || isDashing) {
+            return;
+        }
         if (currentState != runState) {
             switchState(runState);
         }
     }
 
     private void stopRunState() {
-        if (controller.isGrounded()) {
+        if (controller.isGrounded() && !isAttacking) {
             ensureIdleState();
         }
     }
@@ -508,10 +672,13 @@ public final class SamuraiCharacter {
     }
 
     private void handleGrounding(boolean grounded) {
+        if (!grounded && wasGrounded) {
+            attackCoordinator.resetCombo();
+        }
         if (grounded && !wasGrounded) {
             restoreAirActions();
         }
-        if (grounded && !isDashing) {
+        if (grounded && !isDashing && !isAttacking) {
             if (currentState == jumpState) {
                 ensureIdleState();
             } else if (isInWallState()) {
@@ -527,7 +694,7 @@ public final class SamuraiCharacter {
     }
 
     private void handleWallInteractions() {
-        if (isDashing || currentState == wallJumpState) {
+        if (isDashing || currentState == wallJumpState || isAttacking) {
             return;
         }
         boolean touchingLeft = controller.isTouchingWallLeft();

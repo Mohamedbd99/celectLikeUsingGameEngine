@@ -6,6 +6,10 @@ package org.celestelike.game.entity.samurai;
 public enum SamuraiAnimationKey {
     IDLE,
     RUN,
+    ATTACK_1,
+    ATTACK_2,
+    ATTACK_3,
+    AIR_ATTACK,
     JUMP,
     JUMP_TRANSITION,
     JUMP_FALL,
