@@ -20,20 +20,20 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import org.celestelike.game.world.LevelData;
 import org.celestelike.game.world.LevelData.TileBlueprint;
+import org.celestelike.game.world.TilesetIO;
+import org.celestelike.game.world.TilesetIO.TilesetData;
 
 public class MapInspector extends ApplicationAdapter {
 
     private enum SelectionType {
         SOLID("Solid ground/wall"),
-        ENEMY_TIER1("Enemies tier 1"),
-        ENEMY_TIER2("Enemies tier 2"),
-        ENEMY_TIER3("Enemies tier 3"),
         DOOR("Door"),
         KEY("Door Key"),
         WATER("Water");
@@ -69,12 +69,40 @@ public class MapInspector extends ApplicationAdapter {
         }
     }
 
+    private static final class EnemyPlacement {
+        private final String name;
+        private TileRef tile;
+
+        EnemyPlacement(String name, TileRef tile) {
+            this.name = name;
+            this.tile = tile;
+        }
+
+        public String name() {
+            return name;
+        }
+
+        public TileRef tile() {
+            return tile;
+        }
+
+        public void moveTo(TileRef ref) {
+            this.tile = ref;
+        }
+
+        @Override public String toString() {
+            return name + "=" + tile;
+        }
+    }
+
     private OrthographicCamera camera;
     private Viewport viewport;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
 
     private static final String SNAPSHOT_PATH = "inspector_snapshot.json";
+    private static final String TILESET_BASE = "assets/newTileSetManara/";
+    private static final String TILESET_TSX = "assets/b.tsx";
 
     private final List<TextureRegion> paletteRegions = new ArrayList<>();
     private final List<Texture> paletteTextures = new ArrayList<>();
@@ -89,7 +117,10 @@ public class MapInspector extends ApplicationAdapter {
     private final Map<SelectionType, List<TileRef>> selections = new EnumMap<>(SelectionType.class);
     private final List<DoorRecord> doors = new ArrayList<>();
     private final ArrayDeque<DoorRecord> pendingDoors = new ArrayDeque<>();
-    private int enemyTierIndex = 0;
+    private final List<EnemyPlacement> enemies = new ArrayList<>();
+    private final StringBuilder enemyNameBuffer = new StringBuilder();
+    private String pendingEnemyName;
+    private boolean awaitingEnemyName;
     private boolean deleteMode = false;
 
     @Override
@@ -182,6 +213,10 @@ public class MapInspector extends ApplicationAdapter {
             setFillColor(type, 0.28f);
             list.forEach(ref -> drawTileFill(ref));
         });
+        if (!enemies.isEmpty()) {
+            shapeRenderer.setColor(0.95f, 0.25f, 0.45f, 0.35f);
+            enemies.forEach(enemy -> drawTileFill(enemy.tile()));
+        }
         for (DoorRecord door : doors) {
             shapeRenderer.setColor(0.95f, 0.55f, 0.15f, 0.28f);
             door.doorTiles.forEach(this::drawTileFill);
@@ -195,6 +230,10 @@ public class MapInspector extends ApplicationAdapter {
             setOutlineColor(type);
             list.forEach(ref -> drawTileOutline(ref));
         });
+        if (!enemies.isEmpty()) {
+            shapeRenderer.setColor(0.95f, 0.25f, 0.45f, 1f);
+            enemies.forEach(enemy -> drawTileOutline(enemy.tile()));
+        }
         shapeRenderer.setColor(0.95f, 0.55f, 0.15f, 1f);
         doors.forEach(door -> door.doorTiles.forEach(this::drawTileOutline));
         shapeRenderer.setColor(0.95f, 0.85f, 0.2f, 1f);
@@ -220,9 +259,6 @@ public class MapInspector extends ApplicationAdapter {
         switch (type) {
             case SOLID -> shapeRenderer.setColor(0.1f, 0.95f, 0.2f, alpha);
             case WATER -> shapeRenderer.setColor(0.2f, 0.45f, 0.95f, alpha);
-            case ENEMY_TIER1 -> shapeRenderer.setColor(0.95f, 0.2f, 0.2f, alpha);
-            case ENEMY_TIER2 -> shapeRenderer.setColor(0.95f, 0.6f, 0.2f, alpha);
-            case ENEMY_TIER3 -> shapeRenderer.setColor(0.7f, 0.2f, 0.95f, alpha);
             case DOOR -> shapeRenderer.setColor(0.95f, 0.55f, 0.15f, alpha);
             case KEY -> shapeRenderer.setColor(0.95f, 0.85f, 0.2f, alpha);
         }
@@ -232,29 +268,30 @@ public class MapInspector extends ApplicationAdapter {
         switch (type) {
             case SOLID -> shapeRenderer.setColor(0.1f, 0.95f, 0.2f, 1f);
             case WATER -> shapeRenderer.setColor(0.2f, 0.45f, 0.95f, 1f);
-            case ENEMY_TIER1 -> shapeRenderer.setColor(0.95f, 0.2f, 0.2f, 1f);
-            case ENEMY_TIER2 -> shapeRenderer.setColor(0.95f, 0.6f, 0.2f, 1f);
-            case ENEMY_TIER3 -> shapeRenderer.setColor(0.7f, 0.2f, 0.95f, 1f);
             case DOOR -> shapeRenderer.setColor(0.95f, 0.55f, 0.15f, 1f);
             case KEY -> shapeRenderer.setColor(0.95f, 0.85f, 0.2f, 1f);
         }
     }
 
     private void handleHotkeys() {
+        if (awaitingEnemyName) {
+            handleEnemyNameInput();
+            return;
+        }
         if (isSaveShortcutJustPressed()) {
             saveSnapshot();
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
             setSelection(SelectionType.SOLID, "1");
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
             setSelection(SelectionType.SOLID, "2");
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
-            cycleEnemyTier();
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
             setSelection(SelectionType.DOOR, "4");
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)) {
             setSelection(SelectionType.KEY, "5");
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_6)) {
             setSelection(SelectionType.WATER, "6");
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            promptEnemyName();
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.DEL)
                 || Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
             deleteMode = true;
@@ -268,14 +305,66 @@ public class MapInspector extends ApplicationAdapter {
         return ctrl && Gdx.input.isKeyJustPressed(Input.Keys.S);
     }
 
-    private void cycleEnemyTier() {
-        enemyTierIndex = (enemyTierIndex + 1) % 3;
-        SelectionType type = switch (enemyTierIndex) {
-            case 0 -> SelectionType.ENEMY_TIER1;
-            case 1 -> SelectionType.ENEMY_TIER2;
-            default -> SelectionType.ENEMY_TIER3;
-        };
-        setSelection(type, "3 (tier " + (enemyTierIndex + 1) + ")");
+    private void handleEnemyNameInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            if (enemyNameBuffer.length() == 0) {
+                Gdx.app.log("MapInspector", "Enemy name is empty. Type characters or press Esc to cancel.");
+                return;
+            }
+            pendingEnemyName = enemyNameBuffer.toString();
+            awaitingEnemyName = false;
+            enemyNameBuffer.setLength(0);
+            Gdx.app.log("MapInspector", "Enemy '" + pendingEnemyName + "' pending placement. Click a tile.");
+            return;
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            awaitingEnemyName = false;
+            enemyNameBuffer.setLength(0);
+            Gdx.app.log("MapInspector", "Enemy naming canceled.");
+            return;
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
+            if (enemyNameBuffer.length() > 0) {
+                enemyNameBuffer.deleteCharAt(enemyNameBuffer.length() - 1);
+            }
+            return;
+        }
+        appendCharacterIfPressed();
+    }
+
+    private void appendCharacterIfPressed() {
+        boolean shift = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)
+                || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT);
+        for (int key = Input.Keys.A; key <= Input.Keys.Z; key++) {
+            if (Gdx.input.isKeyJustPressed(key)) {
+                char base = (char) ('a' + (key - Input.Keys.A));
+                enemyNameBuffer.append(shift ? Character.toUpperCase(base) : base);
+                return;
+            }
+        }
+        for (int key = Input.Keys.NUM_0; key <= Input.Keys.NUM_9; key++) {
+            if (Gdx.input.isKeyJustPressed(key)) {
+                enemyNameBuffer.append((char) ('0' + (key - Input.Keys.NUM_0)));
+                return;
+            }
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            enemyNameBuffer.append(' ');
+            return;
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.MINUS)) {
+            enemyNameBuffer.append(shift ? '_' : '-');
+        }
+    }
+
+    private void promptEnemyName() {
+        if (awaitingEnemyName) {
+            Gdx.app.log("MapInspector", "Already awaiting an enemy name input.");
+            return;
+        }
+        awaitingEnemyName = true;
+        enemyNameBuffer.setLength(0);
+        Gdx.app.log("MapInspector", "Enter enemy name using keyboard. Press Enter to confirm, Esc to cancel.");
     }
 
     private void setSelection(SelectionType type, String keyLabel) {
@@ -292,6 +381,10 @@ public class MapInspector extends ApplicationAdapter {
         if (ref == null) {
             return;
         }
+        if (pendingEnemyName != null) {
+            placeEnemy(ref);
+            return;
+        }
         if (deleteMode) {
             deleteMode = false;
             removeTile(ref);
@@ -299,9 +392,6 @@ public class MapInspector extends ApplicationAdapter {
         }
         switch (activeSelection) {
             case SOLID -> addAndLog(SelectionType.SOLID, ref);
-            case ENEMY_TIER1 -> addAndLog(SelectionType.ENEMY_TIER1, ref);
-            case ENEMY_TIER2 -> addAndLog(SelectionType.ENEMY_TIER2, ref);
-            case ENEMY_TIER3 -> addAndLog(SelectionType.ENEMY_TIER3, ref);
             case WATER -> addAndLog(SelectionType.WATER, ref);
             case DOOR -> handleDoorSelection(ref);
             case KEY -> handleKeySelection(ref);
@@ -350,6 +440,32 @@ public class MapInspector extends ApplicationAdapter {
         printSummary();
     }
 
+    private void placeEnemy(TileRef ref) {
+        String name = pendingEnemyName;
+        pendingEnemyName = null;
+        if (name == null || name.isBlank()) {
+            return;
+        }
+        EnemyPlacement existing = findEnemyByName(name);
+        if (existing != null) {
+            existing.moveTo(ref);
+            Gdx.app.log("MapInspector", "Moved enemy '" + name + "' to " + ref);
+        } else {
+            enemies.add(new EnemyPlacement(name, ref));
+            Gdx.app.log("MapInspector", "Placed enemy '" + name + "' at " + ref);
+        }
+        printSummary();
+    }
+
+    private EnemyPlacement findEnemyByName(String name) {
+        for (EnemyPlacement enemy : enemies) {
+            if (enemy.name().equalsIgnoreCase(name)) {
+                return enemy;
+            }
+        }
+        return null;
+    }
+
     private void removeTile(TileRef ref) {
         boolean removed = false;
         for (SelectionType type : SelectionType.values()) {
@@ -370,11 +486,26 @@ public class MapInspector extends ApplicationAdapter {
                 removed = true;
             }
         }
+        if (removeEnemyAt(ref)) {
+            removed = true;
+        }
         if (removed) {
             printSummary();
         } else {
             Gdx.app.log("MapInspector", "No entry found at " + ref);
         }
+    }
+
+    private boolean removeEnemyAt(TileRef ref) {
+        boolean removed = false;
+        for (int i = enemies.size() - 1; i >= 0; i--) {
+            if (enemies.get(i).tile().equals(ref)) {
+                Gdx.app.log("MapInspector", "Removed enemy '" + enemies.get(i).name() + "' at " + ref);
+                enemies.remove(i);
+                removed = true;
+            }
+        }
+        return removed;
     }
 
     private TileRef worldToTile(float worldX, float worldY) {
@@ -390,9 +521,7 @@ public class MapInspector extends ApplicationAdapter {
     private void printSummary() {
         logCategory("solid", selections.get(SelectionType.SOLID));
         logCategory("water", selections.get(SelectionType.WATER));
-        logCategory("enemires tier 1", selections.get(SelectionType.ENEMY_TIER1));
-        logCategory("enemires tier 2", selections.get(SelectionType.ENEMY_TIER2));
-        logCategory("enemires tier 3", selections.get(SelectionType.ENEMY_TIER3));
+        logEnemies();
         logDoors();
     }
 
@@ -404,6 +533,25 @@ public class MapInspector extends ApplicationAdapter {
                 sb.append(", ");
             }
             sb.append("#").append(i + 1).append(" ").append(refs.get(i));
+        }
+        sb.append("]");
+        Gdx.app.log("MapInspector", sb.toString());
+    }
+
+    private void logEnemies() {
+        if (enemies.isEmpty()) {
+            Gdx.app.log("MapInspector", "enemies []");
+            return;
+        }
+        StringBuilder sb = new StringBuilder("enemies [");
+        for (int i = 0; i < enemies.size(); i++) {
+            if (i > 0) {
+                sb.append(", ");
+            }
+            EnemyPlacement enemy = enemies.get(i);
+            sb.append("#").append(i + 1).append(" (")
+                    .append(enemy.name()).append(" @ ")
+                    .append(enemy.tile()).append(")");
         }
         sb.append("]");
         Gdx.app.log("MapInspector", sb.toString());
@@ -441,9 +589,17 @@ public class MapInspector extends ApplicationAdapter {
     }
 
     private void loadTileset() {
-        loadPaletteFromTilesDirectory();
-        if (paletteRegions.isEmpty()) {
-            loadPaletteFromAtlas();
+        paletteRegions.clear();
+        paletteTextures.clear();
+        TilesetData data = TilesetIO.loadFromTsx(TILESET_TSX);
+        if (!data.isEmpty()) {
+            paletteTextures.addAll(data.textures());
+            paletteRegions.addAll(data.regions());
+        } else {
+            loadPaletteFromTilesDirectory();
+            if (paletteRegions.isEmpty()) {
+                loadPaletteFromAtlas();
+            }
         }
         if (paletteRegions.isEmpty()) {
             throw new IllegalStateException("Unable to load tile palette.");
@@ -451,29 +607,33 @@ public class MapInspector extends ApplicationAdapter {
     }
 
     private void loadPaletteFromTilesDirectory() {
-        String basePath = "assets/kenney_pico-8-platformer/Transparent/Tiles/";
-        boolean any = false;
-        int consecutiveMisses = 0;
-        for (int index = 0; index < 512 && consecutiveMisses < 50; index++) {
-            String name = String.format(Locale.US, "tile_%04d.png", index);
-            FileHandle file = Gdx.files.internal(basePath + name);
-            if (!file.exists()) {
-                consecutiveMisses++;
+        FileHandle directory = Gdx.files.internal(TILESET_BASE);
+        if (directory == null || !directory.exists() || !directory.isDirectory()) {
+            return;
+        }
+        FileHandle[] contents = directory.list();
+        if (contents == null || contents.length == 0) {
+            return;
+        }
+        Arrays.sort(contents, (a, b) -> a.name().compareToIgnoreCase(b.name()));
+        int loaded = 0;
+        for (FileHandle file : contents) {
+            String extension = file.extension().toLowerCase(Locale.ROOT);
+            if (!"png".equals(extension)) {
                 continue;
             }
             Texture texture = new Texture(file);
             paletteTextures.add(texture);
             paletteRegions.add(new TextureRegion(texture));
-            consecutiveMisses = 0;
-            any = true;
+            loaded++;
         }
-        if (any) {
-            Gdx.app.log("MapInspector", "Loaded " + paletteRegions.size() + " sprites from Transparent/Tiles");
+        if (loaded > 0) {
+            Gdx.app.log("MapInspector", "Loaded " + paletteRegions.size() + " textures from " + TILESET_BASE);
         }
     }
 
     private void loadPaletteFromAtlas() {
-        FileHandle file = Gdx.files.internal("assets/kenney_pico-8-platformer/Transparent/Tilemap/tilemap.png");
+        FileHandle file = Gdx.files.internal(TILESET_BASE + "tilemap.png");
         if (!file.exists()) {
             return;
         }
@@ -504,12 +664,10 @@ public class MapInspector extends ApplicationAdapter {
             selections.values().forEach(List::clear);
             doors.clear();
             pendingDoors.clear();
+             enemies.clear();
             JsonValue root = new JsonReader().parse(file);
             preloadList(SelectionType.SOLID, root.get("solid"));
             preloadList(SelectionType.WATER, root.get("water"));
-            preloadList(SelectionType.ENEMY_TIER1, root.get("enemyTier1"));
-            preloadList(SelectionType.ENEMY_TIER2, root.get("enemyTier2"));
-            preloadList(SelectionType.ENEMY_TIER3, root.get("enemyTier3"));
             JsonValue doorArray = root.get("doors");
             if (doorArray != null) {
                 for (JsonValue doorValue : doorArray) {
@@ -517,6 +675,20 @@ public class MapInspector extends ApplicationAdapter {
                     applyRefs(doorValue.get("door"), door.doorTiles);
                     applyRefs(doorValue.get("key"), door.keyTiles);
                     doors.add(door);
+                }
+            }
+            JsonValue enemyArray = root.get("enemies");
+            if (enemyArray != null) {
+                for (JsonValue enemyValue : enemyArray) {
+                    String name = enemyValue.getString("name", null);
+                    JsonValue rowValue = enemyValue.get("row");
+                    JsonValue colValue = enemyValue.get("col");
+                    if (name == null || rowValue == null || colValue == null) {
+                        continue;
+                    }
+                    enemies.add(new EnemyPlacement(
+                            name,
+                            new TileRef(rowValue.asInt(), colValue.asInt())));
                 }
             }
             Gdx.app.log("MapInspector", "Loaded snapshot from " + file.path());
@@ -571,9 +743,6 @@ public class MapInspector extends ApplicationAdapter {
             json.object();
             writeRefs(json, "solid", selections.get(SelectionType.SOLID));
             writeRefs(json, "water", selections.get(SelectionType.WATER));
-            writeRefs(json, "enemyTier1", selections.get(SelectionType.ENEMY_TIER1));
-            writeRefs(json, "enemyTier2", selections.get(SelectionType.ENEMY_TIER2));
-            writeRefs(json, "enemyTier3", selections.get(SelectionType.ENEMY_TIER3));
             json.name("doors");
             json.array();
             for (DoorRecord door : doors) {
@@ -583,6 +752,16 @@ public class MapInspector extends ApplicationAdapter {
                 json.pop();
             }
             json.pop(); // doors array
+            json.name("enemies");
+            json.array();
+            for (EnemyPlacement enemy : enemies) {
+                json.object();
+                json.name("name").value(enemy.name());
+                json.name("row").value(enemy.tile().row());
+                json.name("col").value(enemy.tile().col());
+                json.pop();
+            }
+            json.pop(); // enemies array
             json.pop(); // root
             json.close();
             Gdx.app.log("MapInspector", "Snapshot saved to " + handle.file().getAbsolutePath());

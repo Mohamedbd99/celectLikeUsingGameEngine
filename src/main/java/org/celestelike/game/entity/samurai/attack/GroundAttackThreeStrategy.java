@@ -8,6 +8,8 @@ import org.celestelike.game.entity.samurai.SamuraiCharacter;
  */
 public final class GroundAttackThreeStrategy implements SamuraiAttackStrategy {
 
+    private static final int DAMAGE = 15;
+
     @Override
     public SamuraiAnimationKey animationKey() {
         return SamuraiAnimationKey.ATTACK_3;
@@ -21,6 +23,11 @@ public final class GroundAttackThreeStrategy implements SamuraiAttackStrategy {
     @Override
     public void onEnter(SamuraiCharacter samurai) {
         samurai.stopHorizontalMovementForAttack();
+    }
+
+    @Override
+    public int damage() {
+        return DAMAGE;
     }
 }
 

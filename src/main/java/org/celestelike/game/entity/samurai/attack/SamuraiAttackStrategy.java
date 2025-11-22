@@ -48,6 +48,13 @@ public interface SamuraiAttackStrategy {
         }
         return animation.isAnimationFinished(samurai.getStateTime());
     }
+
+    /**
+     * Base damage applied when this attack connects.
+     */
+    default int damage() {
+        return 0;
+    }
 }
 
 

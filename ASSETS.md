@@ -18,3 +18,10 @@
   - `Shift`/`X` dash. Direction comes from the current input, defaulting to straight up when idle.
 - To use a different sprite for a specific behavior, just paint that sprite (optionally add up to 3 frames via `O`) and copy the emitted blueprint; no code changes are required unless you add custom logic for that tile id.
 
+
+
+gradlew extractTiles --args="C:/Users/moham/Downloads/kenney_pico-8-platformer/Transparent/Tiles/b.tsx C:\Users\moham\IdeaProjects\celectLikeUsingGameEngine\src\main\resources\assets\kenney_pico-8-platformer\Transparent\Tiles"
+
+
+.\gradlew extractTiles --args="C:/Users/moham/Downloads/kenney_pico-8-platformer/Transparent/Tiles/b.tsx C:\Users\moham\IdeaProjects\celectLikeUsingGameEngine\src\main\resources\assets\kenney_pico-8-platformer\Transparent\Tiles"
+>>

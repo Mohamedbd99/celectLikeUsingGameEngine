@@ -45,3 +45,5 @@ bin/
 kenney_pico-8-platformer
 resources
 src/main/resources
+
+logs/

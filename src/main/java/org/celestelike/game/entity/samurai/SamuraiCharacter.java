@@ -30,12 +30,17 @@ import org.celestelike.game.entity.samurai.state.SamuraiHurtState;
 import org.celestelike.game.entity.samurai.state.SamuraiWallContactState;
 import org.celestelike.game.entity.samurai.state.SamuraiWallJumpState;
 import org.celestelike.game.entity.samurai.state.SamuraiWallSlideState;
+import org.celestelike.game.logging.GameLogger;
 import org.celestelike.game.world.LevelCollisionMap;
 
 /**
  * Samurai hero facade. Handles loading, state updates, animation selection, and rendering.
  */
 public final class SamuraiCharacter {
+
+    public interface AttackImpactListener {
+        void onAttackImpact(int damage);
+    }
 
     private static final Logger LOGGER = new Logger("SamuraiCharacter", Logger.INFO);
     private static final String SAMURAI_BASE = "assets/FULL_Samurai 2D Pixel Art v1.2/Sprites/";
@@ -84,6 +89,7 @@ public final class SamuraiCharacter {
     private static final float DEATH_FRAME_DURATION = 0.08f;
     private static final int DEATH_FRAMES = 9;
     private static final float HURT_FRAME_DURATION = 0.07f;
+    private static final int SPECIAL_ATTACK_DAMAGE = 40;
     private static final float RENDER_OFFSET_Y = -20f;
     private static final float RENDER_OFFSET_X = 0f;
     private final Vector2 dashDirection = new Vector2();
@@ -131,6 +137,7 @@ public final class SamuraiCharacter {
     private float wallJumpTimer;
     private SamuraiAttackStrategy queuedAttackStrategy;
     private DeathListener deathListener;
+    private AttackImpactListener attackImpactListener;
 
     public SamuraiCharacter() {
         LOGGER.info("Samurai character initialized");
@@ -402,13 +409,21 @@ public final class SamuraiCharacter {
         this.deathListener = listener;
     }
 
+    public void setAttackImpactListener(AttackImpactListener listener) {
+        this.attackImpactListener = listener;
+    }
+
     public void switchState(SamuraiState nextState) {
         if (nextState == null) {
             LOGGER.error("Attempted to switch to a null state");
             return;
         }
         String prev = currentState == null ? "NONE" : currentState.name();
+        if (currentState == nextState) {
+            return;
+        }
         LOGGER.info("Switching state from " + prev + " to " + nextState.name());
+        GameLogger.stateTransition("Player", prev, nextState.name());
         currentState = nextState;
         stateTime = 0f;
         nextState.enter(this);
@@ -505,6 +520,10 @@ public final class SamuraiCharacter {
 
     public boolean isGrounded() {
         return controller.isGrounded();
+    }
+
+    public boolean isFacingRight() {
+        return facingRight;
     }
 
     private boolean canApplyHorizontalInput() {
@@ -657,6 +676,7 @@ public final class SamuraiCharacter {
         isSpecialAttacking = true;
         switchState(specialAttackState);
         controller.stopHorizontal();
+        notifyAttackImpact(SPECIAL_ATTACK_DAMAGE);
         return true;
     }
 
@@ -669,6 +689,7 @@ public final class SamuraiCharacter {
         attackCoordinator.onAttackStarted(strategy, controller.isGrounded());
         isAttacking = true;
         switchState(attackState);
+        notifyAttackImpact(strategy.damage());
     }
 
     private void cancelAttackState() {
@@ -939,10 +960,17 @@ public final class SamuraiCharacter {
         }
     }
 
+    private void notifyAttackImpact(int damage) {
+        if (attackImpactListener != null && damage > 0) {
+            attackImpactListener.onAttackImpact(damage);
+        }
+    }
+
     private void startWaterHurt() {
         if (isHurting || isDying) {
             return;
         }
+        GameLogger.collision("Samurai collided with water tile");
         cancelAttackState();
         queuedAttackStrategy = null;
         isAttacking = false;

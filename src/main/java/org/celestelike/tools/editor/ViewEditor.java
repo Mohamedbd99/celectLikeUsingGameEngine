@@ -16,6 +16,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +25,8 @@ import java.util.Locale;
 
 import org.celestelike.game.world.LevelData;
 import org.celestelike.game.world.LevelData.TileBlueprint;
+import org.celestelike.game.world.TilesetIO;
+import org.celestelike.game.world.TilesetIO.TilesetData;
 
 /**
  * Tile editor for the Kenney Pico-8 tileset that lets you pick any sprite and
@@ -30,25 +34,30 @@ import org.celestelike.game.world.LevelData.TileBlueprint;
  */
 public class ViewEditor extends ApplicationAdapter {
 
-    private static final String KENNEY_BASE = "assets/kenney_pico-8-platformer/";
-    private static final float TILE_SCALE = 4f;          // 8px -> 32px world units
-    private static final float PALETTE_SCALE = 2f;       // palette tiles drawn at 16px
-    private static final float PALETTE_MARGIN = 16f;
-    private static final float PALETTE_HEADER_HEIGHT = 28f;
+    private static final String TILESET_BASE = "assets/newTileSetManara/";
+    private static final String TILESET_TSX = "assets/b.tsx";
+    private static final float TILE_SCALE = 8f;          // 8px -> 32px world units
+    private static final float PALETTE_SCALE = 4f;       // palette tiles drawn at 32px
+    private static final float PALETTE_MARGIN = 32f;
+    private static final float PALETTE_HEADER_HEIGHT = 40f;
     private static final float MIN_FRAME_DURATION = 0.05f;
     private static final float MAX_FRAME_DURATION = 0.5f;
     private static final float FRAME_DURATION_STEP = 0.02f;
-
+    private final List<Texture> paletteTextures = new ArrayList<>();
+    private final List<TextureRegion> paletteRegions = new ArrayList<>();
+    private final PaletteSharedState paletteBridge = new PaletteSharedState();
+    private int paletteRows;
+    private int paletteCols = LevelData.ATLAS_COLUMNS;
+    private float paletteTileSize = LevelData.TILE_SIZE * PALETTE_SCALE;
+    private boolean paletteDetached = true;
+    private boolean paletteWindowSpawned;
+    
     private OrthographicCamera worldCamera;
     private Viewport worldViewport;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private BitmapFont font;
 
-    private final List<Texture> paletteTextures = new ArrayList<>();
-    private final List<TextureRegion> paletteRegions = new ArrayList<>();
-    private int paletteRows;
-    private int paletteCols = LevelData.ATLAS_COLUMNS;
 
     private TileCell[][] cells;
     private EntityMarker[][] entities;
@@ -109,6 +118,8 @@ public class ViewEditor extends ApplicationAdapter {
         } else {
             setSelectedTileIndex(-1);
         }
+        paletteBridge.updateCurrentSelection(selectedTileIndex);
+        spawnPaletteWindowIfPossible();
     }
 
     @Override
@@ -117,11 +128,12 @@ public class ViewEditor extends ApplicationAdapter {
         elapsed += delta;
         updateStatusBanner(delta);
 
+        drainPaletteSelectionRequests();
         updateHoverState();
         updateEntityHotkeys();
         handleEditorInput();
 
-        ScreenUtils.clear(0.08f, 0.08f, 0.12f, 1f);
+        ScreenUtils.clear(1f, 1f, 1f, 1f);
 
         worldCamera.update();
         batch.setProjectionMatrix(worldCamera.combined);
@@ -152,43 +164,72 @@ public class ViewEditor extends ApplicationAdapter {
     }
 
     private void loadTileset() {
-        loadPaletteFromTilesDirectory();
-        if (paletteRegions.isEmpty()) {
-            loadPaletteFromAtlas();
+        paletteTextures.clear();
+        paletteRegions.clear();
+
+        TilesetData tsxData = TilesetIO.loadFromTsx(TILESET_TSX);
+        if (!tsxData.isEmpty()) {
+            paletteTextures.addAll(tsxData.textures());
+            paletteRegions.addAll(tsxData.regions());
+            paletteCols = tsxData.columns();
+            paletteRows = tsxData.rows();
+        } else {
+            loadPaletteFromTilesDirectory();
+            if (paletteRegions.isEmpty()) {
+                loadPaletteFromAtlas();
+            }
+            if (paletteCols <= 0 || paletteRows <= 0) {
+                int total = Math.max(1, paletteRegions.size());
+                paletteCols = (int) Math.ceil(Math.sqrt(total));
+                paletteRows = (int) Math.ceil(total / (float) paletteCols);
+            }
         }
-        paletteRows = (int) Math.ceil(Math.max(1, paletteRegions.size()) / (float) paletteCols);
+
         updatePaletteBounds(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
-
+    
     private void loadPaletteFromTilesDirectory() {
-        String basePath = KENNEY_BASE + "Transparent/Tiles/";
-        boolean any = false;
-        int consecutiveMisses = 0;
-        for (int index = 0; index < 512 && consecutiveMisses < 50; index++) {
-            String name = String.format(Locale.US, "tile_%04d.png", index);
-            FileHandle file = Gdx.files.internal(basePath + name);
-            if (!file.exists()) {
-                consecutiveMisses++;
-                continue;
-            }
-            consecutiveMisses = 0;
-            any = true;
-            Texture texture = new Texture(file);
-            texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-            paletteTextures.add(texture);
-            paletteRegions.add(new TextureRegion(texture));
+        FileHandle directory = Gdx.files.internal(TILESET_BASE);
+        if (directory == null || !directory.exists() || !directory.isDirectory()) {
+            Gdx.app.log("Palette", "Tileset folder " + TILESET_BASE + " missing; will fall back to atlas");
+            return;
         }
-
-        if (any) {
-            Gdx.app.log("Palette", "Loaded " + paletteRegions.size() + " sprites from Transparent/Tiles");
+        FileHandle[] contents = directory.list();
+        if (contents == null || contents.length == 0) {
+            Gdx.app.log("Palette", "No assets found in " + TILESET_BASE + "; will fall back to atlas");
+            return;
+        }
+        Arrays.sort(contents, (a, b) -> a.name().compareToIgnoreCase(b.name()));
+        int loaded = 0;
+        for (FileHandle file : contents) {
+            String extension = file.extension().toLowerCase(Locale.ROOT);
+            if ("png".equals(extension)) {
+                Texture texture = new Texture(file);
+                texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+                paletteTextures.add(texture);
+                paletteRegions.add(new TextureRegion(texture));
+                loaded++;
+            } else if ("tsx".equals(extension)) {
+                TilesetData data = TilesetIO.loadFromTsx(file);
+                if (!data.isEmpty()) {
+                    paletteTextures.addAll(data.textures());
+                    paletteRegions.addAll(data.regions());
+                    paletteCols = data.columns();
+                    paletteRows = data.rows();
+                    loaded++;
+                }
+            }
+        }
+        if (loaded == 0) {
+            Gdx.app.log("Palette", "No usable tiles found in " + TILESET_BASE + "; will fall back to atlas");
         } else {
-            Gdx.app.log("Palette", "Could not enumerate Transparent/Tiles; will fall back to atlas");
+            Gdx.app.log("Palette", "Loaded tiles from " + TILESET_BASE);
         }
     }
 
     private void loadPaletteFromAtlas() {
         try {
-            Texture atlas = new Texture(Gdx.files.internal(KENNEY_BASE + "Transparent/Tilemap/tilemap.png"));
+            Texture atlas = new Texture(Gdx.files.internal(TILESET_BASE + "tilemap.png"));
             atlas.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
             TextureRegion[][] grid = TextureRegion.split(atlas, LevelData.TILE_SIZE, LevelData.TILE_SIZE);
             paletteCols = grid[0].length;
@@ -197,13 +238,32 @@ public class ViewEditor extends ApplicationAdapter {
                 paletteRegions.addAll(Arrays.asList(row));
             }
             paletteTextures.add(atlas);
-            Gdx.app.log("Palette", "Fallback to tilemap atlas (" + paletteRegions.size() + " tiles)");
+            Gdx.app.log("Palette", "Fallback to atlas (" + paletteRegions.size() + " tiles)");
         } catch (Exception exception) {
             Gdx.app.error("Palette", "Failed to load fallback tilemap atlas", exception);
         }
     }
 
-    private void loadInitialCells(TileBlueprint[][] blueprint) {
+    private void spawnPaletteWindowIfPossible() {
+        if (paletteWindowSpawned) {
+            return;
+        }
+        if (!(Gdx.app instanceof Lwjgl3Application)) {
+            paletteDetached = false;
+            return;
+        }
+        paletteWindowSpawned = true;
+        paletteDetached = true;
+        Lwjgl3Application application = (Lwjgl3Application) Gdx.app;
+        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+        config.setTitle("Tileset Palette");
+        config.setWindowedMode(560, 960);
+        config.setResizable(true);
+        config.setForegroundFPS(60);
+        application.newWindow(new PaletteWindow(TILESET_TSX, TILESET_BASE, PALETTE_SCALE, paletteBridge), config);
+    }
+
+        private void loadInitialCells(TileBlueprint[][] blueprint) {
         int rows = blueprint.length;
         int cols = blueprint[0].length;
         cells = new TileCell[rows][cols];
@@ -242,10 +302,15 @@ public class ViewEditor extends ApplicationAdapter {
     private void updateHoverState() {
         int screenX = Gdx.input.getX();
         int screenY = Gdx.graphics.getHeight() - Gdx.input.getY();
-        pointerOverPalette = paletteBounds.contains(screenX, screenY);
-        paletteHoverIndex = pointerOverPalette ? computePaletteIndex(screenX, screenY) : -1;
+        if (!paletteDetached) {
+            pointerOverPalette = paletteBounds.contains(screenX, screenY);
+            paletteHoverIndex = pointerOverPalette ? computePaletteIndex(screenX, screenY) : -1;
+        } else {
+            pointerOverPalette = false;
+            paletteHoverIndex = -1;
+        }
 
-        if (pointerOverPalette) {
+        if (!paletteDetached && pointerOverPalette) {
             hoverRow = -1;
             hoverCol = -1;
             return;
@@ -274,13 +339,13 @@ public class ViewEditor extends ApplicationAdapter {
         int screenX = Gdx.input.getX();
         int screenY = Gdx.graphics.getHeight() - Gdx.input.getY();
         boolean shift = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT);
-        boolean pointerBlocked = pointerOverPalette || draggingPalette;
+        boolean pointerBlocked = !paletteDetached && (pointerOverPalette || draggingPalette);
 
         if (isSaveShortcutJustPressed()) {
             exportCurrentBlueprint();
         }
 
-        if (pointerOverPalette) {
+        if (!paletteDetached && pointerOverPalette) {
             if (!draggingPalette && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)
                     && isPointerInPaletteHeader(screenX, screenY)) {
                 startPaletteDrag(screenX, screenY);
@@ -397,6 +462,16 @@ public class ViewEditor extends ApplicationAdapter {
         Gdx.app.log("ViewEditor", message);
     }
 
+    private void drainPaletteSelectionRequests() {
+        if (paletteBridge == null) {
+            return;
+        }
+        int requested = paletteBridge.consumeRequestedSelection();
+        if (requested != PaletteSharedState.NO_REQUEST) {
+            setSelectedTileIndex(requested);
+        }
+    }
+
     private void applyBrush(int row, int col) {
         if (selectedTileIndex < 0) {
             clearCell(row, col);
@@ -422,6 +497,7 @@ public class ViewEditor extends ApplicationAdapter {
         selectedTileIndex = tileIndex;
         selectedFrameCount = clampFramesForTile(tileIndex, selectedFrameCount);
         Gdx.app.log("Palette", tileIndex < 0 ? "Selected: air" : "Selected tile " + describeTile(tileIndex));
+        paletteBridge.updateCurrentSelection(selectedTileIndex);
     }
 
     private void adjustFrameCount(int delta) {
@@ -503,6 +579,9 @@ public class ViewEditor extends ApplicationAdapter {
     }
 
     private void renderPaletteOverlay() {
+        if (paletteDetached) {
+            return;
+        }
         shapeRenderer.setProjectionMatrix(uiMatrix);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(0f, 0f, 0f, 0.7f);
@@ -516,12 +595,12 @@ public class ViewEditor extends ApplicationAdapter {
 
         batch.setProjectionMatrix(uiMatrix);
         batch.begin();
-        float paletteTileSize = LevelData.TILE_SIZE * PALETTE_SCALE;
         int total = paletteRegions.size();
         for (int idx = 0; idx < total; idx++) {
-            float[] rect = paletteRectForIndex(idx, paletteTileSize);
+            float[] rect = paletteRectForIndex(idx);
             batch.draw(paletteRegions.get(idx), rect[0], rect[1], rect[2], rect[3]);
         }
+        
         font.draw(batch, "Tile Palette (drag the top bar)",
                 paletteBounds.x, headerY + PALETTE_HEADER_HEIGHT - 8f);
         float infoY = paletteBounds.y + paletteBounds.height + 16f;
@@ -558,11 +637,11 @@ public class ViewEditor extends ApplicationAdapter {
     }
 
     private void drawPaletteRect(int tileIndex, float r, float g, float b) {
-        float[] rect = paletteRectForIndex(tileIndex, LevelData.TILE_SIZE * PALETTE_SCALE);
+        float[] rect = paletteRectForIndex(tileIndex);
         shapeRenderer.setColor(r, g, b, 1f);
         shapeRenderer.rect(rect[0], rect[1], rect[2], rect[3]);
     }
-
+        
     private int clampFramesForTile(int tileIndex, int desiredFrames) {
         if (tileIndex < 0) {
             return 1;
@@ -577,16 +656,34 @@ public class ViewEditor extends ApplicationAdapter {
     }
 
     private void updatePaletteBounds(int width, int height) {
-        float paletteTileSize = LevelData.TILE_SIZE * PALETTE_SCALE;
+        if (paletteCols <= 0 || paletteRows <= 0) {
+            return;
+        }
+    
+        // Maximum area the palette is allowed to use
+        float maxWidth = width - 2f * PALETTE_MARGIN;
+        float maxHeight = height - 2f * PALETTE_MARGIN - PALETTE_HEADER_HEIGHT;
+    
+        // Tile size that fits both width and height
+        float tileSizeByWidth = maxWidth / Math.max(1, paletteCols);
+        float tileSizeByHeight = maxHeight / Math.max(1, paletteRows);
+        paletteTileSize = Math.min(tileSizeByWidth, tileSizeByHeight);
+    
+        // Optional clamp so tiles are not ridiculously tiny
+        paletteTileSize = Math.max(8f, paletteTileSize);
+    
         float gridWidth = paletteCols * paletteTileSize;
         float gridHeight = paletteRows * paletteTileSize;
         float totalWidth = gridWidth;
         float totalHeight = gridHeight + PALETTE_HEADER_HEIGHT;
+    
         if (paletteBounds.width == 0f && paletteBounds.height == 0f) {
+            // Initial position: bottom-right corner with margin
             float x = Math.max(0f, width - totalWidth - PALETTE_MARGIN);
             float y = PALETTE_MARGIN;
             paletteBounds.set(x, y, totalWidth, totalHeight);
         } else {
+            // Keep it inside the screen if resized
             paletteBounds.width = totalWidth;
             paletteBounds.height = totalHeight;
             float maxX = Math.max(0f, width - totalWidth);
@@ -595,7 +692,7 @@ public class ViewEditor extends ApplicationAdapter {
             paletteBounds.y = Math.max(0f, Math.min(paletteBounds.y, maxY));
         }
     }
-
+    
     private String describeTile(int tileIndex) {
         int row = tileIndex / paletteCols;
         int col = tileIndex % paletteCols;
@@ -647,12 +744,11 @@ public class ViewEditor extends ApplicationAdapter {
         if (!paletteBounds.contains(screenX, screenY)) {
             return -1;
         }
-        float paletteTileSize = LevelData.TILE_SIZE * PALETTE_SCALE;
         float localX = screenX - paletteBounds.x;
         float localY = screenY - paletteBounds.y;
         float usableHeight = paletteRows * paletteTileSize;
         if (localY >= usableHeight) {
-            return -1;
+            return -1; // in the header area
         }
         int col = (int) (localX / paletteTileSize);
         int rowFromBottom = (int) (localY / paletteTileSize);
@@ -662,15 +758,14 @@ public class ViewEditor extends ApplicationAdapter {
         }
         return row * paletteCols + col;
     }
-
-    private float[] paletteRectForIndex(int tileIndex, float paletteTileSize) {
+        private float[] paletteRectForIndex(int tileIndex) {
         int row = tileIndex / paletteCols;
         int col = tileIndex % paletteCols;
         float x = paletteBounds.x + col * paletteTileSize;
         float y = paletteBounds.y + (paletteRows - row - 1) * paletteTileSize;
         return new float[]{x, y, paletteTileSize, paletteTileSize};
     }
-
+    
     private void updateEntityHotkeys() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1)) {
             entityBrush = EntityType.NONE;

@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import org.celestelike.game.entity.samurai.SamuraiCharacter;
@@ -28,9 +29,16 @@ import org.celestelike.game.entity.samurai.input.MoveLeftCommand;
 import org.celestelike.game.entity.samurai.input.MoveRightCommand;
 import org.celestelike.game.entity.samurai.input.MoveUpCommand;
 import org.celestelike.game.entity.samurai.input.SamuraiCommand;
+import org.celestelike.game.entity.enemy.EnemyManager;
+import org.celestelike.game.entity.enemy.EnemySpawn;
+import org.celestelike.game.entity.enemy.EnemySpawnLoader;
+import org.celestelike.game.logging.GameLogger;
+import org.celestelike.game.state.GameState;
 import org.celestelike.game.world.LevelCollisionMap;
 import org.celestelike.game.world.LevelData;
 import org.celestelike.game.world.LevelData.TileBlueprint;
+import org.celestelike.game.world.TilesetIO;
+import org.celestelike.game.world.TilesetIO.TilesetData;
 
 /**
  * Minimal runtime that renders the currently authored level.
@@ -38,7 +46,8 @@ import org.celestelike.game.world.LevelData.TileBlueprint;
  */
 public class CelesteGame extends ApplicationAdapter {
 
-    private static final String KENNEY_BASE = "assets/kenney_pico-8-platformer/";
+    private static final String TILESET_BASE = "assets/newTileSetManara/";
+    private static final String TILESET_TSX = "assets/b.tsx";
     private static final float TILE_SCALE = 4f; // 8px -> 32 px world units
     private static final float VIEW_TILES_W = 28f;
     private static final float VIEW_TILES_H = 16f;
@@ -71,16 +80,21 @@ public class CelesteGame extends ApplicationAdapter {
     private SamuraiCommand specialAttackCommand;
     private float spawnX;
     private float spawnY;
+    private EnemyManager enemyManager;
+    private List<EnemySpawn> enemySpawns = new ArrayList<>();
+    private int blueprintRows;
+    private GameState currentGameState = GameState.MENU;
 
     @Override
     public void create() {
         tileWorldSize = LevelData.TILE_SIZE * TILE_SCALE;
+        GameLogger.info("Game started");
 
         TileBlueprint[][] blueprint = LevelData.copyBlueprint();
-        int rows = blueprint.length;
+        blueprintRows = blueprint.length;
         int cols = blueprint[0].length;
-        cells = new TileCell[rows][cols];
-        for (int row = 0; row < rows; row++) {
+        cells = new TileCell[blueprintRows][cols];
+        for (int row = 0; row < blueprintRows; row++) {
             for (int col = 0; col < cols; col++) {
                 cells[row][col] = TileCell.fromBlueprint(blueprint[row][col]);
             }
@@ -88,7 +102,7 @@ public class CelesteGame extends ApplicationAdapter {
         collisionMap = new LevelCollisionMap(blueprint, tileWorldSize);
 
         worldWidth = cols * tileWorldSize;
-        worldHeight = rows * tileWorldSize;
+        worldHeight = blueprintRows * tileWorldSize;
         viewWidth = VIEW_TILES_W * tileWorldSize;
         viewHeight = VIEW_TILES_H * tileWorldSize;
 
@@ -100,8 +114,19 @@ public class CelesteGame extends ApplicationAdapter {
         uiShape = new ShapeRenderer();
         loadTileset();
         initSamurai();
+        enemyManager = new EnemyManager();
+        enemySpawns = EnemySpawnLoader.load();
+        if (!enemySpawns.isEmpty()) {
+            enemyManager.spawnAll(enemySpawns, blueprintRows, tileWorldSize);
+        }
+        samurai.setAttackImpactListener(damage -> {
+            if (enemyManager != null) {
+                enemyManager.applyMeleeDamage(samurai, damage);
+            }
+        });
         Gdx.graphics.setVSync(true);
         updateCamera();
+        transitionGameState(GameState.PLAYING);
     }
 
     @Override
@@ -115,14 +140,24 @@ public class CelesteGame extends ApplicationAdapter {
         if (samurai != null) {
             samurai.update(delta);
         }
+        if (enemyManager != null) {
+            enemyManager.update(delta);
+        }
 
         updateCamera();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         drawTiles();
+        if (enemyManager != null) {
+            enemyManager.draw(batch);
+        }
         drawSamurai();
         batch.end();
+        if (enemyManager != null && uiShape != null) {
+            uiShape.setProjectionMatrix(camera.combined);
+            enemyManager.drawHealthBars(uiShape);
+        }
         drawHealthBar();
     }
 
@@ -133,6 +168,10 @@ public class CelesteGame extends ApplicationAdapter {
 
     @Override
     public void dispose() {
+        if (currentGameState != GameState.GAME_OVER) {
+            transitionGameState(GameState.GAME_OVER);
+        }
+        GameLogger.info("Game terminated");
         batch.dispose();
         if (uiShape != null) {
             uiShape.dispose();
@@ -142,6 +181,9 @@ public class CelesteGame extends ApplicationAdapter {
         }
         if (samurai != null) {
             samurai.dispose();
+        }
+        if (enemyManager != null) {
+            enemyManager.dispose();
         }
     }
 
@@ -170,9 +212,17 @@ public class CelesteGame extends ApplicationAdapter {
     }
 
     private void loadTileset() {
-        loadPaletteFromTilesDirectory();
-        if (paletteRegions.isEmpty()) {
-            loadPaletteFromAtlas();
+        paletteTextures.clear();
+        paletteRegions.clear();
+        TilesetData data = TilesetIO.loadFromTsx(TILESET_TSX);
+        if (!data.isEmpty()) {
+            paletteTextures.addAll(data.textures());
+            paletteRegions.addAll(data.regions());
+        } else {
+            loadPaletteFromTilesDirectory();
+            if (paletteRegions.isEmpty()) {
+                loadPaletteFromAtlas();
+            }
         }
         if (paletteRegions.isEmpty()) {
             throw new IllegalStateException("Unable to load tile palette.");
@@ -180,29 +230,34 @@ public class CelesteGame extends ApplicationAdapter {
     }
 
     private void loadPaletteFromTilesDirectory() {
-        String basePath = KENNEY_BASE + "Transparent/Tiles/";
-        boolean any = false;
-        int consecutiveMisses = 0;
-        for (int index = 0; index < 512 && consecutiveMisses < 50; index++) {
-            String name = String.format(Locale.US, "tile_%04d.png", index);
-            FileHandle file = Gdx.files.internal(basePath + name);
-            if (!file.exists()) {
-                consecutiveMisses++;
+        FileHandle directory = Gdx.files.internal(TILESET_BASE);
+        if (directory == null || !directory.exists() || !directory.isDirectory()) {
+            Gdx.app.log("CelesteGame", "Tileset folder " + TILESET_BASE + " missing.");
+            return;
+        }
+        FileHandle[] contents = directory.list();
+        if (contents == null || contents.length == 0) {
+            return;
+        }
+        Arrays.sort(contents, (a, b) -> a.name().compareToIgnoreCase(b.name()));
+        int loaded = 0;
+        for (FileHandle file : contents) {
+            String extension = file.extension().toLowerCase(Locale.ROOT);
+            if (!"png".equals(extension)) {
                 continue;
             }
             Texture texture = new Texture(file);
             paletteTextures.add(texture);
             paletteRegions.add(new TextureRegion(texture));
-            consecutiveMisses = 0;
-            any = true;
+            loaded++;
         }
-        if (any) {
-            Gdx.app.log("CelesteGame", "Loaded " + paletteRegions.size() + " sprites from Transparent/Tiles");
+        if (loaded > 0) {
+            Gdx.app.log("CelesteGame", "Loaded " + paletteRegions.size() + " textures from " + TILESET_BASE);
         }
     }
 
     private void loadPaletteFromAtlas() {
-        FileHandle file = Gdx.files.internal(KENNEY_BASE + "Transparent/Tilemap/tilemap.png");
+        FileHandle file = Gdx.files.internal(TILESET_BASE + "tilemap.png");
         if (!file.exists()) {
             return;
         }
@@ -244,6 +299,7 @@ public class CelesteGame extends ApplicationAdapter {
         defendCommand = new DefendCommand();
         specialAttackCommand = new SpecialAttackCommand();
         Gdx.app.log("CelesteGame", "Samurai initialized at (" + spawnX + ", " + spawnY + ")");
+        GameLogger.entityCreated("Samurai", "player");
     }
 
     private void handleInput(float delta) {
@@ -356,9 +412,17 @@ public class CelesteGame extends ApplicationAdapter {
 
     private void handleSamuraiDeath() {
         Gdx.app.log("CelesteGame", "Samurai died; scheduling respawn");
+        GameLogger.entityDestroyed("Samurai", "player");
         Gdx.app.postRunnable(() -> {
             if (samurai != null) {
                 samurai.reviveAt(spawnX, spawnY);
+                GameLogger.entityCreated("Samurai", "player");
+                if (enemyManager != null) {
+                    enemyManager.dispose();
+                    if (enemySpawns != null && !enemySpawns.isEmpty()) {
+                        enemyManager.spawnAll(enemySpawns, blueprintRows, tileWorldSize);
+                    }
+                }
             }
         });
     }
@@ -387,6 +451,14 @@ public class CelesteGame extends ApplicationAdapter {
         uiShape.setColor(0.85f, 0.1f, 0.2f, 0.95f);
         uiShape.rect(x, y, barWidth * ratio, barHeight);
         uiShape.end();
+    }
+
+    private void transitionGameState(GameState next) {
+        if (next == null || next == currentGameState) {
+            return;
+        }
+        GameLogger.stateTransition("Game", currentGameState.name(), next.name());
+        currentGameState = next;
     }
 
     private static class TileCell {

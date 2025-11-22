@@ -63,6 +63,17 @@ tasks.register<JavaExec>("runInspector") {
     mainClass.set("org.celestelike.desktop.InspectorLauncher")
     classpath = sourceSets["main"].runtimeClasspath
 }
+tasks.register<JavaExec>("extractTiles") {
+    group = "tools"
+    description = "Extract tiles from a TSX tileset into tile_0000.png, tile_0001.png, ..."
+
+    mainClass.set("org.celestelike.tools.TsxTileExtractor")
+    classpath = sourceSets["main"].runtimeClasspath
+
+    args(
+         "C:/Users/moham/Downloads/kenney_pico-8-platformer/Transparent/Tiles/manara.tsx"
+    )
+}
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
