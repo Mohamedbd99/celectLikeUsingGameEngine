@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import org.celestelike.game.config.GameConfig;
 import org.celestelike.game.entity.samurai.SamuraiCharacter;
 import org.celestelike.game.entity.samurai.input.AttackCommand;
 import org.celestelike.game.entity.samurai.input.DashCommand;
@@ -64,8 +65,12 @@ public class CelesteGame extends ApplicationAdapter {
     private float worldWidth;
     private float worldHeight;
     private float elapsed;
+    private float viewTilesWide = VIEW_TILES_W;
+    private float viewTilesTall = VIEW_TILES_H;
+    private float cameraZoom = 1f;
     private float viewWidth;
     private float viewHeight;
+    private GameConfig gameConfig;
     private SamuraiCharacter samurai;
     private ShapeRenderer uiShape;
     private final Matrix4 uiMatrix = new Matrix4();
@@ -87,8 +92,13 @@ public class CelesteGame extends ApplicationAdapter {
 
     @Override
     public void create() {
+        gameConfig = GameConfig.load();
         tileWorldSize = LevelData.TILE_SIZE * TILE_SCALE;
         GameLogger.info("Game started");
+
+        viewTilesWide = gameConfig.cameraTilesWide();
+        viewTilesTall = gameConfig.cameraTilesTall();
+        cameraZoom = gameConfig.cameraZoom();
 
         TileBlueprint[][] blueprint = LevelData.copyBlueprint();
         blueprintRows = blueprint.length;
@@ -103,12 +113,13 @@ public class CelesteGame extends ApplicationAdapter {
 
         worldWidth = cols * tileWorldSize;
         worldHeight = blueprintRows * tileWorldSize;
-        viewWidth = VIEW_TILES_W * tileWorldSize;
-        viewHeight = VIEW_TILES_H * tileWorldSize;
+        viewWidth = viewTilesWide * tileWorldSize;
+        viewHeight = viewTilesTall * tileWorldSize;
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(viewWidth, viewHeight, camera);
         viewport.apply(true);
+        camera.zoom = cameraZoom;
 
         batch = new SpriteBatch();
         uiShape = new ShapeRenderer();
@@ -280,7 +291,7 @@ public class CelesteGame extends ApplicationAdapter {
     }
 
     private void initSamurai() {
-        samurai = new SamuraiCharacter();
+        samurai = new SamuraiCharacter(gameConfig.player());
         samurai.loadAssets();
         spawnX = 1f * tileWorldSize - 3f;
         spawnY = 2f * tileWorldSize;

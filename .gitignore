@@ -47,3 +47,4 @@ resources
 src/main/resources
 
 logs/
+logs/game.log

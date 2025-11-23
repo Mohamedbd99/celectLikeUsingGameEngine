@@ -13,7 +13,7 @@ import org.celestelike.game.world.LevelData.TileBlueprint;
 public final class LevelCollisionMap {
 
     private static final String SNAPSHOT_PATH = "inspector_snapshot.json";
-    private static final float DEFAULT_TILE_SIZE = LevelData.TILE_SIZE;
+    private static final float DEFAULT_TILE_SIZE = org.celestelike.game.world.LevelData.TILE_SIZE;
 
     private final boolean[][] solid;
     private final boolean[][] water;
@@ -122,7 +122,7 @@ public final class LevelCollisionMap {
     }
 
     private void populateWaterMask(TileBlueprint[][] blueprint) {
-        int waterTileIndex = LevelData.waterTileIndex();
+        int waterTileIndex = org.celestelike.game.world.LevelData.waterTileIndex();
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 TileBlueprint cell = blueprint[row][col];

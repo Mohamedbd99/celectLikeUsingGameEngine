@@ -24,6 +24,7 @@ import org.celestelike.game.entity.samurai.state.SamuraiJumpState;
 import org.celestelike.game.entity.samurai.state.SamuraiRunState;
 import org.celestelike.game.entity.samurai.state.SamuraiState;
 import org.celestelike.game.entity.samurai.state.SamuraiDefendState;
+import org.celestelike.game.config.GameConfig;
 import org.celestelike.game.entity.samurai.state.SamuraiSpecialAttackState;
 import org.celestelike.game.entity.samurai.state.SamuraiDeathState;
 import org.celestelike.game.entity.samurai.state.SamuraiHurtState;
@@ -90,8 +91,6 @@ public final class SamuraiCharacter {
     private static final int DEATH_FRAMES = 9;
     private static final float HURT_FRAME_DURATION = 0.07f;
     private static final int SPECIAL_ATTACK_DAMAGE = 40;
-    private static final float RENDER_OFFSET_Y = -20f;
-    private static final float RENDER_OFFSET_X = 0f;
     private final Vector2 dashDirection = new Vector2();
 
     private final EnumMap<SamuraiAnimationKey, Animation<TextureRegion>> animations =
@@ -138,10 +137,23 @@ public final class SamuraiCharacter {
     private SamuraiAttackStrategy queuedAttackStrategy;
     private DeathListener deathListener;
     private AttackImpactListener attackImpactListener;
+    private final float colliderWidth;
+    private final float colliderHeight;
+    private final float colliderOffsetX;
+    private final float colliderOffsetY;
+    private final float renderOffsetX;
+    private final float renderOffsetY;
 
-    public SamuraiCharacter() {
+    public SamuraiCharacter(GameConfig.PlayerConfig config) {
         LOGGER.info("Samurai character initialized");
-        controller.configureCollider(39f, 84f, 27f, 0f);
+        colliderWidth = config == null ? 39f : config.colliderWidth();
+        colliderHeight = config == null ? 84f : config.colliderHeight();
+        colliderOffsetX = config == null ? 27f : config.colliderOffsetX();
+        colliderOffsetY = config == null ? 0f : config.colliderOffsetY();
+        renderOffsetX = config == null ? 0f : config.renderOffsetX();
+        renderOffsetY = config == null ? -20f : config.renderOffsetY();
+
+        controller.configureCollider(colliderWidth, colliderHeight, colliderOffsetX, colliderOffsetY);
         dashAvailable = true;
         jumpAvailable = true;
         wasGrounded = false;
@@ -483,8 +495,8 @@ public final class SamuraiCharacter {
         float width = currentFrame.getRegionWidth();
         float height = currentFrame.getRegionHeight();
         float drawWidth = facingRight ? width : -width;
-        float drawX = facingRight ? pos.x + RENDER_OFFSET_X : pos.x + width - RENDER_OFFSET_X;
-        float drawY = pos.y + RENDER_OFFSET_Y;
+        float drawX = facingRight ? pos.x + renderOffsetX : pos.x + width - renderOffsetX;
+        float drawY = pos.y + renderOffsetY;
         batch.draw(currentFrame, drawX, drawY, drawWidth, height);
     }
 

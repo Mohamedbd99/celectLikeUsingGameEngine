@@ -25,13 +25,14 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import org.celestelike.game.config.GameConfig;
 import org.celestelike.game.world.LevelData;
 import org.celestelike.game.world.LevelData.TileBlueprint;
 import org.celestelike.game.world.TilesetIO;
 import org.celestelike.game.world.TilesetIO.TilesetData;
 
 public class MapInspector extends ApplicationAdapter {
-
+    
     private enum SelectionType {
         SOLID("Solid ground/wall"),
         DOOR("Door"),
@@ -95,6 +96,8 @@ public class MapInspector extends ApplicationAdapter {
         }
     }
 
+    private static final float HIGHLIGHT_INSET = 1f;
+
     private OrthographicCamera camera;
     private Viewport viewport;
     private SpriteBatch batch;
@@ -125,6 +128,7 @@ public class MapInspector extends ApplicationAdapter {
 
     @Override
     public void create() {
+        GameConfig.load();
         tileWorldSize = LevelData.TILE_SIZE * 4f;
 
         TileBlueprint[][] blueprint = LevelData.copyBlueprint();
@@ -243,16 +247,18 @@ public class MapInspector extends ApplicationAdapter {
 
     private void drawTileOutline(TileRef ref) {
         int rows = cells.length;
-        float x = ref.col * tileWorldSize;
-        float y = (rows - ref.row - 1) * tileWorldSize;
-        shapeRenderer.rect(x, y, tileWorldSize, tileWorldSize);
+        float x = ref.col * tileWorldSize + HIGHLIGHT_INSET;
+        float y = (rows - ref.row - 1) * tileWorldSize + HIGHLIGHT_INSET;
+        float size = tileWorldSize - HIGHLIGHT_INSET * 2f;
+        shapeRenderer.rect(x, y, size, size);
     }
 
     private void drawTileFill(TileRef ref) {
         int rows = cells.length;
-        float x = ref.col * tileWorldSize;
-        float y = (rows - ref.row - 1) * tileWorldSize;
-        shapeRenderer.rect(x, y, tileWorldSize, tileWorldSize);
+        float x = ref.col * tileWorldSize + HIGHLIGHT_INSET;
+        float y = (rows - ref.row - 1) * tileWorldSize + HIGHLIGHT_INSET;
+        float size = tileWorldSize - HIGHLIGHT_INSET * 2f;
+        shapeRenderer.rect(x, y, size, size);
     }
 
     private void setFillColor(SelectionType type, float alpha) {
