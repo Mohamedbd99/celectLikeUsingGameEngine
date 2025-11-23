@@ -17242,3 +17242,925 @@
 [2025-11-23 21:53:10] [STATE] Player: ATTACK -> IDLE
 [2025-11-23 21:53:11] [STATE] Game: PLAYING -> GAME_OVER
 [2025-11-23 21:53:11] [INFO] Game terminated
+[2025-11-23 22:01:17] [INFO] Game started
+[2025-11-23 22:01:17] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:01:17] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:01:17] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:01:19] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:01:19] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:01:19] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:01:19] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:01:19] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:01:20] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:01:21] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:21] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:01:21] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:01:21] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:01:21] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:01:22] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:22] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:01:22] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:22] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:01:23] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:01:23] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:01:24] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:24] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:01:24] [STATE] Player: JUMP -> WALL_SLIDE
+[2025-11-23 22:01:24] [STATE] Player: WALL_SLIDE -> IDLE
+[2025-11-23 22:01:25] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:01:25] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:01:25] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:01:25] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:01:25] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:01:26] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:27] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:01:27] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:01:27] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:01:28] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:28] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:01:28] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:01:28] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:01:29] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:29] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:01:30] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:01:30] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:01:30] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:31] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:01:31] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:01:32] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:01:32] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:33] [STATE] Player: IDLE -> DASH
+[2025-11-23 22:01:33] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:01:34] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:34] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:01:34] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:01:35] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:01:35] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:35] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:01:36] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:01:36] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:36] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:01:37] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:01:37] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:01:37] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:01:38] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:38] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:01:38] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:01:38] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:01:39] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:01:40] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:01:40] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:01:41] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:01:41] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:01:42] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:01:42] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:01:42] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:07:44] [INFO] MapEditor started with TSX: assets/b.tsx
+[2025-11-23 22:07:50] [INFO] Selected map cell row=10 col=6
+[2025-11-23 22:07:50] [INFO] Selected map cell row=11 col=6
+[2025-11-23 22:07:51] [INFO] Selected map cell row=10 col=6
+[2025-11-23 22:07:51] [INFO] Selected map cell row=11 col=6
+[2025-11-23 22:07:52] [INFO] Selected map cell row=10 col=6
+[2025-11-23 22:07:54] [INFO] Selected map cell row=11 col=6
+[2025-11-23 22:07:56] [INFO] Selected map cell row=23 col=9
+[2025-11-23 22:07:57] [INFO] Cleared cell (23,9)
+[2025-11-23 22:07:58] [INFO] Selected map cell row=21 col=9
+[2025-11-23 22:07:58] [INFO] Cleared cell (21,9)
+[2025-11-23 22:07:59] [INFO] Cleared cell (21,9)
+[2025-11-23 22:07:59] [INFO] Cleared cell (21,9)
+[2025-11-23 22:08:15] [INFO] Selected map cell row=27 col=7
+[2025-11-23 22:08:16] [INFO] Selected map cell row=26 col=8
+[2025-11-23 22:08:17] [INFO] Selected map cell row=26 col=8
+[2025-11-23 22:08:17] [INFO] Selected map cell row=26 col=8
+[2025-11-23 22:08:18] [INFO] Selected map cell row=27 col=7
+[2025-11-23 22:08:21] [INFO] Cell (27,7) solid=false
+[2025-11-23 22:08:23] [INFO] Selected map cell row=27 col=7
+[2025-11-23 22:08:23] [INFO] Cell (27,7) solid=true
+[2025-11-23 22:08:24] [INFO] Cell (27,7) solid=false
+[2025-11-23 22:08:25] [INFO] Cell (27,7) solid=true
+[2025-11-23 22:08:27] [INFO] Selected map cell row=27 col=8
+[2025-11-23 22:08:27] [INFO] Cell (27,8) water=true
+[2025-11-23 22:08:28] [INFO] Selected map cell row=27 col=9
+[2025-11-23 22:08:30] [INFO] Placed door at (27,9) channel=2
+[2025-11-23 22:08:31] [INFO] Selected map cell row=27 col=10
+[2025-11-23 22:08:34] [INFO] Placed key at (27,10) channel=2
+[2025-11-23 22:08:39] [INFO] Cleared cell (27,10)
+[2025-11-23 22:08:40] [INFO] Selected map cell row=27 col=9
+[2025-11-23 22:08:41] [INFO] Cleared cell (27,9)
+[2025-11-23 22:08:41] [INFO] Selected map cell row=27 col=8
+[2025-11-23 22:08:42] [INFO] Cleared cell (27,8)
+[2025-11-23 22:08:42] [INFO] Selected map cell row=27 col=7
+[2025-11-23 22:08:42] [INFO] Cleared cell (27,7)
+[2025-11-23 22:08:43] [INFO] Selected map cell row=25 col=7
+[2025-11-23 22:08:44] [INFO] Cleared cell (25,7)
+[2025-11-23 22:08:44] [INFO] Selected map cell row=25 col=6
+[2025-11-23 22:08:45] [INFO] Cleared cell (25,6)
+[2025-11-23 22:08:45] [INFO] Selected map cell row=25 col=5
+[2025-11-23 22:08:45] [INFO] Cleared cell (25,5)
+[2025-11-23 22:08:46] [INFO] Selected map cell row=24 col=5
+[2025-11-23 22:08:46] [INFO] Cleared cell (24,5)
+[2025-11-23 22:08:46] [INFO] Selected map cell row=23 col=5
+[2025-11-23 22:08:47] [INFO] Cleared cell (23,5)
+[2025-11-23 22:08:47] [INFO] Selected map cell row=23 col=5
+[2025-11-23 22:08:47] [INFO] Cleared cell (23,5)
+[2025-11-23 22:08:47] [INFO] Selected map cell row=22 col=5
+[2025-11-23 22:08:48] [INFO] Cleared cell (22,5)
+[2025-11-23 22:08:48] [INFO] Selected map cell row=21 col=5
+[2025-11-23 22:08:48] [INFO] Cleared cell (21,5)
+[2025-11-23 22:08:48] [INFO] Selected map cell row=20 col=5
+[2025-11-23 22:08:48] [INFO] Selected map cell row=20 col=5
+[2025-11-23 22:08:49] [INFO] Cleared cell (20,5)
+[2025-11-23 22:08:49] [INFO] Cleared cell (20,5)
+[2025-11-23 22:08:49] [INFO] Selected map cell row=18 col=5
+[2025-11-23 22:08:49] [INFO] Cleared cell (18,5)
+[2025-11-23 22:08:50] [INFO] Selected map cell row=19 col=5
+[2025-11-23 22:08:50] [INFO] Cleared cell (19,5)
+[2025-11-23 22:08:50] [INFO] Selected map cell row=17 col=5
+[2025-11-23 22:08:51] [INFO] Cleared cell (17,5)
+[2025-11-23 22:08:51] [INFO] Selected map cell row=16 col=5
+[2025-11-23 22:08:51] [INFO] Cleared cell (16,5)
+[2025-11-23 22:08:51] [INFO] Selected map cell row=15 col=5
+[2025-11-23 22:08:52] [INFO] Cleared cell (15,5)
+[2025-11-23 22:08:52] [INFO] Selected map cell row=14 col=5
+[2025-11-23 22:08:52] [INFO] Cleared cell (14,5)
+[2025-11-23 22:08:52] [INFO] Selected map cell row=14 col=3
+[2025-11-23 22:08:53] [INFO] Cleared cell (14,3)
+[2025-11-23 22:08:53] [INFO] Selected map cell row=14 col=2
+[2025-11-23 22:08:54] [INFO] Selected map cell row=13 col=5
+[2025-11-23 22:08:54] [INFO] Cleared cell (13,5)
+[2025-11-23 22:08:54] [INFO] Selected map cell row=13 col=4
+[2025-11-23 22:08:55] [INFO] Cleared cell (13,4)
+[2025-11-23 22:08:55] [INFO] Selected map cell row=14 col=6
+[2025-11-23 22:08:55] [INFO] Cleared cell (14,6)
+[2025-11-23 22:08:55] [INFO] Selected map cell row=15 col=7
+[2025-11-23 22:08:56] [INFO] Selected map cell row=16 col=7
+[2025-11-23 22:08:57] [INFO] Selected map cell row=16 col=8
+[2025-11-23 22:08:57] [INFO] Selected map cell row=15 col=7
+[2025-11-23 22:08:58] [INFO] Cleared cell (15,7)
+[2025-11-23 22:08:58] [INFO] Selected map cell row=16 col=8
+[2025-11-23 22:08:59] [INFO] Cleared cell (16,8)
+[2025-11-23 22:08:59] [INFO] Selected map cell row=16 col=8
+[2025-11-23 22:08:59] [INFO] Cleared cell (16,8)
+[2025-11-23 22:09:00] [INFO] Selected map cell row=14 col=7
+[2025-11-23 22:09:00] [INFO] Cleared cell (14,7)
+[2025-11-23 22:09:00] [INFO] Cleared cell (14,7)
+[2025-11-23 22:09:01] [INFO] Cleared cell (14,7)
+[2025-11-23 22:09:01] [INFO] Selected map cell row=14 col=2
+[2025-11-23 22:09:01] [INFO] Cleared cell (14,2)
+[2025-11-23 22:09:01] [INFO] Cleared cell (14,2)
+[2025-11-23 22:09:01] [INFO] Cleared cell (14,2)
+[2025-11-23 22:09:02] [INFO] Cleared cell (14,2)
+[2025-11-23 22:09:02] [INFO] Selected map cell row=12 col=5
+[2025-11-23 22:09:02] [INFO] Cleared cell (12,5)
+[2025-11-23 22:09:02] [INFO] Cleared cell (12,5)
+[2025-11-23 22:09:02] [INFO] Cleared cell (12,5)
+[2025-11-23 22:09:02] [INFO] Selected map cell row=11 col=6
+[2025-11-23 22:09:03] [INFO] Cleared cell (11,6)
+[2025-11-23 22:09:03] [INFO] Cleared cell (11,6)
+[2025-11-23 22:09:03] [INFO] Cleared cell (11,6)
+[2025-11-23 22:09:03] [INFO] Selected map cell row=10 col=6
+[2025-11-23 22:09:04] [INFO] Cleared cell (10,6)
+[2025-11-23 22:09:04] [INFO] Cleared cell (10,6)
+[2025-11-23 22:09:04] [INFO] Selected map cell row=12 col=6
+[2025-11-23 22:09:04] [INFO] Cleared cell (12,6)
+[2025-11-23 22:09:04] [INFO] Cleared cell (12,6)
+[2025-11-23 22:09:05] [INFO] Cleared cell (12,6)
+[2025-11-23 22:09:05] [INFO] Cleared cell (12,6)
+[2025-11-23 22:09:05] [INFO] Cleared cell (12,6)
+[2025-11-23 22:09:05] [INFO] Selected map cell row=22 col=16
+[2025-11-23 22:09:05] [INFO] Cleared cell (22,16)
+[2025-11-23 22:09:06] [INFO] Cleared cell (22,16)
+[2025-11-23 22:09:06] [INFO] Selected map cell row=23 col=17
+[2025-11-23 22:09:06] [INFO] Cleared cell (23,17)
+[2025-11-23 22:09:06] [INFO] Cleared cell (23,17)
+[2025-11-23 22:09:06] [INFO] Cleared cell (23,17)
+[2025-11-23 22:09:06] [INFO] Selected map cell row=23 col=16
+[2025-11-23 22:09:07] [INFO] Cleared cell (23,16)
+[2025-11-23 22:09:07] [INFO] Cleared cell (23,16)
+[2025-11-23 22:09:07] [INFO] Selected map cell row=22 col=17
+[2025-11-23 22:09:07] [INFO] Cleared cell (22,17)
+[2025-11-23 22:09:07] [INFO] Cleared cell (22,17)
+[2025-11-23 22:09:07] [INFO] Cleared cell (22,17)
+[2025-11-23 22:09:08] [INFO] Selected map cell row=24 col=17
+[2025-11-23 22:09:08] [INFO] Cleared cell (24,17)
+[2025-11-23 22:09:08] [INFO] Selected map cell row=25 col=17
+[2025-11-23 22:09:08] [INFO] Cleared cell (25,17)
+[2025-11-23 22:09:08] [INFO] Cleared cell (25,17)
+[2025-11-23 22:09:09] [INFO] Selected map cell row=25 col=19
+[2025-11-23 22:09:09] [INFO] Cleared cell (25,19)
+[2025-11-23 22:09:09] [INFO] Cleared cell (25,19)
+[2025-11-23 22:09:09] [INFO] Cleared cell (25,19)
+[2025-11-23 22:09:09] [INFO] Selected map cell row=25 col=29
+[2025-11-23 22:09:09] [INFO] Cleared cell (25,29)
+[2025-11-23 22:09:10] [INFO] Cleared cell (25,29)
+[2025-11-23 22:09:10] [INFO] Cleared cell (25,29)
+[2025-11-23 22:09:10] [INFO] Cleared cell (25,29)
+[2025-11-23 22:09:11] [INFO] Selected map cell row=13 col=6
+[2025-11-23 22:09:11] [INFO] Cleared cell (13,6)
+[2025-11-23 22:09:11] [INFO] Cleared cell (13,6)
+[2025-11-23 22:09:11] [INFO] Cleared cell (13,6)
+[2025-11-23 22:09:19] [INFO] Selected palette index=1121
+[2025-11-23 22:09:22] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:22] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:22] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:23] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:23] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:23] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:23] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:23] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:24] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:25] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:25] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:26] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:26] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:26] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:09:27] [INFO] MapEditor terminated
+[2025-11-23 22:09:34] [INFO] Game started
+[2025-11-23 22:09:34] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:09:34] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:09:34] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:09:36] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:09:36] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:09:36] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:09:37] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:09:37] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:09:37] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:09:37] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:09:38] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:09:38] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:09:38] [STATE] Player: WALL_CONTACT -> WALL_SLIDE
+[2025-11-23 22:09:39] [STATE] Player: WALL_SLIDE -> IDLE
+[2025-11-23 22:09:39] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:09:39] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:09:39] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:09:40] [STATE] Player: WALL_CONTACT -> WALL_SLIDE
+[2025-11-23 22:09:40] [STATE] Player: WALL_SLIDE -> IDLE
+[2025-11-23 22:09:40] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:09:40] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:09:40] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:09:40] [STATE] Player: WALL_CONTACT -> WALL_JUMP
+[2025-11-23 22:09:40] [STATE] Player: WALL_JUMP -> JUMP
+[2025-11-23 22:09:40] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:09:41] [STATE] Player: WALL_CONTACT -> WALL_JUMP
+[2025-11-23 22:09:41] [STATE] Player: WALL_JUMP -> JUMP
+[2025-11-23 22:09:41] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:09:41] [STATE] Player: WALL_CONTACT -> WALL_SLIDE
+[2025-11-23 22:09:42] [STATE] Player: WALL_SLIDE -> IDLE
+[2025-11-23 22:09:42] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:09:42] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:09:43] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:09:43] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:09:45] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:09:45] [INFO] Game terminated
+[2025-11-23 22:20:57] [INFO] Game started
+[2025-11-23 22:20:57] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:20:57] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:20:57] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:20:58] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:20:59] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:21:00] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:01] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:21:01] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:01] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:21:01] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:02] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:21:03] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:21:03] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:03] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:21:04] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:21:04] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:04] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:21:05] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:21:05] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:05] [STATE] Player: RUN -> DASH
+[2025-11-23 22:21:05] [STATE] Player: DASH -> IDLE
+[2025-11-23 22:21:05] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:06] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:21:06] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:21:06] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:21:06] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:21:06] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:08] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:21:08] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:09] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:21:10] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:10] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:21:10] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:21:10] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:11] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:21:11] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:21:11] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:11] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:21:12] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:21:12] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:12] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:21:13] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:21:13] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:21:13] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:21:13] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:21:15] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:21:15] [INFO] Game terminated
+[2025-11-23 22:21:32] [INFO] MapEditor started with TSX: assets/b.tsx
+[2025-11-23 22:21:38] [INFO] Selected palette index=1089
+[2025-11-23 22:21:40] [INFO] Selected map cell row=0 col=0
+[2025-11-23 22:21:41] [INFO] Selected map cell row=0 col=1
+[2025-11-23 22:21:42] [INFO] Selected map cell row=0 col=2
+[2025-11-23 22:21:42] [INFO] Selected map cell row=0 col=3
+[2025-11-23 22:21:43] [INFO] Selected map cell row=0 col=4
+[2025-11-23 22:21:43] [INFO] Selected map cell row=0 col=4
+[2025-11-23 22:21:44] [INFO] Selected map cell row=0 col=3
+[2025-11-23 22:21:46] [INFO] Cleared cell (0,3)
+[2025-11-23 22:21:46] [INFO] Selected map cell row=0 col=2
+[2025-11-23 22:21:47] [INFO] Cleared cell (0,2)
+[2025-11-23 22:21:47] [INFO] Selected map cell row=0 col=1
+[2025-11-23 22:21:48] [INFO] Cleared cell (0,1)
+[2025-11-23 22:21:48] [INFO] Selected map cell row=0 col=0
+[2025-11-23 22:21:49] [INFO] Cleared cell (0,0)
+[2025-11-23 22:21:49] [INFO] Selected map cell row=0 col=4
+[2025-11-23 22:21:49] [INFO] Cell (0,4) solid=true
+[2025-11-23 22:21:51] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:21:54] [INFO] MapEditor terminated
+[2025-11-23 22:22:00] [INFO] Game started
+[2025-11-23 22:22:00] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:22:00] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:22:00] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:22:02] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:22:02] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:22:02] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:02] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:22:02] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:04] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:22:04] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:22:04] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:05] [STATE] Player: RUN -> DASH
+[2025-11-23 22:22:05] [STATE] Player: DASH -> IDLE
+[2025-11-23 22:22:05] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:05] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:22:06] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:22:06] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:22:06] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:22:06] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:06] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:22:06] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:22:07] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:22:07] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:22:07] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:07] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:22:07] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:22:07] [STATE] Player: DASH -> IDLE
+[2025-11-23 22:22:07] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:08] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:22:08] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:08] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:22:08] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:22:08] [STATE] Player: DASH -> IDLE
+[2025-11-23 22:22:08] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:08] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:22:08] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:22:09] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:22:09] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:22:09] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:09] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:22:10] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:22:11] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:22:11] [INFO] Game terminated
+[2025-11-23 22:22:16] [INFO] MapEditor started with TSX: assets/b.tsx
+[2025-11-23 22:22:19] [INFO] Selected map cell row=0 col=4
+[2025-11-23 22:22:23] [INFO] Selected palette index=779
+[2025-11-23 22:22:25] [INFO] Selected map cell row=0 col=4
+[2025-11-23 22:22:27] [INFO] Cell (0,4) solid=false
+[2025-11-23 22:22:28] [INFO] Cell (0,4) solid=true
+[2025-11-23 22:22:28] [INFO] Selected map cell row=0 col=4
+[2025-11-23 22:22:29] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:29] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:29] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:29] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:35] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:36] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:36] [INFO] Selected map cell row=0 col=5
+[2025-11-23 22:22:37] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:37] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:38] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:38] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:39] [INFO] Selected map cell row=0 col=5
+[2025-11-23 22:22:41] [INFO] Cleared cell (0,5)
+[2025-11-23 22:22:42] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:42] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:42] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:42] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:42] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:43] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:43] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:43] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:43] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:44] [INFO] Selected map cell row=0 col=6
+[2025-11-23 22:22:45] [INFO] Cleared cell (0,6)
+[2025-11-23 22:22:46] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:46] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:46] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:46] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:47] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:22:49] [INFO] MapEditor terminated
+[2025-11-23 22:22:53] [INFO] Game started
+[2025-11-23 22:22:53] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:22:53] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:22:53] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:22:55] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:22:55] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:22:56] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:56] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:22:56] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:56] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:22:56] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:58] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:22:58] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:22:58] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:22:58] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:22:59] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:22:59] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:23:00] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:23:00] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:23:01] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:23:01] [INFO] Game terminated
+[2025-11-23 22:35:06] [INFO] MapEditor started with TSX: assets/b.tsx
+[2025-11-23 22:35:34] [INFO] Selected palette index=777
+[2025-11-23 22:35:38] [INFO] Selected map cell row=19 col=4
+[2025-11-23 22:35:39] [INFO] Cell (19,4) solid=true
+[2025-11-23 22:35:41] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:35:41] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:35:41] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:35:41] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:35:42] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:35:43] [INFO] MapEditor terminated
+[2025-11-23 22:35:47] [INFO] Game started
+[2025-11-23 22:35:47] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:35:47] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:35:47] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:35:49] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:35:49] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:35:49] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:50] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:50] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:50] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:51] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:51] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:52] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:52] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:53] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:53] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:53] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:53] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:54] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:54] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:55] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:55] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:55] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:55] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:55] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:55] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:56] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:56] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:56] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:35:57] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:35:57] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:35:57] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:35:58] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:58] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:58] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:35:59] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:35:59] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:35:59] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:35:59] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:36:00] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:36:00] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:36:00] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:36:00] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:36:01] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:36:02] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:36:02] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:36:02] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:36:03] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:36:03] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:36:04] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:36:04] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:36:04] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:36:04] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:36:04] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:36:05] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:36:05] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:36:05] [STATE] Player: RUN -> DASH
+[2025-11-23 22:36:06] [STATE] Player: DASH -> IDLE
+[2025-11-23 22:36:06] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:36:06] [STATE] Player: RUN -> DASH
+[2025-11-23 22:36:06] [STATE] Player: DASH -> IDLE
+[2025-11-23 22:36:06] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:36:06] [STATE] Player: RUN -> DASH
+[2025-11-23 22:36:06] [STATE] Player: DASH -> IDLE
+[2025-11-23 22:36:06] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:36:07] [STATE] Player: RUN -> DASH
+[2025-11-23 22:36:07] [STATE] Player: DASH -> IDLE
+[2025-11-23 22:36:07] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:36:07] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:36:35] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:36:35] [INFO] Game terminated
+[2025-11-23 22:36:41] [INFO] MapEditor started with TSX: assets/b.tsx
+[2025-11-23 22:37:04] [INFO] Game started
+[2025-11-23 22:37:05] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:37:05] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:37:05] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:37:06] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:37:06] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:37:06] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:37:07] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:37:07] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:37:07] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:37:08] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:37:08] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:37:25] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:37:25] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:37:27] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:37:27] [INFO] Game terminated
+[2025-11-23 22:37:44] [INFO] Game started
+[2025-11-23 22:37:44] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:37:44] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:37:44] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:37:50] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:37:50] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:37:50] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:37:51] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:37:51] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:37:51] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:37:51] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:37:52] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:38:10] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:38:10] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:38:10] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:38:10] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:38:10] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:38:11] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:38:11] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:38:11] [INFO] Game terminated
+[2025-11-23 22:38:16] [INFO] Game started
+[2025-11-23 22:38:16] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:38:16] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:38:16] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:38:20] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:38:21] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:38:21] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:38:21] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:38:21] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:38:22] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:38:22] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:38:22] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:38:22] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:38:22] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:38:25] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:38:26] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:38:26] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:38:26] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:38:27] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:38:27] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:38:27] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:38:27] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:38:28] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:38:28] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:38:28] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:38:29] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:38:29] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:38:29] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:41:09] [INFO] Game started
+[2025-11-23 22:41:09] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:41:09] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:41:09] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:41:11] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:41:11] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:41:11] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:41:12] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:41:12] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:41:12] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:41:13] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:41:13] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:41:13] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:41:13] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:41:13] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:41:14] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:41:14] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:41:15] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:41:16] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:41:16] [INFO] Game terminated
+[2025-11-23 22:41:21] [INFO] MapEditor started with TSX: assets/b.tsx
+[2025-11-23 22:41:23] [INFO] Selected map cell row=0 col=4
+[2025-11-23 22:41:23] [INFO] Cleared cell (0,4)
+[2025-11-23 22:41:24] [INFO] Cleared cell (0,4)
+[2025-11-23 22:41:24] [INFO] Cleared cell (0,4)
+[2025-11-23 22:41:24] [INFO] Selected map cell row=19 col=4
+[2025-11-23 22:41:25] [INFO] Cleared cell (19,4)
+[2025-11-23 22:41:25] [INFO] Cleared cell (19,4)
+[2025-11-23 22:41:25] [INFO] Cleared cell (19,4)
+[2025-11-23 22:41:27] [INFO] Selected palette index=777
+[2025-11-23 22:41:29] [INFO] Selected map cell row=0 col=5
+[2025-11-23 22:41:30] [INFO] Cell (0,5) solid=true
+[2025-11-23 22:41:32] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:41:32] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:41:32] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:41:34] [INFO] MapEditor terminated
+[2025-11-23 22:41:39] [INFO] Game started
+[2025-11-23 22:41:39] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:41:39] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:41:39] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:41:42] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:41:43] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:41:43] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:41:44] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:41:44] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:41:44] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:41:45] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:41:45] [STATE] Player: WALL_CONTACT -> WALL_SLIDE
+[2025-11-23 22:41:45] [STATE] Player: WALL_SLIDE -> IDLE
+[2025-11-23 22:41:46] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:41:46] [INFO] Game terminated
+[2025-11-23 22:42:00] [INFO] MapEditor started with TSX: assets/b.tsx
+[2025-11-23 22:42:02] [INFO] Selected map cell row=0 col=0
+[2025-11-23 22:42:03] [INFO] Cleared cell (0,0)
+[2025-11-23 22:42:03] [INFO] Cleared cell (0,0)
+[2025-11-23 22:42:04] [INFO] Selected map cell row=1 col=0
+[2025-11-23 22:42:04] [INFO] Cleared cell (1,0)
+[2025-11-23 22:42:04] [INFO] Selected map cell row=2 col=0
+[2025-11-23 22:42:05] [INFO] Cleared cell (2,0)
+[2025-11-23 22:42:05] [INFO] Selected map cell row=3 col=0
+[2025-11-23 22:42:06] [INFO] Cleared cell (3,0)
+[2025-11-23 22:42:06] [INFO] Selected map cell row=4 col=0
+[2025-11-23 22:42:11] [INFO] Cleared cell (4,0)
+[2025-11-23 22:42:11] [INFO] Cleared cell (4,0)
+[2025-11-23 22:42:11] [INFO] Selected map cell row=5 col=0
+[2025-11-23 22:42:11] [INFO] Cleared cell (5,0)
+[2025-11-23 22:42:12] [INFO] Cleared cell (5,0)
+[2025-11-23 22:42:12] [INFO] Cleared cell (5,0)
+[2025-11-23 22:42:12] [INFO] Selected map cell row=6 col=0
+[2025-11-23 22:42:12] [INFO] Cleared cell (6,0)
+[2025-11-23 22:42:12] [INFO] Cleared cell (6,0)
+[2025-11-23 22:42:12] [INFO] Selected map cell row=7 col=0
+[2025-11-23 22:42:13] [INFO] Cleared cell (7,0)
+[2025-11-23 22:42:13] [INFO] Cleared cell (7,0)
+[2025-11-23 22:42:13] [INFO] Selected map cell row=8 col=0
+[2025-11-23 22:42:13] [INFO] Cleared cell (8,0)
+[2025-11-23 22:42:14] [INFO] Cleared cell (8,0)
+[2025-11-23 22:42:14] [INFO] Selected map cell row=9 col=0
+[2025-11-23 22:42:14] [INFO] Cleared cell (9,0)
+[2025-11-23 22:42:14] [INFO] Selected map cell row=10 col=0
+[2025-11-23 22:42:15] [INFO] Cleared cell (10,0)
+[2025-11-23 22:42:15] [INFO] Cleared cell (10,0)
+[2025-11-23 22:42:15] [INFO] Cleared cell (10,0)
+[2025-11-23 22:42:15] [INFO] Selected map cell row=11 col=0
+[2025-11-23 22:42:15] [INFO] Cleared cell (11,0)
+[2025-11-23 22:42:15] [INFO] Cleared cell (11,0)
+[2025-11-23 22:42:16] [INFO] Cleared cell (11,0)
+[2025-11-23 22:42:16] [INFO] Cleared cell (11,0)
+[2025-11-23 22:42:16] [INFO] Selected map cell row=12 col=0
+[2025-11-23 22:42:16] [INFO] Cleared cell (12,0)
+[2025-11-23 22:42:16] [INFO] Cleared cell (12,0)
+[2025-11-23 22:42:16] [INFO] Cleared cell (12,0)
+[2025-11-23 22:42:16] [INFO] Selected map cell row=13 col=0
+[2025-11-23 22:42:16] [INFO] Cleared cell (13,0)
+[2025-11-23 22:42:16] [INFO] Selected map cell row=13 col=0
+[2025-11-23 22:42:17] [INFO] Cleared cell (13,0)
+[2025-11-23 22:42:17] [INFO] Selected map cell row=14 col=0
+[2025-11-23 22:42:17] [INFO] Cleared cell (14,0)
+[2025-11-23 22:42:17] [INFO] Cleared cell (14,0)
+[2025-11-23 22:42:17] [INFO] Cleared cell (14,0)
+[2025-11-23 22:42:17] [INFO] Selected map cell row=14 col=0
+[2025-11-23 22:42:17] [INFO] Cleared cell (14,0)
+[2025-11-23 22:42:17] [INFO] Cleared cell (14,0)
+[2025-11-23 22:42:17] [INFO] Selected map cell row=15 col=0
+[2025-11-23 22:42:17] [INFO] Cleared cell (15,0)
+[2025-11-23 22:42:18] [INFO] Cleared cell (15,0)
+[2025-11-23 22:42:18] [INFO] Cleared cell (15,0)
+[2025-11-23 22:42:18] [INFO] Selected map cell row=16 col=0
+[2025-11-23 22:42:18] [INFO] Cleared cell (16,0)
+[2025-11-23 22:42:18] [INFO] Cleared cell (16,0)
+[2025-11-23 22:42:18] [INFO] Selected map cell row=16 col=0
+[2025-11-23 22:42:18] [INFO] Cleared cell (16,0)
+[2025-11-23 22:42:18] [INFO] Cleared cell (16,0)
+[2025-11-23 22:42:19] [INFO] Selected map cell row=17 col=0
+[2025-11-23 22:42:19] [INFO] Cleared cell (17,0)
+[2025-11-23 22:42:19] [INFO] Cleared cell (17,0)
+[2025-11-23 22:42:19] [INFO] Cleared cell (17,0)
+[2025-11-23 22:42:19] [INFO] Selected map cell row=18 col=0
+[2025-11-23 22:42:19] [INFO] Cleared cell (18,0)
+[2025-11-23 22:42:19] [INFO] Cleared cell (18,0)
+[2025-11-23 22:42:19] [INFO] Selected map cell row=19 col=0
+[2025-11-23 22:42:19] [INFO] Cleared cell (19,0)
+[2025-11-23 22:42:20] [INFO] Cleared cell (19,0)
+[2025-11-23 22:42:20] [INFO] Cleared cell (19,0)
+[2025-11-23 22:42:21] [INFO] Selected map cell row=0 col=5
+[2025-11-23 22:42:21] [INFO] Cleared cell (0,5)
+[2025-11-23 22:42:21] [INFO] Cleared cell (0,5)
+[2025-11-23 22:42:22] [INFO] Cleared cell (0,5)
+[2025-11-23 22:42:23] [INFO] Selected palette index=134
+[2025-11-23 22:42:25] [INFO] Selected map cell row=19 col=5
+[2025-11-23 22:42:26] [INFO] Cleared cell (19,5)
+[2025-11-23 22:42:26] [INFO] Selected map cell row=19 col=5
+[2025-11-23 22:42:27] [INFO] Cell (19,5) solid=true
+[2025-11-23 22:42:28] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:42:28] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:42:29] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:42:29] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:42:29] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:42:29] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:42:32] [INFO] MapEditor terminated
+[2025-11-23 22:42:36] [INFO] Game started
+[2025-11-23 22:42:36] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:42:36] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:42:36] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:42:38] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:42:38] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:42:38] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:42:39] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:42:39] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:42:40] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:42:40] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:42:40] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:42:40] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:42:41] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:42:41] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:42:42] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:42:42] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:42:42] [INFO] Game terminated
+[2025-11-23 22:46:38] [INFO] MapEditor started with TSX: assets/b.tsx
+[2025-11-23 22:46:45] [INFO] Selected map cell row=18 col=15
+[2025-11-23 22:46:45] [INFO] Cleared cell (18,15)
+[2025-11-23 22:46:46] [INFO] Selected map cell row=19 col=5
+[2025-11-23 22:46:46] [INFO] Cleared cell (19,5)
+[2025-11-23 22:46:46] [INFO] Cleared cell (19,5)
+[2025-11-23 22:46:46] [INFO] Cleared cell (19,5)
+[2025-11-23 22:46:47] [INFO] Cleared cell (19,5)
+[2025-11-23 22:46:48] [INFO] Selected palette index=1121
+[2025-11-23 22:46:50] [INFO] Selected map cell row=19 col=5
+[2025-11-23 22:46:51] [INFO] Cell (19,5) solid=true
+[2025-11-23 22:46:52] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:46:52] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:46:52] [INFO] Editor save: blueprint=true snapshot=true enemies=true
+[2025-11-23 22:46:53] [INFO] MapEditor terminated
+[2025-11-23 22:46:59] [INFO] Game started
+[2025-11-23 22:46:59] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:46:59] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:46:59] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:47:01] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:47:01] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:47:01] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:02] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:47:03] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:03] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:47:03] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:03] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:47:03] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:03] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:47:03] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:47:04] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:47:04] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:47:04] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:05] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:47:05] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:05] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:47:05] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:47:05] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:47:06] [STATE] Player: JUMP -> WALL_SLIDE
+[2025-11-23 22:47:06] [STATE] Player: WALL_SLIDE -> IDLE
+[2025-11-23 22:47:06] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:06] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:47:06] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:06] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:47:06] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:47:07] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:47:07] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:47:07] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:08] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:47:08] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:08] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:47:08] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:08] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:47:09] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:09] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:47:09] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:10] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:47:26] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:47:27] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:47:27] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:47:27] [INFO] Game terminated
+[2025-11-23 22:47:31] [INFO] Game started
+[2025-11-23 22:47:31] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:47:31] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:47:31] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:47:32] [STATE] Player: IDLE -> ATTACK
+[2025-11-23 22:47:33] [STATE] Player: ATTACK -> IDLE
+[2025-11-23 22:47:33] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:33] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:47:33] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:47:34] [STATE] Player: WALL_CONTACT -> WALL_SLIDE
+[2025-11-23 22:47:34] [STATE] Player: WALL_SLIDE -> IDLE
+[2025-11-23 22:47:35] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:36] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:47:36] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:47:36] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:47:36] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:47:36] [STATE] Player: WALL_CONTACT -> WALL_JUMP
+[2025-11-23 22:47:36] [STATE] Player: WALL_JUMP -> JUMP
+[2025-11-23 22:47:36] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:47:36] [STATE] Player: WALL_CONTACT -> WALL_JUMP
+[2025-11-23 22:47:37] [STATE] Player: WALL_JUMP -> JUMP
+[2025-11-23 22:47:37] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:47:37] [STATE] Player: WALL_CONTACT -> WALL_JUMP
+[2025-11-23 22:47:37] [STATE] Player: WALL_JUMP -> JUMP
+[2025-11-23 22:47:37] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:47:37] [STATE] Player: WALL_CONTACT -> WALL_JUMP
+[2025-11-23 22:47:37] [STATE] Player: WALL_JUMP -> JUMP
+[2025-11-23 22:47:37] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:47:37] [STATE] Player: WALL_CONTACT -> WALL_JUMP
+[2025-11-23 22:47:37] [STATE] Player: WALL_JUMP -> JUMP
+[2025-11-23 22:47:37] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:47:37] [STATE] Player: WALL_CONTACT -> WALL_JUMP
+[2025-11-23 22:47:37] [STATE] Player: WALL_JUMP -> JUMP
+[2025-11-23 22:47:37] [STATE] Player: JUMP -> WALL_SLIDE
+[2025-11-23 22:47:40] [STATE] Player: WALL_SLIDE -> IDLE
+[2025-11-23 22:50:05] [INFO] Game started
+[2025-11-23 22:50:05] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:50:05] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:50:05] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:50:07] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:50:07] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:50:08] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:50:08] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:50:09] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:50:09] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:50:09] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:50:10] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:50:10] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:50:10] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:50:10] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:50:11] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:50:13] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:50:13] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:50:14] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:50:14] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:50:14] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:50:14] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:50:14] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:50:15] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:50:16] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:50:16] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:50:17] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:50:17] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:50:17] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:50:18] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:50:18] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:50:18] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:50:18] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:50:18] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:50:20] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:50:21] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:50:21] [INFO] Game terminated
+[2025-11-23 22:52:20] [INFO] Game started
+[2025-11-23 22:52:21] [STATE] Player: NONE -> IDLE
+[2025-11-23 22:52:21] [ENTITY] CREATED Samurai [player]
+[2025-11-23 22:52:21] [STATE] Game: MENU -> PLAYING
+[2025-11-23 22:52:22] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:52:22] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:52:23] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:52:23] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:52:23] [STATE] Player: WALL_CONTACT -> WALL_SLIDE
+[2025-11-23 22:52:24] [STATE] Player: WALL_SLIDE -> IDLE
+[2025-11-23 22:52:24] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:52:25] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:52:26] [STATE] Player: IDLE -> JUMP
+[2025-11-23 22:52:26] [STATE] Player: JUMP -> WALL_CONTACT
+[2025-11-23 22:52:26] [STATE] Player: WALL_CONTACT -> JUMP
+[2025-11-23 22:52:26] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:52:26] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:52:27] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:52:27] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:52:27] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:52:28] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:52:28] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:52:28] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:52:29] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:52:29] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:52:29] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:52:29] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:52:29] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:52:29] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:52:30] [STATE] Player: DASH -> IDLE
+[2025-11-23 22:52:30] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:52:30] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:52:31] [STATE] Player: JUMP -> DASH
+[2025-11-23 22:52:31] [STATE] Player: DASH -> JUMP
+[2025-11-23 22:52:31] [STATE] Player: JUMP -> IDLE
+[2025-11-23 22:52:31] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:52:32] [STATE] Player: RUN -> JUMP
+[2025-11-23 22:52:32] [STATE] Player: JUMP -> WALL_SLIDE
+[2025-11-23 22:52:32] [STATE] Player: WALL_SLIDE -> IDLE
+[2025-11-23 22:52:32] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:52:33] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:52:34] [STATE] Player: IDLE -> RUN
+[2025-11-23 22:52:35] [STATE] Player: RUN -> IDLE
+[2025-11-23 22:52:35] [STATE] Game: PLAYING -> GAME_OVER
+[2025-11-23 22:52:35] [INFO] Game terminated

@@ -20,7 +20,7 @@ public final class EnemySpawnLoader {
     public static List<EnemySpawn> load() {
         List<EnemySpawn> spawns = new ArrayList<>();
 
-        // 1) Prefer standalone enemy_spawns.json written by ViewEditor
+        // 1) Prefer standalone enemy_spawns.json authored by external tools
         FileHandle enemyFile = locate(ENEMY_SPAWNS);
         if (enemyFile != null && enemyFile.exists()) {
             loadFromFile(enemyFile, spawns);

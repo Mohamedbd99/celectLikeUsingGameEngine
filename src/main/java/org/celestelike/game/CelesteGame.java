@@ -43,7 +43,7 @@ import org.celestelike.game.world.TilesetIO.TilesetData;
 
 /**
  * Minimal runtime that renders the currently authored level.
- * The interactive editor logic now lives in org.celestelike.tools.editor.ViewEditor.
+ * External tools are responsible for authoring the blueprint and collision data.
  */
 public class CelesteGame extends ApplicationAdapter {
 
@@ -115,7 +115,7 @@ public class CelesteGame extends ApplicationAdapter {
         worldWidth = cols * tileWorldSize;
         worldHeight = blueprintRows * tileWorldSize;
 
-        // Show the whole authored level, like the ViewEditor: viewport matches world size.
+        // Show the whole authored level: viewport matches world size.
         viewTilesWide = cols;
         viewTilesTall = blueprintRows;
         viewWidth = worldWidth;
@@ -298,7 +298,7 @@ public class CelesteGame extends ApplicationAdapter {
     private void initSamurai() {
         samurai = new SamuraiCharacter(gameConfig.player());
         samurai.loadAssets();
-        spawnX = 1f * tileWorldSize - 3f;
+        spawnX = 1f * tileWorldSize ;
         spawnY = 2f * tileWorldSize;
         samurai.placeAt(spawnX, spawnY);
         samurai.configurePhysics(-1800f, 0f);

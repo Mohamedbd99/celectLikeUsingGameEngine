@@ -137,6 +137,8 @@ public final class LevelData {
     }
 
     private static TileBlueprint[][] buildBlueprint() {
+        // Default authored layout baked into the game; can be overridden at runtime
+        // by editor_blueprint.json exported from the in-engine map editor.
         return deepCopy(CUSTOM_MAP);
     }
 
