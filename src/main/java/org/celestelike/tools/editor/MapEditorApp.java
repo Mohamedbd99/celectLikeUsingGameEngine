@@ -45,7 +45,7 @@ import org.celestelike.game.world.TilesetIO.TilesetData;
  *   <li>Key 2: toggle WATER flag for the selected cell.</li>
  *   <li>Key 3: toggle DOOR at the selected cell (door channel cycles 1..8).</li>
  *   <li>Key 4: toggle KEY at the selected cell (associated with the current door channel).</li>
- *   <li>Key 5: cycle ENEMY type for the selected cell (deathBoss, redDeon, skeletonEnemie).</li>
+ *   <li>Key 5: cycle ENEMY type for the selected cell (redDeon).</li>
  *   <li>Ctrl+S: save blueprint + collision + enemies to JSON files read by the game.</li>
  *   <li>Ctrl+C: clear all metadata (solid/water/door/key/enemy) for the selected cell.</li>
  *   <li>ESC: quit editor.</li>
@@ -64,9 +64,7 @@ public final class MapEditorApp extends ApplicationAdapter {
     private static final String ENEMY_SPAWNS_PATH = "enemy_spawns.json";
 
     private static final String[] ENEMY_TYPES = {
-            "deathBoss",
-            "redDeon",
-            "skeletonEnemie"
+            "redDeon"
     };
 
     private final String tsxPath;
@@ -385,10 +383,9 @@ public final class MapEditorApp extends ApplicationAdapter {
         int y = Gdx.graphics.getHeight() - Gdx.input.getY() - 1;
 
         if (x < mapPaneWidth) {
-            // click inside map
+            // click inside map (row 0 = bottom, to match original tileset view)
             int col = x / tileSizePx;
-            int visualRow = y / tileSizePx;
-            int row = rows - 1 - visualRow; // row 0 is the TOP row, same as runtime
+            int row = y / tileSizePx;
             if (withinBounds(row, col)) {
                 selectedRow = row;
                 selectedCol = col;
@@ -399,9 +396,11 @@ public final class MapEditorApp extends ApplicationAdapter {
             // click inside palette
             int localX = x - mapPaneWidth;
             int col = localX / paletteTileSizePx;
-            int row = y / paletteTileSizePx;
+            int visualRow = y / paletteTileSizePx; // 0 = bottom row on screen
             int paletteCols = Math.max(1, tileset != null ? tileset.columns() : 1);
-            int paletteIndex = row * paletteCols + col;
+            int rowsNeeded = (int) Math.ceil(tilesetRegions.size() / (float) paletteCols);
+            int logicalRow = rowsNeeded - 1 - visualRow; // 0 = top row in tileset image
+            int paletteIndex = logicalRow * paletteCols + col;
             if (paletteIndex >= 0 && paletteIndex < tilesetRegions.size()) {
                 selectedPaletteIndex = paletteIndex;
                 GameLogger.info("Selected palette index=" + paletteIndex);
@@ -623,7 +622,6 @@ public final class MapEditorApp extends ApplicationAdapter {
 
         batch.begin();
         for (int r = 0; r < rows; r++) {
-            int visualRow = rows - 1 - r; // row 0 (top) drawn at highest Y
             for (int c = 0; c < cols; c++) {
                 TileBlueprint cell = blueprint[r][c];
                 if (cell == null || cell.frames().length == 0) {
@@ -635,7 +633,7 @@ public final class MapEditorApp extends ApplicationAdapter {
                 }
                 TextureRegion region = tilesetRegions.get(index);
                 float x = c * tileSizePx;
-                float y = visualRow * tileSizePx;
+                float y = r * tileSizePx;
                 batch.draw(region, x, y, tileSizePx, tileSizePx);
             }
         }
@@ -655,10 +653,9 @@ public final class MapEditorApp extends ApplicationAdapter {
 
         // highlight solid/water/door/key/enemy
         for (int r = 0; r < rows; r++) {
-            int visualRow = rows - 1 - r;
             for (int c = 0; c < cols; c++) {
                 float x = c * tileSizePx;
-                float y = visualRow * tileSizePx;
+                float y = r * tileSizePx;
                 Cell cell = new Cell(r, c);
 
                 if (solidMask[r][c]) {
@@ -689,9 +686,8 @@ public final class MapEditorApp extends ApplicationAdapter {
         // selected cell outline
         if (withinBounds(selectedRow, selectedCol)) {
             shapes.setColor(Color.WHITE);
-            int visualRow = rows - 1 - selectedRow;
             float x = selectedCol * tileSizePx;
-            float y = visualRow * tileSizePx;
+            float y = selectedRow * tileSizePx;
             shapes.rect(x, y, tileSizePx, tileSizePx);
         }
 
@@ -705,14 +701,16 @@ public final class MapEditorApp extends ApplicationAdapter {
         int offsetX = mapPaneWidth;
 
         int paletteCols = Math.max(1, tileset != null ? tileset.columns() : 1);
+        int rowsNeeded = (int) Math.ceil(tilesetRegions.size() / (float) paletteCols);
 
         batch.begin();
         for (int i = 0; i < tilesetRegions.size(); i++) {
             TextureRegion region = tilesetRegions.get(i);
+            int logicalRow = i / paletteCols;                 // 0 = top row in tileset
             int col = i % paletteCols;
-            int row = i / paletteCols;
+            int visualRow = rowsNeeded - 1 - logicalRow;      // 0 = bottom on screen
             float x = offsetX + col * paletteTileSizePx;
-            float y = row * paletteTileSizePx;
+            float y = visualRow * paletteTileSizePx;
             batch.draw(region, x, y, paletteTileSizePx, paletteTileSizePx);
         }
         batch.end();
@@ -721,8 +719,6 @@ public final class MapEditorApp extends ApplicationAdapter {
         shapes.begin(ShapeRenderer.ShapeType.Line);
         shapes.setColor(0.15f, 0.15f, 0.2f, 1f);
 
-        int rowsNeeded = (int) Math.ceil(tilesetRegions.size()
-                / (float) paletteCols);
         for (int r = 0; r <= rowsNeeded; r++) {
             float y = r * paletteTileSizePx;
             shapes.line(offsetX, y, offsetX + palettePaneWidth, y);
@@ -735,9 +731,10 @@ public final class MapEditorApp extends ApplicationAdapter {
         if (selectedPaletteIndex >= 0
                 && selectedPaletteIndex < tilesetRegions.size()) {
             int col = selectedPaletteIndex % paletteCols;
-            int row = selectedPaletteIndex / paletteCols;
+            int logicalRow = selectedPaletteIndex / paletteCols;
+            int visualRow = rowsNeeded - 1 - logicalRow;
             float x = offsetX + col * paletteTileSizePx;
-            float y = row * paletteTileSizePx;
+            float y = visualRow * paletteTileSizePx;
             shapes.setColor(Color.WHITE);
             shapes.rect(x, y, paletteTileSizePx, paletteTileSizePx);
         }

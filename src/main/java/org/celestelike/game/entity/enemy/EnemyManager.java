@@ -24,8 +24,10 @@ public final class EnemyManager {
             if (definition == null) {
                 continue;
             }
+            // Editor and collision map now treat row 0 as the BOTTOM row,
+            // so enemies should spawn with the same convention.
             float x = spawn.col() * tileWorldSize;
-            float y = (totalRows - spawn.row() - 1) * tileWorldSize;
+            float y = spawn.row() * tileWorldSize;
             active.add(new EnemyInstance(definition, x, y));
         }
     }

@@ -214,7 +214,7 @@ public class CelesteGame extends ApplicationAdapter {
                     continue;
                 }
                 float x = col * tileWorldSize;
-                float y = (rows - row - 1) * tileWorldSize;
+                float y = row * tileWorldSize;
                 batch.draw(frame, x, y, tileWorldSize, tileWorldSize);
             }
         }

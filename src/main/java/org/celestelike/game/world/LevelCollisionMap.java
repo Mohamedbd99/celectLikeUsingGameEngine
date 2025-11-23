@@ -96,8 +96,8 @@ public final class LevelCollisionMap {
     }
 
     public int worldToRow(float worldY) {
-        int rowFromBottom = (int) Math.floor(worldY / tileSize);
-        return rows - rowFromBottom - 1;
+        // Row 0 is the bottom row; rows increase upwards.
+        return (int) Math.floor(worldY / tileSize);
     }
 
     public float colLeft(int col) {
@@ -105,7 +105,7 @@ public final class LevelCollisionMap {
     }
 
     public float rowBottom(int row) {
-        return (rows - row - 1) * tileSize;
+        return row * tileSize;
     }
 
     public float rowTop(int row) {
