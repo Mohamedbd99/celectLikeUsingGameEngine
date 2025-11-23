@@ -28,10 +28,10 @@ public class DesktopLauncher {
         // config.setWindowIcon("icon.png");
         
         // Optional: Disable window resizing for consistent gameplay
-        // config.setResizable(false);
+        config.setResizable(false);
         
         // Optional: Set fullscreen
-        // config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+        config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
         
         // Launch the core game (viewer only)
         new Lwjgl3Application(new CelesteGame(), config);

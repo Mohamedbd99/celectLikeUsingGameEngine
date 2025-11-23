@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -61,6 +62,18 @@ public class ViewEditor extends ApplicationAdapter {
 
     private TileCell[][] cells;
     private EntityMarker[][] entities;
+
+    // Simple collision brush types so one click can assign BOTH tile art and collision.
+    private enum CollisionType {
+        NONE,
+        SOLID,
+        WATER,
+        DOOR,
+        KEY
+    }
+
+    private CollisionType[][] collision;
+    private CollisionType collisionBrush = CollisionType.NONE;
     private EntityType entityBrush = EntityType.NONE;
     private int entityChannel = 0;
     private float tileWorldSize;
@@ -112,6 +125,7 @@ public class ViewEditor extends ApplicationAdapter {
         loadTileset();
         loadInitialCells(blueprint);
         loadInitialEntities(rows, cols);
+        initCollisionGrid(rows, cols);
         if (!paletteRegions.isEmpty()) {
             int defaultIndex = Math.min(atlasIndex(6, 1), paletteRegions.size() - 1);
             setSelectedTileIndex(defaultIndex);
@@ -282,6 +296,15 @@ public class ViewEditor extends ApplicationAdapter {
         entities = new EntityMarker[rows][cols];
     }
 
+    private void initCollisionGrid(int rows, int cols) {
+        collision = new CollisionType[rows][cols];
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                collision[row][col] = CollisionType.NONE;
+            }
+        }
+    }
+
     private void renderTerrain() {
         int rows = cells.length;
         int cols = cells[0].length;
@@ -367,6 +390,24 @@ public class ViewEditor extends ApplicationAdapter {
             return;
         }
 
+        // Collision brush hotkeys: 1=solid, 2=water, 3=door, 4=key, 0=none
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+            collisionBrush = CollisionType.SOLID;
+            Gdx.app.log("Editor", "Collision brush set to SOLID (1)");
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+            collisionBrush = CollisionType.WATER;
+            Gdx.app.log("Editor", "Collision brush set to WATER (2)");
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
+            collisionBrush = CollisionType.DOOR;
+            Gdx.app.log("Editor", "Collision brush set to DOOR (3)");
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
+            collisionBrush = CollisionType.KEY;
+            Gdx.app.log("Editor", "Collision brush set to KEY (4)");
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
+            collisionBrush = CollisionType.NONE;
+            Gdx.app.log("Editor", "Collision brush set to NONE (0)");
+        }
+
         if (shift && hoverRow >= 0 && hoverCol >= 0) {
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 placeEntity(hoverRow, hoverCol);
@@ -423,6 +464,8 @@ public class ViewEditor extends ApplicationAdapter {
         boolean saved = LevelData.saveBlueprint(snapshot);
         if (saved) {
             showStatusMessage("Saved level to " + LevelData.blueprintExportPath());
+            exportEnemySpawns();
+            exportCollisionSnapshot();
         } else {
             showStatusMessage("Save failed (see log)");
         }
@@ -462,6 +505,156 @@ public class ViewEditor extends ApplicationAdapter {
         Gdx.app.log("ViewEditor", message);
     }
 
+    /**
+     * Writes collision information (solid, water, door, key) into inspector_snapshot.json
+     * so the runtime collision map matches what was painted here.
+     */
+    private void exportCollisionSnapshot() {
+        if (collision == null) {
+            return;
+        }
+
+        FileHandle handle = Gdx.files.local("inspector_snapshot.json");
+        if (handle.file().getParentFile() != null) {
+            //noinspection ResultOfMethodCallIgnored
+            handle.file().getParentFile().mkdirs();
+        }
+
+        try (java.io.Writer writer = handle.writer(false, "UTF-8")) {
+            JsonWriter json = new JsonWriter(writer);
+            json.setOutputType(JsonWriter.OutputType.json);
+            json.object();
+
+            // SOLID tiles
+            json.name("solid");
+            json.array();
+            for (int row = 0; row < collision.length; row++) {
+                for (int col = 0; col < collision[row].length; col++) {
+                    if (collision[row][col] == CollisionType.SOLID) {
+                        json.array();
+                        json.value(row);
+                        json.value(col);
+                        json.pop();
+                    }
+                }
+            }
+            json.pop(); // solid array
+
+            // WATER tiles
+            json.name("water");
+            json.array();
+            for (int row = 0; row < collision.length; row++) {
+                for (int col = 0; col < collision[row].length; col++) {
+                    if (collision[row][col] == CollisionType.WATER) {
+                        json.array();
+                        json.value(row);
+                        json.value(col);
+                        json.pop();
+                    }
+                }
+            }
+            json.pop(); // water array
+
+            // DOORS / KEYS: simple 1-tile records so existing door system can at least see them
+            json.name("doors");
+            json.array();
+            for (int row = 0; row < collision.length; row++) {
+                for (int col = 0; col < collision[row].length; col++) {
+                    if (collision[row][col] == CollisionType.DOOR) {
+                        json.object();
+                        // door tiles
+                        json.name("door");
+                        json.array();
+                        json.array();
+                        json.value(row);
+                        json.value(col);
+                        json.pop();
+                        json.pop();
+                        // empty key list
+                        json.name("key");
+                        json.array();
+                        json.pop();
+                        json.pop();
+                    } else if (collision[row][col] == CollisionType.KEY) {
+                        json.object();
+                        // empty door list
+                        json.name("door");
+                        json.array();
+                        json.pop();
+                        // key tiles
+                        json.name("key");
+                        json.array();
+                        json.array();
+                        json.value(row);
+                        json.value(col);
+                        json.pop();
+                        json.pop();
+                        json.pop();
+                    }
+                }
+            }
+            json.pop(); // doors array
+
+            // enemies are now written by enemy_spawns.json, keep empty array for compatibility
+            json.name("enemies");
+            json.array();
+            json.pop();
+
+            json.pop(); // root
+            json.close();
+            Gdx.app.log("ViewEditor", "Collision snapshot saved to " + handle.file().getAbsolutePath());
+        } catch (Exception exception) {
+            Gdx.app.error("ViewEditor", "Failed to save inspector_snapshot.json", exception);
+        }
+    }
+
+    /**
+     * Writes all ENEMY entity markers into a standalone JSON file that the game reads
+     * for enemy spawns. This lets the map editor drive enemy positions directly.
+     *
+     * Format (array of objects):
+     * [
+     *   {"name":"redDeon","row":25,"col":17},
+     *   {"name":"deathBoss","row":5,"col":34}
+     * ]
+     */
+    private void exportEnemySpawns() {
+        if (entities == null) {
+            return;
+        }
+        FileHandle handle = Gdx.files.local("enemy_spawns.json");
+        if (handle.file().getParentFile() != null) {
+            //noinspection ResultOfMethodCallIgnored
+            handle.file().getParentFile().mkdirs();
+        }
+        try (java.io.Writer writer = handle.writer(false, "UTF-8")) {
+            JsonWriter json = new JsonWriter(writer);
+            json.setOutputType(JsonWriter.OutputType.json);
+            json.array();
+
+            for (int row = 0; row < entities.length; row++) {
+                for (int col = 0; col < entities[row].length; col++) {
+                    EntityMarker marker = entities[row][col];
+                    if (marker == null || marker.type != EntityType.ENEMY) {
+                        continue;
+                    }
+                    String enemyId = enemyIdForChannel(marker.channel);
+                    json.object();
+                    json.name("name").value(enemyId);
+                    json.name("row").value(marker.row);
+                    json.name("col").value(marker.col);
+                    json.pop();
+                }
+            }
+
+            json.pop(); // array
+            json.close();
+            Gdx.app.log("ViewEditor", "Enemy spawns saved to " + handle.file().getAbsolutePath());
+        } catch (Exception exception) {
+            Gdx.app.error("ViewEditor", "Failed to save enemy_spawns.json", exception);
+        }
+    }
+
     private void drainPaletteSelectionRequests() {
         if (paletteBridge == null) {
             return;
@@ -479,10 +672,27 @@ public class ViewEditor extends ApplicationAdapter {
         }
         int frames = clampFramesForTile(selectedTileIndex, selectedFrameCount);
         cells[row][col].setContiguousFrames(selectedTileIndex, frames, selectedFrameDuration);
+
+        // Also assign collision type for this tile, if a collision brush is active
+        if (collision != null && collisionBrush != CollisionType.NONE) {
+            collision[row][col] = collisionBrush;
+            Gdx.app.log("Editor",
+                    "Paint tile #" + selectedTileIndex
+                            + " as " + collisionBrush
+                            + " at (row=" + row + ", col=" + col + ")");
+        } else {
+            Gdx.app.log("Editor",
+                    "Paint tile #" + selectedTileIndex
+                            + " (no collision) at (row=" + row + ", col=" + col + ")");
+        }
     }
 
     private void clearCell(int row, int col) {
         cells[row][col].clear(selectedFrameDuration);
+        if (collision != null) {
+            collision[row][col] = CollisionType.NONE;
+        }
+        Gdx.app.log("Editor", "Cleared tile and collision at (row=" + row + ", col=" + col + ")");
     }
 
     private void setSelectedTileIndex(int tileIndex) {
@@ -558,6 +768,9 @@ public class ViewEditor extends ApplicationAdapter {
         for (int row = 0; row < cells.length; row++) {
             for (int col = 0; col < cells[row].length; col++) {
                 cells[row][col].clear(selectedFrameDuration);
+                if (collision != null) {
+                    collision[row][col] = CollisionType.NONE;
+                }
             }
         }
         Gdx.app.log("Editor", "Cleared map (all air)");
@@ -611,12 +824,23 @@ public class ViewEditor extends ApplicationAdapter {
                         selectedFrameCount, selectedFrameDuration),
                 paletteBounds.x, infoY - 16f);
         String entityInfo = "Entity brush: " + entityBrush.displayName;
-        if (entityBrush == EntityType.KEY || entityBrush == EntityType.DOOR) {
+        if (entityBrush == EntityType.KEY || entityBrush == EntityType.DOOR || entityBrush == EntityType.ENEMY) {
             entityInfo += " (channel " + entityChannel + ")";
+        }
+        if (entityBrush == EntityType.ENEMY) {
+            entityInfo += " -> " + enemyIdForChannel(entityChannel);
         }
         font.draw(batch, entityInfo + "  [F1-F5] brush  channels [F6/F7]  Shift+click to place/remove",
                 paletteBounds.x, infoY - 32f);
-        font.draw(batch, "Click palette to pick tile. LMB paint, RMB erase, P=print, C=clear, Ctrl+S=save.",
+
+        String collisionInfo = "Collision brush: " + switch (collisionBrush) {
+            case SOLID -> "SOLID (1)";
+            case WATER -> "WATER (2)";
+            case DOOR -> "DOOR (3)";
+            case KEY -> "KEY (4)";
+            default -> "NONE (0)";
+        };
+        font.draw(batch, collisionInfo + "  [1-4] type, 0=none (applies when you paint a tile)",
                 paletteBounds.x, infoY - 48f);
         if (statusMessageTimer > 0f && statusMessage != null && !statusMessage.isEmpty()) {
             font.draw(batch, statusMessage, paletteBounds.x, infoY - 64f);
@@ -830,6 +1054,14 @@ public class ViewEditor extends ApplicationAdapter {
             Gdx.app.log("Entities", "Removed " + entities[row][col].type.displayName + " from (" + row + "," + col + ")");
         }
         entities[row][col] = null;
+    }
+
+    private static String enemyIdForChannel(int channel) {
+        return switch (channel) {
+            case 1 -> "deathBoss";
+            case 2 -> "skeletonEnemie";
+            default -> "redDeon";
+        };
     }
 
     private static class TileCell {

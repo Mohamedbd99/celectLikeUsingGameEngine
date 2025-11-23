@@ -96,9 +96,10 @@ public class CelesteGame extends ApplicationAdapter {
         tileWorldSize = LevelData.TILE_SIZE * TILE_SCALE;
         GameLogger.info("Game started");
 
+        // Use a fixed, designer-controlled framing; no dynamic zoom changes at runtime.
         viewTilesWide = gameConfig.cameraTilesWide();
         viewTilesTall = gameConfig.cameraTilesTall();
-        cameraZoom = gameConfig.cameraZoom();
+        cameraZoom = 1f; // ignore config zoom so camera size stays stable
 
         TileBlueprint[][] blueprint = LevelData.copyBlueprint();
         blueprintRows = blueprint.length;
@@ -113,8 +114,12 @@ public class CelesteGame extends ApplicationAdapter {
 
         worldWidth = cols * tileWorldSize;
         worldHeight = blueprintRows * tileWorldSize;
-        viewWidth = viewTilesWide * tileWorldSize;
-        viewHeight = viewTilesTall * tileWorldSize;
+
+        // Show the whole authored level, like the ViewEditor: viewport matches world size.
+        viewTilesWide = cols;
+        viewTilesTall = blueprintRows;
+        viewWidth = worldWidth;
+        viewHeight = worldHeight;
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(viewWidth, viewHeight, camera);
@@ -399,25 +404,9 @@ public class CelesteGame extends ApplicationAdapter {
         if (camera == null) {
             return;
         }
+        // Fixed camera: keep view centered on the level, no player-follow POV.
         float centerX = worldWidth * 0.5f;
         float centerY = worldHeight * 0.5f;
-        if (samurai != null) {
-            var samuraiPos = samurai.getPosition();
-            centerX = samuraiPos.x + tileWorldSize * 0.5f;
-            centerY = samuraiPos.y + tileWorldSize * 0.5f;
-        }
-        float halfWidth = camera.viewportWidth * 0.5f;
-        float halfHeight = camera.viewportHeight * 0.5f;
-        if (worldWidth > camera.viewportWidth) {
-            centerX = MathUtils.clamp(centerX, halfWidth, worldWidth - halfWidth);
-        } else {
-            centerX = worldWidth * 0.5f;
-        }
-        if (worldHeight > camera.viewportHeight) {
-            centerY = MathUtils.clamp(centerY, halfHeight, worldHeight - halfHeight);
-        } else {
-            centerY = worldHeight * 0.5f;
-        }
         camera.position.set(centerX, centerY, 0f);
     }
 

@@ -33,10 +33,11 @@ public final class LevelCollisionMap {
         solidMaskLoaded = false;
         waterMaskLoaded = false;
 
+        // SOLIDS NOW COME *ONLY* FROM THE INSPECTOR SNAPSHOT.
+        // We no longer auto-generate solid tiles from the art/blueprint,
+        // so there is no way to get a solid block unless the snapshot says so.
         boolean loadedSnapshot = loadMasksFromSnapshot();
-        if (!solidMaskLoaded) {
-            populateFromBlueprint(blueprint);
-        }
+
         if (!waterMaskLoaded) {
             populateWaterMask(blueprint);
         }

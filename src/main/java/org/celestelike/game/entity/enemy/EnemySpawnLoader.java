@@ -13,22 +13,63 @@ import java.util.List;
 public final class EnemySpawnLoader {
 
     private static final String SNAPSHOT = "inspector_snapshot.json";
+    private static final String ENEMY_SPAWNS = "enemy_spawns.json";
 
     private EnemySpawnLoader() {}
 
     public static List<EnemySpawn> load() {
-        FileHandle file = locateSnapshot();
         List<EnemySpawn> spawns = new ArrayList<>();
-        if (file == null || !file.exists()) {
-            return spawns;
-        }
-        try {
-            JsonValue root = new JsonReader().parse(file);
-            JsonValue enemies = root.get("enemies");
-            if (enemies == null) {
+
+        // 1) Prefer standalone enemy_spawns.json written by ViewEditor
+        FileHandle enemyFile = locate(ENEMY_SPAWNS);
+        if (enemyFile != null && enemyFile.exists()) {
+            loadFromFile(enemyFile, spawns);
+            if (!spawns.isEmpty()) {
                 return spawns;
             }
+        }
+
+        // 2) Fallback to legacy inspector_snapshot.json enemies section
+        FileHandle snapshot = locate(SNAPSHOT);
+        if (snapshot != null && snapshot.exists()) {
+            loadFromFile(snapshot, spawns);
+        }
+        return spawns;
+    }
+
+    private static FileHandle locate(String path) {
+        if (Gdx.files == null) {
+            return null;
+        }
+        FileHandle local = Gdx.files.local(path);
+        if (local.exists()) {
+            return local;
+        }
+        FileHandle internal = Gdx.files.internal(path);
+        if (internal.exists()) {
+            return internal;
+        }
+        return null;
+    }
+
+    private static void loadFromFile(FileHandle file, List<EnemySpawn> spawns) {
+        try {
+            JsonValue root = new JsonReader().parse(file);
+            JsonValue enemies;
+            if (root.isArray()) {
+                // New format: root is a plain array of enemy objects
+                enemies = root;
+            } else {
+                // Legacy format: { ..., "enemies": [ ... ] }
+                enemies = root.get("enemies");
+            }
+            if (enemies == null) {
+                return;
+            }
             for (JsonValue enemyValue : enemies) {
+                if (!enemyValue.isObject()) {
+                    continue;
+                }
                 String name = enemyValue.getString("name", null);
                 JsonValue rowValue = enemyValue.get("row");
                 JsonValue colValue = enemyValue.get("col");
@@ -38,24 +79,8 @@ public final class EnemySpawnLoader {
                 spawns.add(new EnemySpawn(name, rowValue.asInt(), colValue.asInt()));
             }
         } catch (Exception exception) {
-            Gdx.app.error("EnemySpawnLoader", "Failed to parse snapshot for enemies", exception);
+            Gdx.app.error("EnemySpawnLoader", "Failed to parse enemy spawns from " + file.path(), exception);
         }
-        return spawns;
-    }
-
-    private static FileHandle locateSnapshot() {
-        if (Gdx.files == null) {
-            return null;
-        }
-        FileHandle local = Gdx.files.local(SNAPSHOT);
-        if (local.exists()) {
-            return local;
-        }
-        FileHandle internal = Gdx.files.internal(SNAPSHOT);
-        if (internal.exists()) {
-            return internal;
-        }
-        return null;
     }
 }
 
