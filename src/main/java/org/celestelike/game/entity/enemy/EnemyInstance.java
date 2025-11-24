@@ -23,6 +23,7 @@ final class EnemyInstance {
     private final Vector2 position = new Vector2();
     private final EnumMap<EnemyAnimationKey, Animation<TextureRegion>> animations =
             new EnumMap<>(EnemyAnimationKey.class);
+    private final Map<EnemyAnimationKey, EnemyAnimationSpec> specs;
     private final List<Texture> ownedTextures = new ArrayList<>();
     private final EnemyStats stats;
     private final float width;
@@ -39,7 +40,8 @@ final class EnemyInstance {
         this.stats = definition.stats();
         this.health = stats.maxHealth();
         this.position.set(x, y);
-        loadAnimations(definition.assetRoot(), definition.animationSpecs());
+        this.specs = new EnumMap<>(definition.animationSpecs());
+        loadAnimations(definition.assetRoot(), specs);
         Animation<TextureRegion> idle = animations.get(EnemyAnimationKey.IDLE);
         if (idle == null) {
             throw new IllegalStateException("Enemy " + definition.id() + " missing idle animation");
@@ -111,8 +113,15 @@ final class EnemyInstance {
         if (animation == null) {
             return;
         }
+        EnemyAnimationSpec spec = specs.get(currentKey);
         TextureRegion frame = animation.getKeyFrame(stateTime, animation.getPlayMode() == Animation.PlayMode.LOOP);
-        batch.draw(frame, position.x, position.y);
+        float drawX = position.x;
+        float drawY = position.y;
+        if (spec != null) {
+            drawX += spec.offsetX();
+            drawY += spec.offsetY();
+        }
+        batch.draw(frame, drawX, drawY);
     }
 
     void drawHealthBarFill(ShapeRenderer shapeRenderer) {
@@ -168,7 +177,16 @@ final class EnemyInstance {
     }
 
     boolean isDead() {
-        return dead;
+        if (!dead) {
+            return false;
+        }
+        Animation<TextureRegion> death = animations.get(EnemyAnimationKey.DEATH);
+        if (death == null) {
+            // No death animation configured: despawn immediately.
+            return true;
+        }
+        // Only report "dead" to the manager once the death animation has finished.
+        return death.isAnimationFinished(stateTime);
     }
 
     int maxHealth() {

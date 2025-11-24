@@ -45,7 +45,7 @@ import org.celestelike.game.world.TilesetIO.TilesetData;
  *   <li>Key 2: toggle WATER flag for the selected cell.</li>
  *   <li>Key 3: toggle DOOR at the selected cell (door channel cycles 1..8).</li>
  *   <li>Key 4: toggle KEY at the selected cell (associated with the current door channel).</li>
- *   <li>Key 5: cycle ENEMY type for the selected cell (redDeon).</li>
+ *   <li>Key 5: cycle ENEMY type for the selected cell (redDeon, skeletonEnemie).</li>
  *   <li>Ctrl+S: save blueprint + collision + enemies to JSON files read by the game.</li>
  *   <li>Ctrl+C: clear all metadata (solid/water/door/key/enemy) for the selected cell.</li>
  *   <li>ESC: quit editor.</li>
@@ -64,7 +64,8 @@ public final class MapEditorApp extends ApplicationAdapter {
     private static final String ENEMY_SPAWNS_PATH = "enemy_spawns.json";
 
     private static final String[] ENEMY_TYPES = {
-            "redDeon"
+            "redDeon",
+            "skeletonEnemie"
     };
 
     private final String tsxPath;
