@@ -26932,3 +26932,22 @@
 [2025-12-24 22:52:10] [INFO] Game terminated
 [2025-12-24 22:52:10] [ENTITY] DESTROYED Enemy [skeletonEnemie]
 [2025-12-24 22:52:10] [ENTITY] DESTROYED Enemy [redDeon]
+[2025-12-24 23:20:20] [INFO] Game started
+[2025-12-24 23:20:21] [STATE] Player: NONE -> IDLE
+[2025-12-24 23:20:21] [ENTITY] CREATED Samurai [player]
+[2025-12-24 23:20:21] [ENTITY] CREATED Enemy [skeletonEnemie]
+[2025-12-24 23:20:21] [ENTITY] CREATED Enemy [redDeon]
+[2025-12-24 23:20:22] [ENTITY] CREATED Samurai [player]
+[2025-12-24 23:20:22] [ENTITY] DESTROYED Enemy [skeletonEnemie]
+[2025-12-24 23:20:22] [ENTITY] DESTROYED Enemy [redDeon]
+[2025-12-24 23:20:22] [ENTITY] CREATED Enemy [skeletonEnemie]
+[2025-12-24 23:20:22] [ENTITY] CREATED Enemy [redDeon]
+[2025-12-24 23:20:22] [STATE] Game: MENU -> PLAYING
+[2025-12-24 23:20:23] [STATE] Game: PLAYING -> GAME_OVER
+[2025-12-24 23:20:23] [INFO] Game terminated
+[2025-12-24 23:20:23] [ENTITY] DESTROYED Enemy [skeletonEnemie]
+[2025-12-24 23:20:23] [ENTITY] DESTROYED Enemy [redDeon]
+[2025-12-24 23:20:48] [INFO] MapEditor started with TSX: assets/b.tsx
+[2025-12-24 23:20:52] [INFO] MapEditor terminated
+[2025-12-24 23:20:59] [INFO] MapEditor started with TSX: assets/b.tsx
+[2025-12-24 23:21:03] [INFO] MapEditor terminated
