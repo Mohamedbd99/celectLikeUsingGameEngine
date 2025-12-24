@@ -1,0 +1,18 @@
+{
+  "camera": {
+    "tilesWide": 0,
+    "tilesTall": 0,
+    "zoom": 1.0
+  },
+  "collisionScale": 1,
+  "player": {
+    "colliderWidth": 18.0,
+    "colliderHeight": 32.0,
+    "colliderOffsetX": 39.0,
+    "colliderOffsetY": 2.0,
+    "renderOffsetX": 0.0,
+    "renderOffsetY": -12.0
+  }
+}
+
+
