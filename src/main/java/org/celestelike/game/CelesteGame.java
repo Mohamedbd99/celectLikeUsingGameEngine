@@ -6,6 +6,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -30,11 +32,14 @@ import org.celestelike.game.entity.samurai.input.MoveLeftCommand;
 import org.celestelike.game.entity.samurai.input.MoveRightCommand;
 import org.celestelike.game.entity.samurai.input.MoveUpCommand;
 import org.celestelike.game.entity.samurai.input.SamuraiCommand;
+import org.celestelike.game.entity.enemy.EnemyDefinition;
 import org.celestelike.game.entity.enemy.EnemyManager;
 import org.celestelike.game.entity.enemy.EnemySpawn;
 import org.celestelike.game.entity.enemy.EnemySpawnLoader;
 import org.celestelike.game.logging.GameLogger;
 import org.celestelike.game.state.GameState;
+import org.celestelike.game.entity.samurai.powerup.SamuraiPowerUpSnapshot;
+import org.celestelike.game.entity.samurai.powerup.SamuraiPowerUpType;
 import org.celestelike.game.world.LevelCollisionMap;
 import org.celestelike.game.world.LevelData;
 import org.celestelike.game.world.LevelData.TileBlueprint;
@@ -52,6 +57,7 @@ public class CelesteGame extends ApplicationAdapter {
     private static final float TILE_SCALE = 4f; // 8px -> 32 px world units
     private static final float VIEW_TILES_W = 28f;
     private static final float VIEW_TILES_H = 16f;
+    private static final int SCORE_PER_ENEMY = 100;
 
     private OrthographicCamera camera;
     private Viewport viewport;
@@ -89,6 +95,11 @@ public class CelesteGame extends ApplicationAdapter {
     private List<EnemySpawn> enemySpawns = new ArrayList<>();
     private int blueprintRows;
     private GameState currentGameState = GameState.MENU;
+    private BitmapFont hudFont;
+    private float playTimer;
+    private int score;
+    private final GlyphLayout hudLayout = new GlyphLayout();
+    private boolean enemiesWereSpawned = false; // Track if enemies were spawned in current run
 
     @Override
     public void create() {
@@ -128,9 +139,12 @@ public class CelesteGame extends ApplicationAdapter {
 
         batch = new SpriteBatch();
         uiShape = new ShapeRenderer();
+        hudFont = new BitmapFont();
+        hudFont.getData().setScale(1.1f);
         loadTileset();
         initSamurai();
         enemyManager = new EnemyManager();
+        enemyManager.setEventListener(this::handleEnemyDefeated);
         enemySpawns = EnemySpawnLoader.load();
         if (!enemySpawns.isEmpty()) {
             enemyManager.spawnAll(enemySpawns, blueprintRows, tileWorldSize);
@@ -142,7 +156,7 @@ public class CelesteGame extends ApplicationAdapter {
         });
         Gdx.graphics.setVSync(true);
         updateCamera();
-        transitionGameState(GameState.PLAYING);
+        transitionGameState(GameState.MENU);
     }
 
     @Override
@@ -153,11 +167,10 @@ public class CelesteGame extends ApplicationAdapter {
 
         handleInput(delta);
 
-        if (samurai != null) {
-            samurai.update(delta);
-        }
-        if (enemyManager != null) {
-            enemyManager.update(delta);
+        float simulationDelta = currentGameState == GameState.PLAYING ? delta : 0f;
+        updateWorld(simulationDelta);
+        if (currentGameState == GameState.PLAYING) {
+            playTimer += delta;
         }
 
         updateCamera();
@@ -174,7 +187,26 @@ public class CelesteGame extends ApplicationAdapter {
             uiShape.setProjectionMatrix(camera.combined);
             enemyManager.drawHealthBars(uiShape);
         }
-        drawHealthBar();
+        drawHudOverlay();
+        drawStateOverlay();
+    }
+
+    private void updateWorld(float delta) {
+        if (samurai != null) {
+            samurai.update(delta);
+        }
+        if (enemyManager != null) {
+            if (samurai != null && !samurai.isDead()) {
+                enemyManager.update(delta, samurai.getPosition());
+                enemyManager.checkEnemyAttacks(samurai);
+            } else {
+                enemyManager.update(delta);
+            }
+            // Only check for victory if enemies were actually spawned in this run
+            if (delta > 0f && currentGameState == GameState.PLAYING && enemiesWereSpawned && enemyManager.isEmpty()) {
+                transitionGameState(GameState.VICTORY);
+            }
+        }
     }
 
     @Override
@@ -191,6 +223,9 @@ public class CelesteGame extends ApplicationAdapter {
         batch.dispose();
         if (uiShape != null) {
             uiShape.dispose();
+        }
+        if (hudFont != null) {
+            hudFont.dispose();
         }
         for (Texture texture : paletteTextures) {
             texture.dispose();
@@ -319,6 +354,16 @@ public class CelesteGame extends ApplicationAdapter {
     }
 
     private void handleInput(float delta) {
+        switch (currentGameState) {
+            case MENU -> handleMenuInput();
+            case PLAYING -> handlePlayingInput(delta);
+            case PAUSED -> handlePauseInput();
+            case GAME_OVER -> handleGameOverInput();
+            case VICTORY -> handleVictoryInput();
+        }
+    }
+
+    private void handlePlayingInput(float delta) {
         if (samurai == null
                 || moveRightCommand == null
                 || moveLeftCommand == null
@@ -398,6 +443,48 @@ public class CelesteGame extends ApplicationAdapter {
             dashCommand.setDirection(dashX, dashY);
             dashCommand.execute(samurai, delta);
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            transitionGameState(GameState.PAUSED);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+            samurai.grantPowerUp(SamuraiPowerUpType.SHIELD);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+            samurai.grantPowerUp(SamuraiPowerUpType.SPEED);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
+            samurai.grantPowerUp(SamuraiPowerUpType.WEAPON);
+        }
+    }
+
+    private void handleMenuInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            startNewRun();
+        }
+    }
+
+    private void handlePauseInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            transitionGameState(GameState.PLAYING);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            transitionGameState(GameState.MENU);
+        }
+    }
+
+    private void handleGameOverInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            startNewRun();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            transitionGameState(GameState.MENU);
+        }
+    }
+
+    private void handleVictoryInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            startNewRun();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            transitionGameState(GameState.MENU);
+        }
     }
 
     private void updateCamera() {
@@ -411,24 +498,33 @@ public class CelesteGame extends ApplicationAdapter {
     }
 
     private void handleSamuraiDeath() {
-        Gdx.app.log("CelesteGame", "Samurai died; scheduling respawn");
         GameLogger.entityDestroyed("Samurai", "player");
-        Gdx.app.postRunnable(() -> {
-            if (samurai != null) {
-                samurai.reviveAt(spawnX, spawnY);
-                GameLogger.entityCreated("Samurai", "player");
-                if (enemyManager != null) {
-                    enemyManager.dispose();
-                    if (enemySpawns != null && !enemySpawns.isEmpty()) {
-                        enemyManager.spawnAll(enemySpawns, blueprintRows, tileWorldSize);
-                    }
-                }
-            }
-        });
+        transitionGameState(GameState.GAME_OVER);
     }
 
-    private void drawHealthBar() {
-        if (uiShape == null || samurai == null) {
+    private void handleEnemyDefeated(EnemyDefinition definition) {
+        score += SCORE_PER_ENEMY;
+        GameLogger.info("Enemy defeated: " + definition.id() + " (score=" + score + ")");
+    }
+
+    private void startNewRun() {
+        score = 0;
+        playTimer = 0f;
+        enemiesWereSpawned = false; // Reset flag
+        if (samurai != null) {
+            samurai.reviveAt(spawnX, spawnY);
+            GameLogger.entityCreated("Samurai", "player");
+        }
+        if (enemyManager != null) {
+            enemyManager.respawn(enemySpawns, blueprintRows, tileWorldSize);
+            // Check if enemies were actually spawned (not empty after respawn)
+            enemiesWereSpawned = !enemyManager.isEmpty();
+        }
+        transitionGameState(GameState.PLAYING);
+    }
+
+    private void drawHudOverlay() {
+        if (uiShape == null || samurai == null || hudFont == null) {
             return;
         }
         int max = samurai.getMaxHealth();
@@ -438,12 +534,14 @@ public class CelesteGame extends ApplicationAdapter {
         int current = Math.max(0, samurai.getCurrentHealth());
         float ratio = MathUtils.clamp(current / (float) max, 0f, 1f);
         float margin = 20f;
-        float barWidth = 220f;
+        float barWidth = 260f;
         float barHeight = 18f;
-        float x = margin;
-        float y = Gdx.graphics.getHeight() - margin - barHeight;
-        uiShape.setProjectionMatrix(uiMatrix.setToOrtho2D(0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        float width = Gdx.graphics.getWidth();
+        float height = Gdx.graphics.getHeight();
+        uiShape.setProjectionMatrix(uiMatrix.setToOrtho2D(0f, 0f, width, height));
         uiShape.begin(ShapeRenderer.ShapeType.Filled);
+        float x = margin;
+        float y = height - margin - barHeight;
         uiShape.setColor(0f, 0f, 0f, 0.6f);
         uiShape.rect(x - 2f, y - 2f, barWidth + 4f, barHeight + 4f);
         uiShape.setColor(0.18f, 0.18f, 0.18f, 0.85f);
@@ -451,13 +549,80 @@ public class CelesteGame extends ApplicationAdapter {
         uiShape.setColor(0.85f, 0.1f, 0.2f, 0.95f);
         uiShape.rect(x, y, barWidth * ratio, barHeight);
         uiShape.end();
+
+        batch.setProjectionMatrix(uiMatrix);
+        batch.begin();
+        float textY = height - margin - barHeight - 10f;
+        hudFont.draw(batch, "Score: " + score, margin, textY);
+        hudFont.draw(batch, "Time : " + formatClock(playTimer), margin, textY - 20f);
+        List<SamuraiPowerUpSnapshot> buffs = samurai.getActivePowerUps();
+        float powerY = textY - 50f;
+        for (SamuraiPowerUpSnapshot buff : buffs) {
+            String label = buff.type().displayName() + " (" + String.format(Locale.US, "%.1fs", Math.max(0f, buff.remainingSeconds())) + ")";
+            hudFont.draw(batch, label, margin, powerY);
+            powerY -= 18f;
+        }
+        batch.end();
+    }
+
+    private void drawStateOverlay() {
+        if (hudFont == null || currentGameState == GameState.PLAYING) {
+            return;
+        }
+        float width = Gdx.graphics.getWidth();
+        float height = Gdx.graphics.getHeight();
+        uiShape.setProjectionMatrix(uiMatrix.setToOrtho2D(0f, 0f, width, height));
+        uiShape.begin(ShapeRenderer.ShapeType.Filled);
+        uiShape.setColor(0f, 0f, 0f, 0.55f);
+        uiShape.rect(0f, 0f, width, height);
+        uiShape.end();
+
+        batch.setProjectionMatrix(uiMatrix);
+        batch.begin();
+        String title;
+        String subtitle;
+        switch (currentGameState) {
+            case MENU -> {
+                title = "Press ENTER to begin";
+                subtitle = "Controls: WASD move, SPACE jump, J attack, E special, RMB defend";
+            }
+            case PAUSED -> {
+                title = "Paused";
+                subtitle = "Press ESC to resume or M for menu";
+            }
+            case GAME_OVER -> {
+                title = "Game Over";
+                subtitle = "Press ENTER to retry or M for menu";
+            }
+            case VICTORY -> {
+                title = "Victory!";
+                subtitle = "Press ENTER for another run";
+            }
+            default -> {
+                title = "";
+                subtitle = "";
+            }
+        }
+        hudLayout.setText(hudFont, title);
+        hudFont.draw(batch, hudLayout, (width - hudLayout.width) * 0.5f, height * 0.6f);
+        hudLayout.setText(hudFont, subtitle);
+        hudFont.draw(batch, hudLayout, (width - hudLayout.width) * 0.5f, height * 0.6f - 30f);
+        batch.end();
+    }
+
+    private String formatClock(float seconds) {
+        int total = Math.max(0, (int) seconds);
+        int minutes = total / 60;
+        int secs = total % 60;
+        return String.format(Locale.US, "%02d:%02d", minutes, secs);
     }
 
     private void transitionGameState(GameState next) {
         if (next == null || next == currentGameState) {
             return;
         }
-        GameLogger.stateTransition("Game", currentGameState.name(), next.name());
+        String prev = currentGameState == null ? "NONE" : currentGameState.name();
+        GameLogger.stateTransition("Game", prev, next.name());
         currentGameState = next;
     }
 

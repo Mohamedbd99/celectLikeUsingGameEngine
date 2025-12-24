@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Iterator;
 import java.util.List;
 import org.celestelike.game.entity.samurai.attack.SamuraiAttackCoordinator;
 import org.celestelike.game.entity.samurai.attack.SamuraiAttackStrategy;
@@ -31,6 +32,10 @@ import org.celestelike.game.entity.samurai.state.SamuraiHurtState;
 import org.celestelike.game.entity.samurai.state.SamuraiWallContactState;
 import org.celestelike.game.entity.samurai.state.SamuraiWallJumpState;
 import org.celestelike.game.entity.samurai.state.SamuraiWallSlideState;
+import org.celestelike.game.entity.samurai.powerup.BaseSamuraiAttributes;
+import org.celestelike.game.entity.samurai.powerup.SamuraiAttributes;
+import org.celestelike.game.entity.samurai.powerup.SamuraiPowerUpSnapshot;
+import org.celestelike.game.entity.samurai.powerup.SamuraiPowerUpType;
 import org.celestelike.game.logging.GameLogger;
 import org.celestelike.game.world.LevelCollisionMap;
 
@@ -111,6 +116,9 @@ public final class SamuraiCharacter {
     private final SamuraiKinematicController controller = new SamuraiKinematicController();
     private final SamuraiAttackCoordinator attackCoordinator = new SamuraiAttackCoordinator();
     private final HealthComponent health = new HealthComponent(100);
+    private final SamuraiAttributes baseAttributes = new BaseSamuraiAttributes();
+    private SamuraiAttributes currentAttributes = baseAttributes;
+    private final List<ActivePowerUp> activePowerUps = new ArrayList<>();
 
     private SamuraiState currentState;
     private TextureRegion currentFrame;
@@ -453,6 +461,7 @@ public final class SamuraiCharacter {
     public void update(float delta) {
         stateTime += delta;
         controller.update(delta);
+        tickPowerUps(delta);
         if (!isDead()) {
             checkEnvironmentHazards();
         }
@@ -530,6 +539,14 @@ public final class SamuraiCharacter {
         return controller.position();
     }
 
+    public float getColliderWidth() {
+        return colliderWidth;
+    }
+
+    public float getColliderHeight() {
+        return colliderHeight;
+    }
+
     public boolean isGrounded() {
         return controller.isGrounded();
     }
@@ -546,7 +563,8 @@ public final class SamuraiCharacter {
         if (!canApplyHorizontalInput()) {
             return;
         }
-        controller.setHorizontalSpeed(DEFAULT_RUN_SPEED);
+        float speed = DEFAULT_RUN_SPEED * currentAttributes.speedMultiplier();
+        controller.setHorizontalSpeed(speed);
         facingRight = true;
         if (controller.isGrounded()) {
             startRunState();
@@ -557,7 +575,8 @@ public final class SamuraiCharacter {
         if (!canApplyHorizontalInput()) {
             return;
         }
-        controller.setHorizontalSpeed(-DEFAULT_RUN_SPEED);
+        float speed = DEFAULT_RUN_SPEED * currentAttributes.speedMultiplier();
+        controller.setHorizontalSpeed(-speed);
         facingRight = false;
         if (controller.isGrounded()) {
             startRunState();
@@ -611,7 +630,8 @@ public final class SamuraiCharacter {
             return false;
         }
         jumpAvailable = false;
-        controller.setVerticalVelocity(jumpSpeed);
+        float jumpVelocity = jumpSpeed * currentAttributes.speedMultiplier();
+        controller.setVerticalVelocity(jumpVelocity);
         jumpPhase = JumpPhase.START;
         jumpPhaseTime = 0f;
         switchState(jumpState);
@@ -627,9 +647,11 @@ public final class SamuraiCharacter {
         if (!touchingLeft && !touchingRight) {
             return false;
         }
+        float speedMultiplier = currentAttributes.speedMultiplier();
         float horizontal = touchingLeft ? WALL_JUMP_HORIZONTAL_SPEED : -WALL_JUMP_HORIZONTAL_SPEED;
+        horizontal *= speedMultiplier;
         controller.setHorizontalSpeed(horizontal);
-        controller.setVerticalVelocity(jumpSpeed);
+        controller.setVerticalVelocity(jumpSpeed * speedMultiplier);
         facingRight = horizontal > 0f;
         wallJumpTimer = WALL_JUMP_STATE_DURATION;
         switchState(wallJumpState);
@@ -650,8 +672,9 @@ public final class SamuraiCharacter {
         dashAvailable = false;
         isDashing = true;
         dashTimer = DASH_DURATION;
-        controller.setHorizontalSpeed(direction.x * DASH_SPEED);
-        controller.setVerticalVelocity(direction.y * DASH_SPEED);
+        float dashSpeed = DASH_SPEED * currentAttributes.speedMultiplier();
+        controller.setHorizontalSpeed(direction.x * dashSpeed);
+        controller.setVerticalVelocity(direction.y * dashSpeed);
         if (direction.x > 0.01f) {
             facingRight = true;
         } else if (direction.x < -0.01f) {
@@ -765,11 +788,39 @@ public final class SamuraiCharacter {
         }
     }
     
+    public void grantPowerUp(SamuraiPowerUpType type) {
+        if (type == null) {
+            return;
+        }
+        for (ActivePowerUp powerUp : activePowerUps) {
+            if (powerUp.type == type) {
+                powerUp.reset();
+                GameLogger.decoratorApplied(type.name(), "Samurai", "REFRESH");
+                return;
+            }
+        }
+        activePowerUps.add(new ActivePowerUp(type));
+        rebuildAttributes();
+        GameLogger.decoratorApplied(type.name(), "Samurai", type.durationSeconds() + "s");
+    }
+
+    public List<SamuraiPowerUpSnapshot> getActivePowerUps() {
+        if (activePowerUps.isEmpty()) {
+            return List.of();
+        }
+        List<SamuraiPowerUpSnapshot> snapshots = new ArrayList<>(activePowerUps.size());
+        for (ActivePowerUp active : activePowerUps) {
+            snapshots.add(new SamuraiPowerUpSnapshot(active.type, active.remaining));
+        }
+        return snapshots;
+    }
+    
     public void applyDamage(int amount) {
         if (isDead()) {
             return;
         }
-        health.damage(amount);
+        int adjusted = Math.max(1, Math.round(amount * currentAttributes.defenseMultiplier()));
+        health.damage(adjusted);
     }
 
     public void heal(int amount) {
@@ -789,6 +840,10 @@ public final class SamuraiCharacter {
 
     public boolean isDead() {
         return health.isDead();
+    }
+    
+    public boolean isDefending() {
+        return isDefending;
     }
 
     public void reviveAt(float worldX, float worldY) {
@@ -972,10 +1027,13 @@ public final class SamuraiCharacter {
         }
     }
 
-    private void notifyAttackImpact(int damage) {
-        if (attackImpactListener != null && damage > 0) {
-            attackImpactListener.onAttackImpact(damage);
+    private void notifyAttackImpact(int baseDamage) {
+        if (attackImpactListener == null || baseDamage <= 0) {
+            return;
         }
+        float scaled = baseDamage * currentAttributes.attackMultiplier();
+        int adjusted = Math.max(1, Math.round(scaled) + currentAttributes.attackBonus());
+        attackImpactListener.onAttackImpact(adjusted);
     }
 
     private void startWaterHurt() {
@@ -1059,6 +1117,34 @@ public final class SamuraiCharacter {
         if (velocity.y < WALL_SLIDE_MAX_DESCENT_SPEED) {
             velocity.y = WALL_SLIDE_MAX_DESCENT_SPEED;
         }
+        controller.setVerticalVelocity(velocity.y);
+    }
+
+    private void tickPowerUps(float delta) {
+        if (activePowerUps.isEmpty()) {
+            return;
+        }
+        boolean changed = false;
+        for (Iterator<ActivePowerUp> iterator = activePowerUps.iterator(); iterator.hasNext();) {
+            ActivePowerUp active = iterator.next();
+            active.remaining -= delta;
+            if (active.remaining <= 0f) {
+                GameLogger.decoratorRemoved(active.type.name(), "Samurai");
+                iterator.remove();
+                changed = true;
+            }
+        }
+        if (changed) {
+            rebuildAttributes();
+        }
+    }
+
+    private void rebuildAttributes() {
+        SamuraiAttributes rebuilt = baseAttributes;
+        for (ActivePowerUp active : activePowerUps) {
+            rebuilt = active.type.wrap(rebuilt);
+        }
+        currentAttributes = rebuilt;
     }
 
     private boolean isInWallState() {
@@ -1091,6 +1177,20 @@ public final class SamuraiCharacter {
         START,
         TRANSITION,
         FALL
+    }
+
+    private static final class ActivePowerUp {
+        private final SamuraiPowerUpType type;
+        private float remaining;
+
+        private ActivePowerUp(SamuraiPowerUpType type) {
+            this.type = type;
+            this.remaining = type.durationSeconds();
+        }
+
+        private void reset() {
+            this.remaining = type.durationSeconds();
+        }
     }
 }
 

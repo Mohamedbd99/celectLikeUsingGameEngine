@@ -29,13 +29,13 @@ public final class EnemyRegistry {
         int redDeonWidth = 79;
         int redDeonHeight = 69;
         register(EnemyDefinition.builder("redDeon", redDeonBase)
-                .stats(new EnemyStats(150, 60f))
+                .stats(new EnemyStats(150, 60f, 40f, 20, 60f, 1.2f)) // health, contactRadius, moveSpeed, attackDamage, attackRange, attackCooldown
                 .animation(EnemyAnimationKey.IDLE,
                         EnemyAnimationSpec.looping("IDLE.png", redDeonWidth, redDeonHeight, 0.1f))
                 .animation(EnemyAnimationKey.HURT,
                         EnemyAnimationSpec.once("HURT.png", redDeonWidth, redDeonHeight, 0.08f))
                 .animation(EnemyAnimationKey.ATTACK,
-                        EnemyAnimationSpec.looping("ATTACK.png", redDeonWidth, redDeonHeight, 0.08f))
+                        EnemyAnimationSpec.once("ATTACK.png", redDeonWidth, redDeonHeight, 0.08f))
                 .animation(EnemyAnimationKey.DEATH,
                         EnemyAnimationSpec.once("DEATH.png", redDeonWidth, redDeonHeight, 0.2f))
                 .animation(EnemyAnimationKey.FLY,
@@ -47,28 +47,28 @@ public final class EnemyRegistry {
         // there to match the actual texture and avoid producing zero frames.
         String skeletonBase = "assets/emenies/skeletonEnemie/";
         int skeletonFrame = 150;
-
+        float idleDuration = 1f / 6f; // 6 fps
+        float walkDuration = 1f / 10f; // 10 fps        
+        float shieldDuration = 1f / 8f; // 8 fps
+        float hitDuration = 1f / 12f; // 12 fps
+        float deathDuration = 1f / 8f; // 8 fps
+        float attackDuration = 1f / 12f; // 12 fps
         register(EnemyDefinition.builder("skeletonEnemie", skeletonBase)
-                .stats(new EnemyStats(220, 50f))
-                // Idle.png: use a shorter frame height to match the actual spritesheet
-                // (otherwise TextureRegion.split would see 0 rows and produce no frames).
-                .animation(EnemyAnimationKey.IDLE,
-                        EnemyAnimationSpec.looping("Idle.png", skeletonFrame, 50, 0.1f,
-                                30f, 0f))      // shift slightly left
-                .animation(EnemyAnimationKey.ATTACK,
-                        EnemyAnimationSpec.looping("Attack.png", skeletonFrame, skeletonFrame, 0.12f,
-                                0, 0))
-                .animation(EnemyAnimationKey.HURT,
-                        EnemyAnimationSpec.once("Take Hit.png", skeletonFrame, 50, 0.08f,
-                                -35f, 0))
-                .animation(EnemyAnimationKey.DEATH,
-                        EnemyAnimationSpec.once("Death.png", skeletonFrame, skeletonFrame, 0.18f,
-                                0, 0))
-                .animation(EnemyAnimationKey.FLY,
-                        EnemyAnimationSpec.looping("Walk.png", skeletonFrame, skeletonFrame, 0.14f,
-                                0, 0))
-                .build());                
-    }
+        .stats(new EnemyStats(220, 13f, 35f, 18, 55f, 1.5f)) // health, contactRadius, moveSpeed, attackDamage, attackRange, attackCooldown
+        .animation(EnemyAnimationKey.IDLE,
+            EnemyAnimationSpec.looping("Idle.png", 150, 150, idleDuration,0f,-45f))
+        // ⚠️ ATTACK -> once (sinon attaque en boucle)
+        .animation(EnemyAnimationKey.ATTACK,
+            EnemyAnimationSpec.once("Attack.png", 150, 150, attackDuration,0f,-45f))
+        .animation(EnemyAnimationKey.HURT,
+            EnemyAnimationSpec.once("Take Hit.png", 150, 150, hitDuration,0f,-45f))
+        .animation(EnemyAnimationKey.DEATH,
+            EnemyAnimationSpec.once("Death.png", 150, 150, deathDuration,0f,-45f))
+        .animation(EnemyAnimationKey.FLY,
+            EnemyAnimationSpec.looping("Walk.png", 150, 150, walkDuration,0f,-45f))
+        .build());
+        }
 }
 
 
+  

@@ -34,6 +34,13 @@ final class EnemyInstance {
     private float hurtTimer;
     private int health;
     private boolean dead;
+    
+    // Movement and attack state
+    private Vector2 playerPosition = null;
+    private float attackCooldownTimer = 0f;
+    private boolean isAttacking = false;
+    private float attackStartTime = 0f;
+    private boolean facingRight = true; // Direction enemy is facing
 
     EnemyInstance(EnemyDefinition definition, float x, float y) {
         this.definition = definition;
@@ -67,6 +74,8 @@ final class EnemyInstance {
             ownedTextures.add(texture);
             int frameWidth = spec.frameWidth() > 0 ? spec.frameWidth() : texture.getWidth();
             int frameHeight = spec.frameHeight() > 0 ? spec.frameHeight() : texture.getHeight();
+            frameWidth = Math.max(1, Math.min(frameWidth, texture.getWidth()));
+            frameHeight = Math.max(1, Math.min(frameHeight, texture.getHeight()));
             TextureRegion[][] split = TextureRegion.split(texture, frameWidth, frameHeight);
             Array<TextureRegion> frames = new Array<>();
             for (TextureRegion[] row : split) {
@@ -88,7 +97,9 @@ final class EnemyInstance {
         }
     }
 
-    void update(float delta) {
+    void update(float delta, Vector2 playerPos) {
+        this.playerPosition = playerPos;
+        
         if (dead) {
             Animation<TextureRegion> death = animations.get(EnemyAnimationKey.DEATH);
             if (death != null && death.isAnimationFinished(stateTime)) {
@@ -99,13 +110,124 @@ final class EnemyInstance {
             }
             return;
         }
+        
         stateTime += delta;
+        
+        // Handle hurt state
         if (hurtTimer > 0f) {
             hurtTimer -= delta;
             if (hurtTimer <= 0f && !dead) {
                 changeAnimation(EnemyAnimationKey.IDLE);
             }
+            return; // Don't move or attack while hurt
         }
+        
+        // Handle attack state
+        if (isAttacking) {
+            Animation<TextureRegion> attackAnim = animations.get(EnemyAnimationKey.ATTACK);
+            float attackElapsed = stateTime - attackStartTime;
+            float attackDuration = attackAnim != null ? attackAnim.getAnimationDuration() : 0.5f;
+            
+            // For looping animations, use a fixed duration
+            if (attackAnim != null && attackAnim.getPlayMode() == Animation.PlayMode.LOOP) {
+                attackDuration = 0.6f; // Fixed duration for looping attacks
+            }
+            
+    // Wait for animation to fully complete before allowing next attack
+    if (attackAnim != null && attackAnim.getPlayMode() != Animation.PlayMode.LOOP) {
+        // For non-looping animations, wait until animation is finished
+        if (attackAnim.isAnimationFinished(attackElapsed)) {
+            isAttacking = false;
+            attackCooldownTimer = stats.attackCooldown();
+            changeAnimation(EnemyAnimationKey.IDLE);
+        }
+    } else {
+        // For looping animations, use fixed duration
+        if (attackElapsed >= attackDuration) {
+            isAttacking = false;
+            attackCooldownTimer = stats.attackCooldown();
+            changeAnimation(EnemyAnimationKey.IDLE);
+        }
+    }
+    return;        }
+        
+        // Update attack cooldown
+        if (attackCooldownTimer > 0f) {
+            attackCooldownTimer -= delta;
+        }
+        
+        // Check if player is in range and attack (only if not already attacking)
+        if (playerPosition != null && !isAttacking && attackCooldownTimer <= 0f) {
+            float centerX = position.x + width * 0.5f;
+            float centerY = position.y + height * 0.5f;
+            float distance = playerPosition.dst(centerX, centerY);
+            
+            // Check attack range using horizontal distance only (not vertical)
+            float horizontalDistance = Math.abs(playerPosition.x - centerX);
+            if (horizontalDistance <= stats.attackRange()) {
+                // Update facing direction before attacking (inverted - face towards player)
+                facingRight = playerPosition.x < centerX;
+                
+                // Start attack
+                isAttacking = true;
+                attackStartTime = stateTime;
+                changeAnimation(EnemyAnimationKey.ATTACK);
+                return;
+            }
+        }
+        
+        // Move towards player if not attacking and player exists (horizontal only)
+        if (playerPosition != null && !isAttacking) {
+            float centerX = position.x + width * 0.5f;
+            float centerY = position.y + height * 0.5f;
+            float distanceX = Math.abs(playerPosition.x - centerX);
+            float distanceY = Math.abs(playerPosition.y - centerY);
+            float distance = (float) Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+            
+            // Update facing direction based on player position (inverted - face towards player)
+            facingRight = playerPosition.x < centerX;
+            
+            // Only move if player is within detection range (slightly larger than attack range)
+            float detectionRange = stats.attackRange() * 2f;
+            if (distance > stats.attackRange() && distance <= detectionRange) {
+                // Calculate horizontal direction to player (only left/right)
+                float dirX = playerPosition.x - centerX;
+                
+                if (Math.abs(dirX) > 5f) {
+                    // Normalize horizontal direction
+                    dirX = dirX > 0 ? 1f : -1f;
+                    
+                    // Move horizontally only
+                    float moveSpeed = stats.moveSpeed();
+                    position.x += dirX * moveSpeed * delta;
+                    // Don't change Y position - only horizontal movement
+                    
+                    // Use FLY animation for movement (walking)
+                    if (currentKey != EnemyAnimationKey.FLY) {
+                        changeAnimation(EnemyAnimationKey.FLY);
+                    }
+                } else {
+                    // Very close horizontally, use idle
+                    if (currentKey != EnemyAnimationKey.IDLE) {
+                        changeAnimation(EnemyAnimationKey.IDLE);
+                    }
+                }
+            } else {
+                // Player too far or too close, use idle
+                if (currentKey != EnemyAnimationKey.IDLE) {
+                    changeAnimation(EnemyAnimationKey.IDLE);
+                }
+            }
+        } else {
+            // No player position, use idle
+            if (currentKey != EnemyAnimationKey.IDLE) {
+                changeAnimation(EnemyAnimationKey.IDLE);
+            }
+        }
+    }
+    
+    void update(float delta) {
+        update(delta, null);
     }
 
     void draw(SpriteBatch batch) {
@@ -115,13 +237,18 @@ final class EnemyInstance {
         }
         EnemyAnimationSpec spec = specs.get(currentKey);
         TextureRegion frame = animation.getKeyFrame(stateTime, animation.getPlayMode() == Animation.PlayMode.LOOP);
-        float drawX = position.x;
-        float drawY = position.y;
-        if (spec != null) {
-            drawX += spec.offsetX();
-            drawY += spec.offsetY();
-        }
-        batch.draw(frame, drawX, drawY);
+        float frameWidth = frame.getRegionWidth();
+        float frameHeight = frame.getRegionHeight();
+        
+        float offsetX = spec != null ? spec.offsetX() : 0f;
+        float offsetY = spec != null ? spec.offsetY() : 0f;
+        
+        // Flip sprite horizontally based on facing direction
+        float drawWidth = facingRight ? frameWidth : -frameWidth;
+        float drawX = facingRight ? position.x + offsetX : position.x + frameWidth - offsetX;
+        float drawY = position.y + offsetY;
+        
+        batch.draw(frame, drawX, drawY, drawWidth, frameHeight);
     }
 
     void drawHealthBarFill(ShapeRenderer shapeRenderer) {
@@ -161,18 +288,20 @@ final class EnemyInstance {
         }
     }
 
-    void applyDamage(int amount) {
+    boolean applyDamage(int amount) {
         if (dead) {
-            return;
+            return false;
         }
         health = Math.max(0, health - amount);
         GameLogger.info(definition.id() + " took " + amount + " dmg (hp=" + health + "/" + stats.maxHealth() + ")");
         if (health == 0) {
             dead = true;
             changeAnimation(EnemyAnimationKey.DEATH);
+            return true;
         } else {
             hurtTimer = 0.3f;
             changeAnimation(EnemyAnimationKey.HURT);
+            return false;
         }
     }
 
@@ -221,6 +350,39 @@ final class EnemyInstance {
         }
         ownedTextures.clear();
         GameLogger.entityDestroyed("Enemy", definition.id());
+    }
+
+    EnemyDefinition definition() {
+        return definition;
+    }
+    
+    boolean isAttacking() {
+        return isAttacking;
+    }
+    
+    boolean canDealDamage() {
+        if (!isAttacking || playerPosition == null) {
+            return false;
+        }
+        Animation<TextureRegion> attackAnim = animations.get(EnemyAnimationKey.ATTACK);
+        if (attackAnim == null) {
+            return false;
+        }
+        float attackElapsed = stateTime - attackStartTime;
+        float attackDuration = attackAnim.getAnimationDuration();
+        
+        // For looping animations, use a fixed duration
+        if (attackAnim.getPlayMode() == Animation.PlayMode.LOOP) {
+            attackDuration = 0.6f;
+        }
+        
+        // Deal damage at the middle of the attack animation
+        float attackProgress = attackDuration > 0 ? attackElapsed / attackDuration : 0f;
+        return attackProgress >= 0.3f && attackProgress <= 0.7f;
+    }
+    
+    int getAttackDamage() {
+        return stats.attackDamage();
     }
 
     private void changeAnimation(EnemyAnimationKey key) {
