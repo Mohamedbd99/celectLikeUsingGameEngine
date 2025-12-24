@@ -25,3 +25,10 @@ gradlew extractTiles --args="C:/Users/moham/Downloads/kenney_pico-8-platformer/T
 
 .\gradlew extractTiles --args="C:/Users/moham/Downloads/kenney_pico-8-platformer/Transparent/Tiles/b.tsx C:\Users\moham\IdeaProjects\celectLikeUsingGameEngine\src\main\resources\assets\kenney_pico-8-platformer\Transparent\Tiles"
 >>
+run game 
+
+./gradlew run 
+
+run map and object builder 
+
+./gradlew runViewEditor --args="assets/yourTileset.tsx"

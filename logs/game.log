@@ -22659,3 +22659,38 @@
 [2025-11-24 18:20:38] [ENTITY] DESTROYED Enemy [skeletonEnemie]
 [2025-11-24 18:20:58] [INFO] MapEditor started with TSX: assets/b.tsx
 [2025-11-24 18:21:06] [INFO] MapEditor terminated
+[2025-12-24 20:02:00] [INFO] Game started
+[2025-12-24 20:02:00] [STATE] Player: NONE -> IDLE
+[2025-12-24 20:02:00] [ENTITY] CREATED Samurai [player]
+[2025-12-24 20:02:00] [ENTITY] CREATED Enemy [skeletonEnemie]
+[2025-12-24 20:02:00] [ENTITY] CREATED Enemy [skeletonEnemie]
+[2025-12-24 20:02:00] [ENTITY] CREATED Enemy [redDeon]
+[2025-12-24 20:02:00] [STATE] Game: MENU -> PLAYING
+[2025-12-24 20:02:01] [STATE] Player: IDLE -> ATTACK
+[2025-12-24 20:02:01] [STATE] Player: ATTACK -> IDLE
+[2025-12-24 20:02:01] [STATE] Player: IDLE -> ATTACK
+[2025-12-24 20:02:01] [STATE] Player: ATTACK -> IDLE
+[2025-12-24 20:02:02] [STATE] Player: IDLE -> ATTACK
+[2025-12-24 20:02:02] [STATE] Player: ATTACK -> IDLE
+[2025-12-24 20:02:03] [STATE] Player: IDLE -> RUN
+[2025-12-24 20:02:03] [STATE] Player: RUN -> IDLE
+[2025-12-24 20:02:04] [STATE] Player: IDLE -> JUMP
+[2025-12-24 20:02:05] [COLLISION] Samurai collided with water tile
+[2025-12-24 20:02:05] [STATE] Player: JUMP -> HURT
+[2025-12-24 20:02:05] [STATE] Player: HURT -> DEATH
+[2025-12-24 20:02:06] [ENTITY] DESTROYED Samurai [player]
+[2025-12-24 20:02:06] [STATE] Player: DEATH -> IDLE
+[2025-12-24 20:02:06] [ENTITY] CREATED Samurai [player]
+[2025-12-24 20:02:06] [ENTITY] DESTROYED Enemy [skeletonEnemie]
+[2025-12-24 20:02:06] [ENTITY] DESTROYED Enemy [skeletonEnemie]
+[2025-12-24 20:02:06] [ENTITY] DESTROYED Enemy [redDeon]
+[2025-12-24 20:02:06] [ENTITY] CREATED Enemy [skeletonEnemie]
+[2025-12-24 20:02:06] [ENTITY] CREATED Enemy [skeletonEnemie]
+[2025-12-24 20:02:06] [ENTITY] CREATED Enemy [redDeon]
+[2025-12-24 20:02:09] [STATE] Game: PLAYING -> GAME_OVER
+[2025-12-24 20:02:09] [INFO] Game terminated
+[2025-12-24 20:02:09] [ENTITY] DESTROYED Enemy [skeletonEnemie]
+[2025-12-24 20:02:09] [ENTITY] DESTROYED Enemy [skeletonEnemie]
+[2025-12-24 20:02:09] [ENTITY] DESTROYED Enemy [redDeon]
+[2025-12-24 20:04:11] [INFO] MapEditor started with TSX: assets/b.tsx
+[2025-12-24 20:04:17] [INFO] MapEditor terminated
